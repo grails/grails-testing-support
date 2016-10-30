@@ -74,10 +74,10 @@ class GrailsUnitTestTransformation implements ASTTransformation {
 
         for (ClassNode classNode : ast.classes) {
             if (classNode.implementsInterface(grailsUnitTestClassNode)) {
-                ClassNode[] interfaces = classNode.getInterfaces()
+                ClassNode[] interfaces = classNode.interfaces
                 for (ClassNode implementedInterface : interfaces) {
                     if (implementedInterface.implementsInterface(grailsUnitTestClassNode)) {
-                        GenericsType[] genericTypes = implementedInterface.getGenericsTypes()
+                        GenericsType[] genericTypes = implementedInterface.genericsTypes
                         ClassNode artefactClassNode = genericTypes[0].type
                         transformTestClass classNode, artefactClassNode
                     }
@@ -94,13 +94,13 @@ class GrailsUnitTestTransformation implements ASTTransformation {
      */
     public static void transformTestClass(ClassNode classNode, ClassNode ce) {
 
-        autoAnnotateSetupTeardown(classNode)
+        autoAnnotateSetupTeardown classNode
         boolean isJunit3Test = isJunit3Test(classNode)
 
         // make sure the 'log' property is not the one from GroovyTestCase
         FieldNode log = classNode.getField("log")
-        if (log == null || log.getDeclaringClass().name == GROOVY_TEST_CASE_CLASS_NAME) {
-            LoggingTransformer.addLogField(classNode, classNode.name)
+        if (log == null || log.declaringClass.name == GROOVY_TEST_CASE_CLASS_NAME) {
+            LoggingTransformer.addLogField classNode, classNode.name
         }
         boolean isSpockTest = isSpockTest(classNode)
 
@@ -109,34 +109,33 @@ class GrailsUnitTestTransformation implements ASTTransformation {
         if (isJunit4 || isJunit3Test || isSpockTest) {
             final MethodNode methodToAdd = weaveMock(classNode, ce)
             if (methodToAdd != null && isJunit3Test) {
-                addMethodCallsToMethod(classNode, SET_UP_METHOD, Arrays.asList(methodToAdd))
+                addMethodCallsToMethod classNode, SET_UP_METHOD, Arrays.asList(methodToAdd)
             }
         }
     }
 
     protected static MethodNode weaveMock(ClassNode testClassNode, ClassNode artifactClassNode) {
-
         ClassNode testTarget = artifactClassNode
-        String className = testTarget.getName()
+        String className = testTarget.name
         for (String artefactType : artefactTypes) {
             if (className.endsWith(artefactType)) {
-                configureJunitHandler(testClassNode)
+                configureJunitHandler testClassNode
                 return addClassUnderTestMethod(testClassNode, artifactClassNode, artefactType)
             }
         }
-        return null
+        null
     }
 
     protected
     static MethodNode addClassUnderTestMethod(ClassNode testClassNode, ClassNode artefactTypeClassNode, String type) {
 
-        String methodName = "setup" + type + "UnderTest"
+        String methodName = "setup${type}UnderTest"
         String fieldName = GrailsNameUtils.getPropertyName(type)
         String getterName = 'getCollaboratorInstance'
         fieldName = '$' + fieldName
 
         if (testClassNode.getField(fieldName) == null) {
-            testClassNode.addField(fieldName, Modifier.PRIVATE, artefactTypeClassNode, null)
+            testClassNode.addField fieldName, Modifier.PRIVATE, artefactTypeClassNode, null
         }
 
         MethodNode methodNode = testClassNode.getDeclaredMethod(methodName, GrailsArtefactClassInjector.ZERO_PARAMETERS)
@@ -144,28 +143,28 @@ class GrailsUnitTestTransformation implements ASTTransformation {
         VariableExpression fieldExpression = new VariableExpression(fieldName, artefactTypeClassNode)
         if (methodNode == null) {
             BlockStatement setupMethodBody = new BlockStatement()
-            addMockCollaborator(type, artefactTypeClassNode, setupMethodBody)
+            addMockCollaborator type, artefactTypeClassNode, setupMethodBody
 
             methodNode = new MethodNode(methodName, Modifier.PUBLIC, ClassHelper.VOID_TYPE, GrailsArtefactClassInjector.ZERO_PARAMETERS, null, setupMethodBody)
-            methodNode.addAnnotation(BEFORE_ANNOTATION)
+            methodNode.addAnnotation BEFORE_ANNOTATION
 
-            testClassNode.addMethod(methodNode)
-            GrailsASTUtils.addCompileStaticAnnotation(methodNode)
+            testClassNode.addMethod methodNode
+            GrailsASTUtils.addCompileStaticAnnotation methodNode
         }
 
         MethodNode getter = testClassNode.getDeclaredMethod(getterName, GrailsArtefactClassInjector.ZERO_PARAMETERS)
         if (getter == null) {
             BlockStatement getterBody = new BlockStatement()
-            getter = new MethodNode(getterName, Modifier.PUBLIC, artefactTypeClassNode.getPlainNodeReference(), GrailsArtefactClassInjector.ZERO_PARAMETERS, null, getterBody)
+            getter = new MethodNode(getterName, Modifier.PUBLIC, artefactTypeClassNode.plainNodeReference, GrailsArtefactClassInjector.ZERO_PARAMETERS, null, getterBody)
 
             BinaryExpression testTargetAssignment = new BinaryExpression(fieldExpression, ASSIGN, new ConstructorCallExpression(artefactTypeClassNode, GrailsArtefactClassInjector.ZERO_ARGS))
 
             IfStatement autowiringIfStatement = getAutowiringIfStatement(artefactTypeClassNode, fieldExpression, testTargetAssignment)
-            getterBody.addStatement(autowiringIfStatement)
+            getterBody.addStatement autowiringIfStatement
 
-            getterBody.addStatement(new ReturnStatement(fieldExpression))
-            testClassNode.addMethod(getter)
-            GrailsASTUtils.addCompileStaticAnnotation(getter)
+            getterBody.addStatement new ReturnStatement(fieldExpression)
+            testClassNode.addMethod getter
+            GrailsASTUtils.addCompileStaticAnnotation getter
         }
 
         return methodNode
@@ -182,27 +181,27 @@ class GrailsUnitTestTransformation implements ASTTransformation {
                         new BinaryExpression(appCtxVar, GrailsASTUtils.NOT_EQUALS_OPERATOR, GrailsASTUtils.NULL_EXPRESSION)))
         BlockStatement performAutowireBlock = new BlockStatement()
         ArgumentListExpression arguments = new ArgumentListExpression()
-        arguments.addExpression(fieldExpression)
-        arguments.addExpression(new ConstantExpression(1))
-        arguments.addExpression(new ConstantExpression(false))
+        arguments.addExpression fieldExpression
+        arguments.addExpression new ConstantExpression(1)
+        arguments.addExpression new ConstantExpression(false)
         BlockStatement assignFromApplicationContext = new BlockStatement()
         ArgumentListExpression argWithClassName = new ArgumentListExpression()
         MethodCallExpression getClassNameMethodCall = new MethodCallExpression(new ClassExpression(targetClass), "getName", new ArgumentListExpression())
-        argWithClassName.addExpression(getClassNameMethodCall)
+        argWithClassName.addExpression getClassNameMethodCall
 
-        assignFromApplicationContext.addStatement(new ExpressionStatement(new BinaryExpression(fieldExpression, ASSIGN, new MethodCallExpression(appCtxVar, "getBean", argWithClassName))))
+        assignFromApplicationContext.addStatement new ExpressionStatement(new BinaryExpression(fieldExpression, ASSIGN, new MethodCallExpression(appCtxVar, "getBean", argWithClassName)))
         BlockStatement elseBlock = new BlockStatement()
-        elseBlock.addStatement(new ExpressionStatement(testTargetAssignment))
-        performAutowireBlock.addStatement(new IfStatement(new BooleanExpression(new MethodCallExpression(appCtxVar, "containsBean", argWithClassName)), assignFromApplicationContext, elseBlock))
-        performAutowireBlock.addStatement(new ExpressionStatement(new MethodCallExpression(new PropertyExpression(appCtxVar, "autowireCapableBeanFactory"), "autowireBeanProperties", arguments)))
-        return new IfStatement(applicationContextCheck, performAutowireBlock, new BlockStatement())
+        elseBlock.addStatement new ExpressionStatement(testTargetAssignment)
+        performAutowireBlock.addStatement new IfStatement(new BooleanExpression(new MethodCallExpression(appCtxVar, "containsBean", argWithClassName)), assignFromApplicationContext, elseBlock)
+        performAutowireBlock.addStatement new ExpressionStatement(new MethodCallExpression(new PropertyExpression(appCtxVar, "autowireCapableBeanFactory"), "autowireBeanProperties", arguments))
+        new IfStatement(applicationContextCheck, performAutowireBlock, new BlockStatement())
     }
 
     protected
     static void addMockCollaborator(String mockType, ClassNode targetClass, BlockStatement methodBody) {
         ArgumentListExpression args = new ArgumentListExpression()
-        args.addExpression(new ClassExpression(targetClass))
-        methodBody.getStatements().add(0, new ExpressionStatement(new MethodCallExpression(new VariableExpression("this"), "mock" + mockType, args)))
+        args.addExpression new ClassExpression(targetClass)
+        methodBody.statements.add 0, new ExpressionStatement(new MethodCallExpression(new VariableExpression("this"), "mock" + mockType, args))
     }
 
     public static void configureJunitHandler(ClassNode classNode) {
@@ -229,8 +228,8 @@ class GrailsUnitTestTransformation implements ASTTransformation {
         }
 
         public void postProcessClassNode() {
-            addMethodCallsToMethod(classNode, SET_UP_METHOD, beforeMethods)
-            addMethodCallsToMethod(classNode, TEAR_DOWN_METHOD, afterMethods)
+            addMethodCallsToMethod classNode, SET_UP_METHOD, beforeMethods
+            addMethodCallsToMethod classNode, TEAR_DOWN_METHOD, afterMethods
             handleTestRuntimeJunitSetUpAndTearDownCalls()
         }
 
@@ -244,15 +243,15 @@ class GrailsUnitTestTransformation implements ASTTransformation {
             if (classNode.redirect().getNodeMetaData(JUNIT3_RULE_SETUP_TEARDOWN_APPLIED_KEY) != Boolean.TRUE) {
                 BlockStatement setUpMethodBody = getOrCreateNoArgsMethodBody(classNode, SET_UP_METHOD)
                 if (!hasExistingSetUp) {
-                    setUpMethodBody.getStatements().add(0, new ExpressionStatement(new MethodCallExpression(new VariableExpression("super"), SET_UP_METHOD, GrailsArtefactClassInjector.ZERO_ARGS)))
+                    setUpMethodBody.statements.add 0, new ExpressionStatement(new MethodCallExpression(new VariableExpression("super"), SET_UP_METHOD, GrailsArtefactClassInjector.ZERO_ARGS))
                 }
                 BlockStatement tearDownMethodBody = getOrCreateNoArgsMethodBody(classNode, TEAR_DOWN_METHOD)
-                setUpMethodBody.getStatements().add(1, new ExpressionStatement(new MethodCallExpression(new FieldExpression(junitAdapterFieldNode), SET_UP_METHOD, new VariableExpression("this"))))
-                tearDownMethodBody.addStatement(new ExpressionStatement(new MethodCallExpression(new FieldExpression(junitAdapterFieldNode), TEAR_DOWN_METHOD, new VariableExpression("this"))))
+                setUpMethodBody.statements.add 1, new ExpressionStatement(new MethodCallExpression(new FieldExpression(junitAdapterFieldNode), SET_UP_METHOD, new VariableExpression("this")))
+                tearDownMethodBody.addStatement new ExpressionStatement(new MethodCallExpression(new FieldExpression(junitAdapterFieldNode), TEAR_DOWN_METHOD, new VariableExpression("this")))
                 if (!hasExistingTearDown) {
-                    tearDownMethodBody.addStatement(new ExpressionStatement(new MethodCallExpression(new VariableExpression("super"), TEAR_DOWN_METHOD, GrailsArtefactClassInjector.ZERO_ARGS)))
+                    tearDownMethodBody.addStatement new ExpressionStatement(new MethodCallExpression(new VariableExpression("super"), TEAR_DOWN_METHOD, GrailsArtefactClassInjector.ZERO_ARGS))
                 }
-                classNode.redirect().setNodeMetaData(JUNIT3_RULE_SETUP_TEARDOWN_APPLIED_KEY, Boolean.TRUE)
+                classNode.redirect().setNodeMetaData JUNIT3_RULE_SETUP_TEARDOWN_APPLIED_KEY, Boolean.TRUE
             }
         }
     }
@@ -261,58 +260,58 @@ class GrailsUnitTestTransformation implements ASTTransformation {
         if (methods != null && !methods.isEmpty()) {
             BlockStatement setupMethodBody = getOrCreateNoArgsMethodBody(classNode, name)
             for (MethodNode beforeMethod : methods) {
-                setupMethodBody.addStatement(new ExpressionStatement(new MethodCallExpression(new VariableExpression("this"), beforeMethod.getName(), GrailsArtefactClassInjector.ZERO_ARGS)))
+                setupMethodBody.addStatement new ExpressionStatement(new MethodCallExpression(new VariableExpression("this"), beforeMethod.getName(), GrailsArtefactClassInjector.ZERO_ARGS))
             }
         }
     }
 
     static protected BlockStatement getOrCreateNoArgsMethodBody(ClassNode classNode, String name) {
         MethodNode setupMethod = classNode.getMethod(name, GrailsArtefactClassInjector.ZERO_PARAMETERS)
-        return getOrCreateMethodBody(classNode, setupMethod, name)
+        getOrCreateMethodBody classNode, setupMethod, name
     }
 
     protected static void autoAnnotateSetupTeardown(ClassNode classNode) {
         MethodNode setupMethod = classNode.getDeclaredMethod(SET_UP_METHOD, GrailsArtefactClassInjector.ZERO_PARAMETERS)
         if (setupMethod != null && setupMethod.getAnnotations(TestForTransformation.BEFORE_CLASS_NODE).size() == 0) {
-            setupMethod.addAnnotation(TestForTransformation.BEFORE_ANNOTATION)
+            setupMethod.addAnnotation TestForTransformation.BEFORE_ANNOTATION
         }
 
         MethodNode tearDown = classNode.getDeclaredMethod(TEAR_DOWN_METHOD, GrailsArtefactClassInjector.ZERO_PARAMETERS)
         if (tearDown != null && tearDown.getAnnotations(TestForTransformation.AFTER_CLASS_NODE).size() == 0) {
-            tearDown.addAnnotation(TestForTransformation.AFTER_ANNOTATION)
+            tearDown.addAnnotation TestForTransformation.AFTER_ANNOTATION
         }
     }
 
     static
     protected BlockStatement getOrCreateMethodBody(ClassNode classNode, MethodNode methodNode, String name) {
         BlockStatement methodBody
-        if (!(methodNode.getDeclaringClass() == classNode)) {
+        if (!(methodNode.declaringClass == classNode)) {
             methodBody = new BlockStatement()
             methodNode = new MethodNode(name, Modifier.PUBLIC, methodNode.getReturnType(), GrailsArtefactClassInjector.ZERO_PARAMETERS, null, methodBody)
-            classNode.addMethod(methodNode)
+            classNode.addMethod methodNode
         } else {
-            final Statement setupMethodBody = methodNode.getCode()
+            final Statement setupMethodBody = methodNode.code
             if (!(setupMethodBody instanceof BlockStatement)) {
                 methodBody = new BlockStatement()
                 if (setupMethodBody != null) {
                     if (!(setupMethodBody instanceof ReturnStatement)) {
-                        methodBody.addStatement(setupMethodBody)
+                        methodBody.addStatement setupMethodBody
                     }
                 }
-                methodNode.setCode(methodBody)
+                methodNode.code = methodBody
             } else {
                 methodBody = (BlockStatement) setupMethodBody
             }
         }
-        return methodBody
+        methodBody
     }
 
     public static boolean isJunit3Test(ClassNode classNode) {
-        return GrailsASTUtils.isSubclassOf(classNode, JUNIT3_CLASS)
+        GrailsASTUtils.isSubclassOf classNode, JUNIT3_CLASS
     }
 
     public static boolean isSpockTest(ClassNode classNode) {
-        return GrailsASTUtils.isSubclassOf(classNode, SPEC_CLASS)
+        GrailsASTUtils.isSubclassOf classNode, SPEC_CLASS
     }
 
     protected static void addJunitRuleFields(ClassNode classNode) {
@@ -327,26 +326,26 @@ class GrailsUnitTestTransformation implements ASTTransformation {
         if (spockTest) {
             // @ClassRule must be added to @Shared field in spock
             FieldNode spockSharedRuleFieldNode = classNode.addField(RULE_FIELD_NAME_BASE + "SharedClassRule", Modifier.PUBLIC, ClassHelper.make(TestRule.class), new FieldExpression(staticRuleFieldNode))
-            spockSharedRuleFieldNode.addAnnotation(classRuleAnnotation)
-            spockSharedRuleFieldNode.addAnnotation(new AnnotationNode(ClassHelper.make(Shared.class)))
-            addSpockFieldMetadata(spockSharedRuleFieldNode, 0)
+            spockSharedRuleFieldNode.addAnnotation classRuleAnnotation
+            spockSharedRuleFieldNode.addAnnotation new AnnotationNode(ClassHelper.make(Shared.class))
+            addSpockFieldMetadata spockSharedRuleFieldNode, 0
         } else {
             staticRuleFieldNode.setModifiers(Modifier.PUBLIC | Modifier.STATIC)
-            staticRuleFieldNode.addAnnotation(classRuleAnnotation)
+            staticRuleFieldNode.addAnnotation classRuleAnnotation
         }
 
         FieldNode ruleFieldNode = classNode.addField(RULE_FIELD_NAME_BASE + "Rule", Modifier.PUBLIC, ClassHelper.make(TestRule.class), new MethodCallExpression(new FieldExpression(junitAdapterFieldNode), "newRule", new VariableExpression("this")))
-        ruleFieldNode.addAnnotation(new AnnotationNode(ClassHelper.make(Rule.class)))
+        ruleFieldNode.addAnnotation new AnnotationNode(ClassHelper.make(Rule.class))
         if (spockTest) {
-            addSpockFieldMetadata(ruleFieldNode, 0)
+            addSpockFieldMetadata ruleFieldNode, 0
         }
     }
 
     protected static void addSpockFieldMetadata(FieldNode field, int ordinal) {
         AnnotationNode ann = new AnnotationNode(ClassHelper.make(FieldMetadata.class))
-        ann.setMember(FieldMetadata.NAME, new ConstantExpression(field.getName()))
-        ann.setMember(FieldMetadata.ORDINAL, new ConstantExpression(ordinal))
-        ann.setMember(FieldMetadata.LINE, new ConstantExpression(field.getLineNumber()))
-        field.addAnnotation(ann)
+        ann.setMember FieldMetadata.NAME, new ConstantExpression(field.getName())
+        ann.setMember FieldMetadata.ORDINAL, new ConstantExpression(ordinal)
+        ann.setMember FieldMetadata.LINE, new ConstantExpression(field.getLineNumber())
+        field.addAnnotation ann
     }
 }
