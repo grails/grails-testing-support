@@ -9,3 +9,18 @@ test controllers.
 include::{demoAppDir}/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration,indent=0]
 ----
 
+Adding the `ControllerUnitTest` trait to a test causes a property named
+`controller` to be added to the test.  This property will automatically be
+ initialized with a instance of the controller under test.
+
+To test the simplest "Hello World"-style example you can do the following:
+
+[source,groovy]
+----
+include::{demoAppDir}/grails-app/controllers/demo/DemoController.groovy[tags=basic_declaration;render_hello,indent=0]
+----
+
+[source,groovy]
+----
+include::{demoAppDir}/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration;test_render,indent=0]
+----

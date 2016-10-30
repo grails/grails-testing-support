@@ -10,7 +10,8 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest<Dem
 
 // end::basic_declaration[]
 
-    void "test action which renders test"() {
+// tag::test_render[]
+    void "test action which renders text"() {
         when:
         controller.hello()
 
@@ -19,6 +20,7 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest<Dem
         response.text == 'Hello, World!'
     }
 
+// end::test_render[]
     void 'test invalid request method'() {
         when:
         request.method = 'POST'
