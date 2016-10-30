@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 rm -rf *.zip
-./gradlew clean check assemble
+./gradlew clean check :grails-testing-support:assemble
 
 EXIT_STATUS=0
 
