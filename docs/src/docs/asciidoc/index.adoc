@@ -12,7 +12,7 @@ include::introduction.adoc[]
 
 include::installation.adoc[]
 
-== Testing Controllers
+== Unit Testing Controllers
 
 include::unitTestingControllers.adoc[]
 
