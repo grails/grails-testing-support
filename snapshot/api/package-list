@@ -1,0 +1,4 @@
+grails.testing.services
+grails.testing.web.controllers
+org.grails.testing
+org.grails.testing.compiler
