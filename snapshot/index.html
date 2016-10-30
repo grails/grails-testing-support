@@ -577,6 +577,46 @@ test controllers.</p>
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Adding the <code>ControllerUnitTest</code> trait to a test causes a property named
+<code>controller</code> to be added to the test.  This property will automatically be
+ initialized with a instance of the controller under test.</p>
+</div>
+<div class="paragraph">
+<p>To test the simplest "Hello World"-style example you can do the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">DemoController</span> {
+
+    <span class="keyword">def</span> <span class="function">hello</span>() {
+        render <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
+
+    <span class="comment">// ...</span>
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which renders text</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">when</span>:
+        controller.hello()
+
+        <span class="key">then</span>:
+        status == <span class="integer">200</span>
+        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
+    }
+
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -591,7 +631,7 @@ test controllers.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-30 18:41:46 UTC
+Last updated 2016-10-30 19:44:45 UTC
 </div>
 </div>
 </body>

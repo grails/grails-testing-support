@@ -446,11 +446,51 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Adding the <code>ControllerUnitTest</code> trait to a test causes a property named
+<code>controller</code> to be added to the test.  This property will automatically be
+ initialized with a instance of the controller under test.</p>
+</div>
+<div class="paragraph">
+<p>To test the simplest "Hello World"-style example you can do the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class DemoController {
+
+    def hello() {
+        render 'Hello, World!'
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.controllers.ControllerUnitTest
+import spock.lang.Specification
+
+class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
+
+    // ...
+
+    void "test action which renders text"() {
+        when:
+        controller.hello()
+
+        then:
+        status == 200
+        response.text == 'Hello, World!'
+    }
+
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-30 18:41:46 UTC
+Last updated 2016-10-30 19:44:45 UTC
 </div>
 </div>
 </body>
