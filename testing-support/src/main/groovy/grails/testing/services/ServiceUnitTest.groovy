@@ -1,6 +1,5 @@
 package grails.testing.services
 
-import groovy.transform.CompileStatic
 import org.grails.core.artefact.ServiceArtefactHandler
 import org.grails.testing.GrailsUnitTest
 

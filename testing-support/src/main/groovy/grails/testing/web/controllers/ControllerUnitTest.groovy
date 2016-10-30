@@ -17,26 +17,26 @@ import org.grails.web.util.GrailsApplicationAttributes
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.mock.web.MockServletContext
 
-trait ControllerUnitTest<T>  extends GrailsUnitTest<T> {
+trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
 
     GrailsWebRequest getWebRequest() {
-        (GrailsWebRequest)runtime.getValue("webRequest")
+        (GrailsWebRequest) runtime.getValue("webRequest")
     }
 
     GrailsMockHttpServletRequest getRequest() {
-        return (GrailsMockHttpServletRequest)getWebRequest().getCurrentRequest()
+        return (GrailsMockHttpServletRequest) getWebRequest().getCurrentRequest()
     }
 
     GrailsMockHttpServletResponse getResponse() {
-        return (GrailsMockHttpServletResponse)getWebRequest().getCurrentResponse()
+        return (GrailsMockHttpServletResponse) getWebRequest().getCurrentResponse()
     }
 
     MockServletContext getServletContext() {
-        (MockServletContext)runtime.getValue("servletContext")
+        (MockServletContext) runtime.getValue("servletContext")
     }
 
     Map<String, String> getGroovyPages() {
-        (Map<String, String>)runtime.getValue("groovyPages")
+        (Map<String, String>) runtime.getValue("groovyPages")
     }
 
     Map<String, String> getViews() {
@@ -47,7 +47,7 @@ trait ControllerUnitTest<T>  extends GrailsUnitTest<T> {
      * The {@link org.springframework.mock.web.MockHttpSession} instance
      */
     MockHttpSession getSession() {
-        (MockHttpSession)request.session
+        (MockHttpSession) request.session
     }
 
     /**
@@ -86,8 +86,7 @@ trait ControllerUnitTest<T>  extends GrailsUnitTest<T> {
 
         if (webRequest.controllerName && webRequest.actionName) {
             new GroovyPagesUriSupport().getViewURI(webRequest.controllerName, webRequest.actionName)
-        }
-        else {
+        } else {
             return null
         }
     }
@@ -115,7 +114,7 @@ trait ControllerUnitTest<T>  extends GrailsUnitTest<T> {
             }
         }
 
-        def callable = {->
+        def callable = { ->
             final controller = applicationContext.getBean(controllerClass.name)
             webRequest.controllerName = controllerArtefact.logicalPropertyName
             request.setAttribute(GrailsApplicationAttributes.CONTROLLER, controller)
@@ -129,7 +128,7 @@ trait ControllerUnitTest<T>  extends GrailsUnitTest<T> {
 
     @CompileStatic
     private GrailsClass createAndEnhance(Class controllerClass) {
-        final GrailsControllerClass controllerArtefact = (GrailsControllerClass)grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, controllerClass)
+        final GrailsControllerClass controllerArtefact = (GrailsControllerClass) grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, controllerClass)
         controllerArtefact.initialize()
         return controllerArtefact
     }
