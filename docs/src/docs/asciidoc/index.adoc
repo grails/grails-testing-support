@@ -1,0 +1,21 @@
+= Grails Testing Support
+:author: Jeff Scott Brown
+:email: brownj@ociweb.com
+:source-highlighter: coderay
+:numbered:
+
+== Introduction
+
+include::introduction.adoc[]
+
+== Installation
+
+include::installation.adoc[]
+
+== Testing Controllers
+
+include::unitTestingControllers.adoc[]
+
+== API Docs
+
+include::apidocs.adoc[]

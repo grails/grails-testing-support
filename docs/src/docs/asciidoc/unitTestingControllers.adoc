@@ -1,0 +1,11 @@
+
+=== The Basics
+
+Use the `grails.testing.web.controllers.ControllerUnitTest` trait to unit
+test controllers.
+
+[source,groovy]
+----
+include::{demoAppDir}/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration,indent=0]
+----
+

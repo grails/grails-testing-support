@@ -1,0 +1,5 @@
+To install the testing support library add the following dependency to the
+`dependencies` block of your `build.gradle` in a Grails application or plugin:
+
+[source,groovy,subs="attributes"]
+compile "org.grails:grails-testing-support:{testingSupportVersion}"
