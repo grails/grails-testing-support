@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
+    }
+}
+
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
@@ -7,9 +16,22 @@ version "1.0.0.BUILD-SNAPSHOT"
 group "org.grails"
 
 apply plugin: 'groovy'
+apply plugin: "com.jfrog.artifactory"
 
 dependencies {
     compile "org.grails:grails-plugin-testing:$grailsVersion"
     compile "org.grails:grails-web-common:$grailsVersion"
     compile 'javax.servlet:javax.servlet-api:3.0.1'
+}
+
+artifactory {
+    contextUrl = 'http://repo.grails.org/grails'
+    publish {
+        repository {
+            repoKey = 'libs-snapshots-local'
+
+            username = System.getenv('GRAILS_CENTRAL_USERNAME') ?: project.properties.get('grailsPluginsUsername')
+            password = System.getenv("GRAILS_CENTRAL_PASSWORD") ?: project.properties.get('grailsPluginsPassword')
+        }
+    }
 }
