@@ -1,4 +1,5 @@
 grails.testing.services
 grails.testing.web.controllers
+grails.testing.web.taglib
 org.grails.testing
 org.grails.testing.compiler
