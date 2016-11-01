@@ -578,12 +578,6 @@ test controllers.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Adding the <code>ControllerUnitTest</code> trait to a test causes a property named
-<code>controller</code> to be added to the test.  This property will automatically be
- initialized with a instance of the controller under test.  See the <a href="api/grails/testing/web/controllers/ControllerUnitTest.html"><code>ControllerUnitTest</code></a>
-docs for information on all of the available properties.</p>
-</div>
-<div class="paragraph">
 <p>To test the simplest "Hello World"-style example you can do the following:</p>
 </div>
 <div class="listingblock">
@@ -608,15 +602,35 @@ docs for information on all of the available properties.</p>
 
     <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which renders text</span><span class="delimiter">&quot;</span></span>() {
         <span class="key">when</span>:
-        controller.hello()
+        controller.hello()               <i class="conum" data-value="1"></i><b>(1)</b>
 
         <span class="key">then</span>:
-        status == <span class="integer">200</span>
-        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
+        status == <span class="integer">200</span>                    <i class="conum" data-value="2"></i><b>(2)</b>
+        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span> <i class="conum" data-value="3"></i><b>(3)</b>
     }
 
 }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>controller</code> property will be an instance of <code>DemoController</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>status</code> property will contain the value of the response status</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>response</code> property will be a reference to the HTTP response object</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>See the <a href="api/grails/testing/web/controllers/ControllerUnitTest.html"><code>ControllerUnitTest</code></a>
+docs for information on all of the available properties.</p>
 </div>
 </div>
 </div>
@@ -632,7 +646,7 @@ docs for information on all of the available properties.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-01 03:30:34 UTC
+Last updated 2016-11-01 20:58:42 UTC
 </div>
 </div>
 </body>
