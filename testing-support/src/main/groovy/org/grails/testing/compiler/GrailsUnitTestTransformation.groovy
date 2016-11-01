@@ -51,7 +51,7 @@ class GrailsUnitTestTransformation implements ASTTransformation {
     final String GROOVY_TEST_CASE_CLASS_NAME = "groovy.util.GroovyTestCase"
     private static final Token ASSIGN = Token.newSymbol("=", -1, -1)
     protected static
-    final List<String> artefactTypes = ['Controller', 'Service']
+    final List<String> artefactTypes = ['Controller', 'Service', 'TagLib']
     public static
     final ClassNode BEFORE_CLASS_NODE = new ClassNode(Before.class)
     public static
