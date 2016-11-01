@@ -1,11 +1,11 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
-    }
+plugins {
+    id "com.jfrog.bintray" version "1.7"
+    id "com.jfrog.artifactory" version "4.4.0"
 }
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenLocal()
@@ -24,6 +24,49 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api:3.0.1'
 }
 
+project.ext {
+    githubUrl = 'https://github.com/grails/grails-testing-support'
+    artifactId = 'testing-support'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId project.artifactId
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name project.artifactId
+                    description project.description
+                    url project.githubUrl
+                    scm {
+                        url project.githubUrl
+                        connection "scm:${project.githubUrl}.git"
+                        developerConnection "scm:${project.githubUrl}.git"
+                    }
+                    licenses {
+                        license {
+                            name 'Apache License, Version 2.0'
+                            url 'https://www.apache.org/licenses/LICENSE-2.0'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'jeffscottbrown'
+                            name 'Jeff Scott Brown'
+                            email 'brownj@ociweb.com'
+                        }
+                    }
+                }
+            }
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
 artifactory {
     contextUrl = 'http://repo.grails.org/grails'
     publish {
@@ -32,6 +75,9 @@ artifactory {
 
             username = System.getenv('GRAILS_CENTRAL_USERNAME') ?: project.properties.get('grailsPluginsUsername')
             password = System.getenv("GRAILS_CENTRAL_PASSWORD") ?: project.properties.get('grailsPluginsPassword')
+        }
+        defaults {
+            publications('maven')
         }
     }
 }
