@@ -8,6 +8,13 @@ EXIT_STATUS=0
 echo "Publishing archives for branch $TRAVIS_BRANCH"
 if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
 
+  if [[ -n $TRAVIS_TAG ]]; then
+      # ./gradlew bintrayUpload || EXIT_STATUS=$?
+      echo "Bintray Upload Not yet Configured"
+  else
+      ./gradlew :testing-support:artifactoryPublish || EXIT_STATUS=$?
+  fi
+
   ./gradlew :docs:docs || EXIT_STATUS=$?
 
   git config --global user.name "$GIT_NAME"
