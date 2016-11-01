@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1"
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
@@ -7,9 +20,66 @@ version "1.0.0.BUILD-SNAPSHOT"
 group "org.grails"
 
 apply plugin: 'groovy'
+apply plugin: "com.jfrog.artifactory"
 
 dependencies {
     compile "org.grails:grails-plugin-testing:$grailsVersion"
     compile "org.grails:grails-web-common:$grailsVersion"
     compile 'javax.servlet:javax.servlet-api:3.0.1'
+}
+
+project.ext {
+    githubUrl = 'https://github.com/grails/grails-testing-support'
+    artifactId = 'testing-support'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId project.artifactId
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name project.artifactId
+                    description project.description
+                    url project.githubUrl
+                    scm {
+                        url project.githubUrl
+                        connection "scm:${project.githubUrl}.git"
+                        developerConnection "scm:${project.githubUrl}.git"
+                    }
+                    licenses {
+                        license {
+                            name 'Apache License, Version 2.0'
+                            url 'https://www.apache.org/licenses/LICENSE-2.0'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'jeffscottbrown'
+                            name 'Jeff Scott Brown'
+                            email 'brownj@ociweb.com'
+                        }
+                    }
+                }
+            }
+            from components.java
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://repo.grails.org/grails'
+    publish {
+        repository {
+            repoKey = 'libs-snapshots-local'
+
+            username = System.getenv('GRAILS_CENTRAL_USERNAME') ?: project.properties.get('grailsPluginsUsername')
+            password = System.getenv("GRAILS_CENTRAL_PASSWORD") ?: project.properties.get('grailsPluginsPassword')
+        }
+        defaults {
+            publications('maven')
+        }
+    }
 }
