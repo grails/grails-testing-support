@@ -13,11 +13,11 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest<Dem
 // tag::test_render[]
     void "test action which renders text"() {
         when:
-        controller.hello()
+        controller.hello()               // <1>
 
         then:
-        status == 200
-        response.text == 'Hello, World!'
+        status == 200                    // <2>
+        response.text == 'Hello, World!' // <3>
     }
 
 // end::test_render[]
