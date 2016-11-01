@@ -21,6 +21,7 @@ package grails.testing.web.controllers
 import grails.core.GrailsClass
 import grails.core.GrailsControllerClass
 import grails.util.GrailsMetaClassUtils
+import grails.web.mime.MimeType
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.transform.CompileStatic
@@ -32,10 +33,24 @@ import org.grails.testing.GrailsUnitTest
 import org.grails.web.pages.GroovyPagesUriSupport
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.GrailsApplicationAttributes
+import org.springframework.context.MessageSource
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.mock.web.MockServletContext
 
 trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
+
+    static String FORM_CONTENT_TYPE = MimeType.FORM.name
+    static String MULTIPART_FORM_CONTENT_TYPE = MimeType.MULTIPART_FORM.name
+    static String ALL_CONTENT_TYPE = MimeType.ALL.name
+    static String HTML_CONTENT_TYPE = MimeType.HTML.name
+    static String XHTML_CONTENT_TYPE = MimeType.XHTML.name
+    static String XML_CONTENT_TYPE = MimeType.XML.name
+    static String JSON_CONTENT_TYPE = MimeType.JSON.name
+    static String TEXT_XML_CONTENT_TYPE = MimeType.TEXT_XML.name
+    static String TEXT_JSON_CONTENT_TYPE = MimeType.TEXT_JSON.name
+    static String HAL_JSON_CONTENT_TYPE = MimeType.HAL_JSON.name
+    static String HAL_XML_CONTENT_TYPE = MimeType.HAL_XML.name
+    static String ATOM_XML_CONTENT_TYPE = MimeType.ATOM_XML.name
 
     GrailsWebRequest getWebRequest() {
         (GrailsWebRequest) runtime.getValue("webRequest")
@@ -155,4 +170,7 @@ trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
         getCollaboratorInstance()
     }
 
+    MessageSource getMessageSource() {
+        applicationContext.getBean("messageSource", MessageSource)
+    }
 }
