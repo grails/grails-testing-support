@@ -14,15 +14,15 @@ include::installation.adoc[]
 
 == Unit Testing Controllers
 
-include::unitTestingControllers.adoc[]
+include::unit/controllers/basics.adoc[]
 
 == Unit Testing Services
 
-include::unitTestingServices.adoc[]
+include::unit/services/basics.adoc[]
 
 == Unit Testing Tag Libraries
 
-include::unitTestingTagLibs.adoc[]
+include::unit/taglibs/basics.adoc[]
 
 == API Docs
 
