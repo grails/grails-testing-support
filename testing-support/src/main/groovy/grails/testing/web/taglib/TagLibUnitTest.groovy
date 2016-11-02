@@ -96,4 +96,8 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
 
         return taglibObject
     }
+
+    T getTagLib() {
+        getCollaboratorInstance()
+    }
 }
