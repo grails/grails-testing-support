@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 rm -rf *.zip
-./gradlew clean check :testing-support:assemble
+./gradlew clean check :grails-testing-support:assemble
 
 EXIT_STATUS=0
 
@@ -12,7 +12,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST
       # ./gradlew bintrayUpload || EXIT_STATUS=$?
       echo "Bintray Upload Not yet Configured"
   else
-      ./gradlew :testing-support:artifactoryPublish || EXIT_STATUS=$?
+      ./gradlew :grails-testing-support:artifactoryPublish || EXIT_STATUS=$?
   fi
 
   ./gradlew :docs:docs || EXIT_STATUS=$?

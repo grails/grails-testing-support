@@ -31,7 +31,7 @@ dependencies {
 
 project.ext {
     githubUrl = 'https://github.com/grails/grails-testing-support'
-    artifactId = 'testing-support'
+    artifactId = 'grails-testing-support'
 }
 
 publishing {

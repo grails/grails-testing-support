@@ -12,8 +12,8 @@ asciidoctor {
                'compat-mode'           : 'true',
                'toc'                   : 'left',
                'icons'                 : 'font',
-               'testingSupportVersion' : "${rootProject.allprojects.find { it.name == 'testing-support'}.version}",
-               'sourcedir'             : "${rootProject.allprojects.find { it.name == 'testing-support'}.projectDir}/src/main/groovy",
+               'testingSupportVersion' : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.version}",
+               'sourcedir'             : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.projectDir}/src/main/groovy",
                'demoAppDir'            : "${rootProject.allprojects.find { it.name == 'demo'}.projectDir}"
 }
 
@@ -22,7 +22,7 @@ configurations {
 }
 
 dependencies {
-    documentation project(':testing-support')
+    documentation project(':grails-testing-support')
     documentation 'org.codehaus.groovy:groovy-all:2.4.7'
 }
 
@@ -30,7 +30,7 @@ dependencies {
 
 task apidocs(type: Groovydoc) {
     def allProjects = rootProject.allprojects.findAll { project ->
-      ['testing-support'].contains(project.name)
+      ['grails-testing-support'].contains(project.name)
     }
     source allProjects.collect { project ->
       project.files('src/main/groovy')
@@ -38,7 +38,7 @@ task apidocs(type: Groovydoc) {
 
     destinationDir = new File(buildDir, 'docs/api')
     // Might need a classpath
-    docTitle = "Grails Testing Support ${rootProject.allprojects.find { it.name == 'testing-support'}.version}"
+    docTitle = "Grails Testing Support ${rootProject.allprojects.find { it.name == 'grails-testing-support'}.version}"
     
     classpath = configurations.documentation
     groovyClasspath = configurations.documentation
