@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Untitled</title>
+<title>The Basics</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -422,17 +422,45 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-
+<ul class="sectlevel2">
+<li><a href="#_the_basics">The Basics</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
+<div class="sect2">
+<h3 id="_the_basics">The Basics</h3>
 <div class="paragraph">
-<p>To install the testing support library add the following dependency to the
-<code>dependencies</code> block of your <code>build.gradle</code> in a Grails application or plugin:</p>
+<p>Use the <code>grails.testing.services.ServiceUnitTest</code> trait to unit
+test services.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">compile "org.grails:grails-testing-support:1.0.0.BUILD-SNAPSHOT"</code></pre>
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class HelperService {
+
+    def getMagicNumber() {
+        42
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.services.ServiceUnitTest
+import spock.lang.Specification
+
+class HelperServiceSpec extends Specification implements ServiceUnitTest&lt;HelperService&gt; {
+
+    void "test retrieving a property"() {
+        expect:
+        service.magicNumber == 42
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding the <code>ServiceUnitTest</code> trait to a test causes a new <code>service</code> property to
+be automatically created for the Service class under test.</p>
 </div>
 </div>
 </div>
