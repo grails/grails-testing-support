@@ -1,5 +1,5 @@
 
-=== The Basics
+== The Basics
 
 
 Tag libraries and GSP pages can be tested with the

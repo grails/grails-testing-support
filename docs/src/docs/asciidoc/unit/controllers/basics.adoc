@@ -1,5 +1,5 @@
 
-=== The Basics
+== The Basics
 
 Use the `grails.testing.web.controllers.ControllerUnitTest` trait to unit
 test controllers.

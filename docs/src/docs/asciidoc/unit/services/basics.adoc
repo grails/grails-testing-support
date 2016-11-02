@@ -1,5 +1,5 @@
 
-=== The Basics
+== The Basics
 
 Use the `grails.testing.services.ServiceUnitTest` trait to unit
 test services.

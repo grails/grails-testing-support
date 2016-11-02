@@ -12,18 +12,11 @@ include::introduction.adoc[]
 
 include::installation.adoc[]
 
-== Unit Testing Controllers
+== Unit Testing
 
-include::unit/controllers/basics.adoc[]
-
-== Unit Testing Services
-
-include::unit/services/basics.adoc[]
-
-== Unit Testing Tag Libraries
-
-include::unit/taglibs/basics.adoc[]
+include::unit/index.adoc[leveloffset=+1]
 
 == API Docs
 
 include::apidocs.adoc[]
+
