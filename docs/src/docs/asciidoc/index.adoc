@@ -16,6 +16,10 @@ include::installation.adoc[]
 
 include::unitTestingControllers.adoc[]
 
+== Unit Testing Services
+
+include::unitTestingServices.adoc[]
+
 == Unit Testing Tag Libraries
 
 include::unitTestingTagLibs.adoc[]
