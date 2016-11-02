@@ -431,75 +431,95 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_the_basics">The Basics</h3>
 <div class="paragraph">
-<p>Use the <code>grails.testing.web.controllers.ControllerUnitTest</code> trait to unit
-test controllers.</p>
+<p>Tag libraries and GSP pages can be tested with the
+<code>grails.testing.web.taglib.TagLibUnitTest</code> trait.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.controllers.ControllerUnitTest
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleTagLib {
+
+    static defaultEncodeAs = [taglib:'html']
+
+    static namespace = 'demo'
+
+    def helloWorld = { attrs -&gt;
+        out &lt;&lt; 'Hello, World!'
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.taglib.TagLibUnitTest
 import spock.lang.Specification
 
-class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
+class SampleTagLibSpec extends Specification implements TagLibUnitTest&lt;SampleTagLib&gt; {
 
-    // ...
-
+    void "test simple tag as method"() {
+        expect:
+        tagLib.helloWorld() == 'Hello, World!'
+    }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To test the simplest "Hello World"-style example you can do the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class DemoController {
-
-    def hello() {
-        render 'Hello, World!'
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.controllers.ControllerUnitTest
-import spock.lang.Specification
-
-class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
-
-    // ...
-
-    void "test action which renders text"() {
-        when:
-        controller.hello()               <i class="conum" data-value="1"></i><b>(1)</b>
-
-        then:
-        status == 200                    <i class="conum" data-value="2"></i><b>(2)</b>
-        response.text == 'Hello, World!' <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>controller</code> property will be an instance of <code>DemoController</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>status</code> property will contain the value of the response status</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <code>response</code> property will be a reference to the HTTP response object</td>
-</tr>
-</table>
+<p>Adding the <code>TagLibUnitTest</code> trait to a test causes a new <code>tagLib</code> field to be
+automatically created for the TagLib class under test.  The <code>tagLib</code> property can
+be used to test calling tags as function calls. The return value of a function
+call is either a <code>org.grails.buffer,StreamCharBuffer</code>
+instance or the object returned from the tag closure when
+<code>returnObjectForTags</code> feature is used.</p>
 </div>
 <div class="paragraph">
-<p>See the <a href="api/grails/testing/web/controllers/ControllerUnitTest.html"><code>ControllerUnitTest</code></a>
-docs for information on all of the available properties.</p>
+<p>To test a tag which accepts parameters, specify the parameter values as named
+arguments to the method call.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleTagLib {
+
+    static defaultEncodeAs = [taglib:'html']
+
+    static namespace = 'demo'
+
+    def sayHello = { attrs -&gt;
+        out &lt;&lt; "Hello, ${attrs.name}!"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.taglib.TagLibUnitTest
+import spock.lang.Specification
+
+class SampleTagLibSpec extends Specification implements TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    void "test tag as method with parameters"() {
+        expect:
+        tagLib.sayHello(name: 'Robert') == 'Hello, Robert!'
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, tags may be tested with the <code>applyTemplate</code> method which accepts
+a <code>String</code> parameter that will be evaluated as if it were source code in a GSP.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.taglib.TagLibUnitTest
+import spock.lang.Specification
+
+class SampleTagLibSpec extends Specification implements TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    void "test tags with applyTemplate"() {
+        expect:
+        applyTemplate('&lt;demo:helloWorld/&gt;') == 'Hello, World!'
+        applyTemplate('&lt;demo:sayHello name="Adrian"/&gt;') == 'Hello, Adrian!'
+    }
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
