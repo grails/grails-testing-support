@@ -527,6 +527,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_unit_testing_controllers">3.1. Unit Testing Controllers</a></li>
 <li><a href="#_unit_testing_services">3.2. Unit Testing Services</a></li>
 <li><a href="#_unit_testing_tag_libraries">3.3. Unit Testing Tag Libraries</a></li>
+<li><a href="#_dependency_injection">3.4. Dependency Injection</a></li>
 </ul>
 </li>
 <li><a href="#_api_docs">4. API Docs</a></li>
@@ -830,6 +831,64 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_dependency_injection">3.4. Dependency Injection</h3>
+<div class="paragraph">
+<p>Artifacts under test are subjected to dependency injection just like they are
+in the running application.  The unit testing environment does not spin up the
+entire Spring application context with all of the beans that would normally be
+configured in the running application.  Unit tests may register any beans
+necessary to carry out the test by defining a static method in the test named
+<code>doWithSpring</code>.  The syntax available in this closure is the same syntax that
+may be used in <code>grails-app/conf/spring/resources.groovy</code> for defining bean
+definitions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">ReportingService</span> {
+
+    MathHelper someHelper
+
+    <span class="type">int</span> retrieveSomeNumber() {
+        someHelper.someNumber
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">interface</span> MathHelper {
+    <span class="type">int</span> getSomeNumber()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">ReportingServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;ReportingService&gt; {
+
+    <span class="directive">static</span> doWithSpring = {
+        someHelper RushHelper
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test dependency injection</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>:
+        service.retrieveSomeNumber() == <span class="integer">2112</span>
+    }
+}
+
+<span class="type">class</span> <span class="class">RushHelper</span> <span class="directive">implements</span> MathHelper {
+
+    <span class="annotation">@Override</span>
+    <span class="type">int</span> getSomeNumber() {
+        <span class="integer">2112</span>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -843,7 +902,7 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 03:16:21 UTC
+Last updated 2016-11-04 03:34:07 UTC
 </div>
 </div>
 </body>

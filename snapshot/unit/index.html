@@ -439,6 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_mocking_tag_libraries">Mocking Tag Libraries</a></li>
 </ul>
 </li>
+<li><a href="#_dependency_injection">Dependency Injection</a></li>
 </ul>
 </div>
 </div>
@@ -718,10 +719,70 @@ class FirstTagLibSpec extends Specification implements TagLibUnitTest&lt;FirstTa
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_dependency_injection">Dependency Injection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Artifacts under test are subjected to dependency injection just like they are
+in the running application.  The unit testing environment does not spin up the
+entire Spring application context with all of the beans that would normally be
+configured in the running application.  Unit tests may register any beans
+necessary to carry out the test by defining a static method in the test named
+<code>doWithSpring</code>.  The syntax available in this closure is the same syntax that
+may be used in <code>grails-app/conf/spring/resources.groovy</code> for defining bean
+definitions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class ReportingService {
+
+    MathHelper someHelper
+
+    int retrieveSomeNumber() {
+        someHelper.someNumber
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface MathHelper {
+    int getSomeNumber()
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.services.ServiceUnitTest
+import spock.lang.Specification
+
+class ReportingServiceSpec extends Specification implements ServiceUnitTest&lt;ReportingService&gt; {
+
+    static doWithSpring = {
+        someHelper RushHelper
+    }
+
+    void "test dependency injection"() {
+        expect:
+        service.retrieveSomeNumber() == 2112
+    }
+}
+
+class RushHelper implements MathHelper {
+
+    @Override
+    int getSomeNumber() {
+        2112
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 03:16:21 UTC
+Last updated 2016-11-04 03:34:07 UTC
 </div>
 </div>
 </body>
