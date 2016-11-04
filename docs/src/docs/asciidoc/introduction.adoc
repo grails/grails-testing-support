@@ -1,3 +1,3 @@
 The Grails Testing Support library provides support for writing concise
-expressive tests for Grails artifacts with a simple easy to use traits and
+expressive tests for Grails artifacts with simple easy to use traits and
 supporting classes.
