@@ -58,6 +58,6 @@ NOTE: The String being passed as the first argument to `applyTemplate` includes
 a Groovy String expression (`"${x + y}"`) that needs to be evaluated when the GSP snippet is
 evaluated, not when the code in the test is evaluated.  Because of that it is
 important that the containing String be surrounded by single quotes, not double
-quotes.  `'<demo:renderSomeNumber value="${x + y}"/>' works.
-"<demo:renderSomeNumber value='${x + y}'/>" would not.
+quotes.  `'<demo:renderSomeNumber value="${x + y}"/>'` works.
+`"<demo:renderSomeNumber value='${x + y}'/>"` would not.
 
