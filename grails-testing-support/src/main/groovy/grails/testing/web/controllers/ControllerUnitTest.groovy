@@ -138,7 +138,7 @@ trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
      * @param controllerClass The controller class
      * @return An instance of the controller
      */
-    def <T> T mockController(Class<T> controllerClass) {
+    void mockArtefact(Class<T> controllerClass) {
         GrailsClass controllerArtefact = createAndEnhance(controllerClass)
         defineBeans(true) {
             "$controllerClass.name"(controllerClass) { bean ->
@@ -156,7 +156,7 @@ trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
 
         GrailsMetaClassUtils.getExpandoMetaClass(controllerClass).constructor = callable
 
-        return callable.call()
+        callable.call()
     }
 
     @CompileStatic
@@ -167,7 +167,7 @@ trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
     }
 
     T getController() {
-        getCollaboratorInstance()
+        getArtefactInstance()
     }
 
     MessageSource getMessageSource() {

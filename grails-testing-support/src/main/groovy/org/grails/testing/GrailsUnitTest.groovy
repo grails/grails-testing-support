@@ -21,7 +21,15 @@ package org.grails.testing
 import grails.core.GrailsApplication
 import grails.test.runtime.TestRuntime
 import grails.test.runtime.TestRuntimeFactory
+import grails.test.runtime.TestRuntimeJunitAdapter
+import org.junit.Before
+import org.junit.Rule
+import org.junit.rules.TestRule
+import org.spockframework.runtime.model.FieldMetadata
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import org.springframework.context.ConfigurableApplicationContext
+
+import java.lang.reflect.ParameterizedType
 
 trait GrailsUnitTest<T> {
 
@@ -58,4 +66,46 @@ trait GrailsUnitTest<T> {
     void defineBeans(boolean immediateDelivery = true, Closure<?> closure) {
         runtime.publishEvent("defineBeans", [closure: closure], [immediateDelivery: immediateDelivery])
     }
+
+    abstract void mockArtefact(Class<T> controllerClass)
+
+    @Before
+    void setupArtefactForTesting() {
+        if (artefactInstance == null && applicationContext != null) {
+            def cutType = getTypeUnderTest()
+            mockArtefact(cutType)
+            if (this.getApplicationContext().containsBean(cutType.name)) {
+                artefactInstance = applicationContext.getBean(cutType.name)
+            } else {
+                artefactInstance = cutType.newInstance()
+            }
+
+            applicationContext.autowireCapableBeanFactory.autowireBeanProperties artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+        }
+    }
+
+    private Class<T> getTypeUnderTest() {
+        getClass().genericInterfaces.find { genericInterface ->
+            genericInterface instanceof ParameterizedType ?
+                    GrailsUnitTest.isAssignableFrom(genericInterface.rawType) : null
+        }?.actualTypeArguments[0]
+    }
+
+    private T artefactInstance
+
+    def getArtefactInstance() {
+        artefactInstance
+    }
+
+    private static TestRuntimeJunitAdapter testRuntimeJunitAdapter = new TestRuntimeJunitAdapter();
+
+    // TODO Probably need a @ClassRule as well
+
+    @Rule
+    @FieldMetadata(
+            line = -1,
+            name = "testRuntimeRule",
+            ordinal = 0
+    )
+    private TestRule testRuntimeRule = testRuntimeJunitAdapter.newRule(this);
 }

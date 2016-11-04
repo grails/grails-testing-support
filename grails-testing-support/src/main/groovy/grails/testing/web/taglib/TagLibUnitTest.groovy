@@ -70,13 +70,13 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
 
     /**
      * Mocks a tag library, making it available to subsequent calls to controllers mocked via
-     * {@link #mockController(Class) } and GSPs rendered via {@link #applyTemplate(String, Map) }
+     * {@link #mockArtefact(Class) } and GSPs rendered via {@link #applyTemplate(String, Map) }
      *
      * @param tagLibClass The tag library class
      * @return The tag library instance
      */
 
-    def mockTagLib(Class tagLibClass) {
+    void mockArtefact(Class<T> tagLibClass) {
         GrailsTagLibClass tagLib = grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLibClass)
         final tagLookup = applicationContext.getBean(TagLibraryLookup)
 
@@ -93,11 +93,9 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
         if(taglibObject instanceof TagLibrary) {
             ((TagLibrary)taglibObject).setTagLibraryLookup(tagLookup)
         }
-
-        return taglibObject
     }
 
     T getTagLib() {
-        getCollaboratorInstance()
+        getArtefactInstance()
     }
 }
