@@ -427,9 +427,54 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The Grails Testing Support library provides support for writing concise
-expressive tests for Grails artifacts with a simple easy to use traits and
-supporting classes.</p>
+<p>In order to test a tag library which invokes tags from another tag library,
+the second tag library needs to be explicitly mocked by invoking the
+<code>mockTagLib</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class FirstTagLib {
+    static defaultEncodeAs = [taglib:'html']
+
+    static namespace = 'one'
+
+    def sayHello = { attrs -&gt;
+        // this is invoking a tag from another tag library
+        out &lt;&lt; two.sayHello()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SecondTagLib {
+    static defaultEncodeAs = [taglib:'html']
+
+    static namespace = 'two'
+
+    def sayHello = { attrs -&gt;
+        out &lt;&lt; 'Hello From SecondTagLib'
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.taglib.TagLibUnitTest
+import spock.lang.Specification
+
+class FirstTagLibSpec extends Specification implements TagLibUnitTest&lt;FirstTagLib&gt; {
+
+    void setupSpec() {
+        mockTagLib SecondTagLib
+    }
+
+    void "test invoking a tag which invokes a tag in another taglib"() {
+        expect:
+        tagLib.sayHello() == 'Hello From SecondTagLib'
+    }
+}</code></pre>
+</div>
 </div>
 </div>
 <div id="footer">
