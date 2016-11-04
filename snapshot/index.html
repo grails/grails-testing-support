@@ -772,6 +772,58 @@ a <code>String</code> parameter that will be evaluated as if it were source code
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The <code>applyTemplate</code> method accepts an optional second argument which is a <code>Map</code>
+containing model variables which may be accessed in the GSP snippet that is
+past as the first argument to <code>applyTemplate</code> as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SampleTagLib</span> {
+
+    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
+
+    <span class="keyword">def</span> renderSomeNumber = { attrs -&gt;
+        <span class="type">int</span> number = attrs.int(<span class="string"><span class="delimiter">'</span><span class="content">value</span><span class="delimiter">'</span></span>, -<span class="integer">1</span>)
+        out &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">The Number Is </span><span class="inline"><span class="inline-delimiter">${</span>number<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test a tag that access the model</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>: <span class="string"><span class="delimiter">'</span><span class="content">the value attribute is used in the output</span><span class="delimiter">'</span></span>
+        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:renderSomeNumber value=&quot;${x + y}&quot;/&gt;</span><span class="delimiter">'</span></span>,
+                      [<span class="key">x</span>: <span class="integer">23</span>, <span class="key">y</span>: <span class="integer">19</span>]) == <span class="string"><span class="delimiter">'</span><span class="content">The Number Is 42</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The String being passed as the first argument to <code>applyTemplate</code> includes
+a Groovy String expression (<code>"${x + y}"</code>) that needs to be evaluated when the GSP snippet is
+evaluated, not when the code in the test is evaluated.  Because of that it is
+important that the containing String be surrounded by single quotes, not double
+quotes.  `<em>&lt;demo:renderSomeNumber value="${x + y}"/&gt;</em> works.
+"&lt;demo:renderSomeNumber value=<em>${x + y}</em>/&gt;" would not.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_mocking_tag_libraries">3.3.2. Mocking Tag Libraries</h4>
@@ -902,7 +954,7 @@ definitions.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 04:12:14 UTC
+Last updated 2016-11-04 19:45:46 UTC
 </div>
 </div>
 </body>

@@ -659,6 +659,58 @@ class SampleTagLibSpec extends Specification implements TagLibUnitTest&lt;Sample
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The <code>applyTemplate</code> method accepts an optional second argument which is a <code>Map</code>
+containing model variables which may be accessed in the GSP snippet that is
+past as the first argument to <code>applyTemplate</code> as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleTagLib {
+
+    static defaultEncodeAs = [taglib:'html']
+
+    static namespace = 'demo'
+
+    def renderSomeNumber = { attrs -&gt;
+        int number = attrs.int('value', -1)
+        out &lt;&lt; "The Number Is ${number}"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.taglib.TagLibUnitTest
+import spock.lang.Specification
+
+class SampleTagLibSpec extends Specification implements TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    void "test a tag that access the model"() {
+        expect: 'the value attribute is used in the output'
+        applyTemplate('&lt;demo:renderSomeNumber value="${x + y}"/&gt;',
+                      [x: 23, y: 19]) == 'The Number Is 42'
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The String being passed as the first argument to <code>applyTemplate</code> includes
+a Groovy String expression (<code>"${x + y}"</code>) that needs to be evaluated when the GSP snippet is
+evaluated, not when the code in the test is evaluated.  Because of that it is
+important that the containing String be surrounded by single quotes, not double
+quotes.  `<em>&lt;demo:renderSomeNumber value="${x + y}"/&gt;</em> works.
+"&lt;demo:renderSomeNumber value=<em>${x + y}</em>/&gt;" would not.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_mocking_tag_libraries">Mocking Tag Libraries</h3>
@@ -782,7 +834,7 @@ class RushHelper implements MathHelper {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 04:12:14 UTC
+Last updated 2016-11-04 19:45:46 UTC
 </div>
 </div>
 </body>
