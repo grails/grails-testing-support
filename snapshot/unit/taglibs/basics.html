@@ -568,8 +568,8 @@ The String being passed as the first argument to <code>applyTemplate</code> incl
 a Groovy String expression (<code>"${x + y}"</code>) that needs to be evaluated when the GSP snippet is
 evaluated, not when the code in the test is evaluated.  Because of that it is
 important that the containing String be surrounded by single quotes, not double
-quotes.  `<em>&lt;demo:renderSomeNumber value="${x + y}"/&gt;</em> works.
-"&lt;demo:renderSomeNumber value=<em>${x + y}</em>/&gt;" would not.
+quotes.  <code>'&lt;demo:renderSomeNumber value="${x + y}"/&gt;'</code> works.
+<code>"&lt;demo:renderSomeNumber value='${x + y}'/&gt;"</code> would not.
 </td>
 </tr>
 </table>
@@ -579,7 +579,7 @@ quotes.  `<em>&lt;demo:renderSomeNumber value="${x + y}"/&gt;</em> works.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 19:45:46 UTC
+Last updated 2016-11-04 19:52:03 UTC
 </div>
 </div>
 </body>
