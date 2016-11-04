@@ -22,6 +22,7 @@ import grails.core.GrailsApplication
 import grails.test.runtime.TestRuntime
 import grails.test.runtime.TestRuntimeFactory
 import grails.test.runtime.TestRuntimeJunitAdapter
+import groovy.transform.CompileStatic
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
@@ -31,6 +32,7 @@ import org.springframework.context.ConfigurableApplicationContext
 
 import java.lang.reflect.ParameterizedType
 
+@CompileStatic
 trait GrailsUnitTest<T> {
 
     private TestRuntime currentRuntime;
@@ -85,13 +87,15 @@ trait GrailsUnitTest<T> {
     }
 
     private Class<T> getTypeUnderTest() {
-        getClass().genericInterfaces.find { genericInterface ->
-            genericInterface instanceof ParameterizedType ?
-                    GrailsUnitTest.isAssignableFrom(genericInterface.rawType) : null
-        }?.actualTypeArguments[0]
+        ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
+            genericInterface instanceof ParameterizedType &&
+              GrailsUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
+        }
+
+        parameterizedType?.actualTypeArguments[0]
     }
 
-    private T artefactInstance
+    private artefactInstance
 
     def getArtefactInstance() {
         artefactInstance

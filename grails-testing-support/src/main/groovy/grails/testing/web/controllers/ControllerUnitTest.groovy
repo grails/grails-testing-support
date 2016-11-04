@@ -24,6 +24,7 @@ import grails.util.GrailsMetaClassUtils
 import grails.web.mime.MimeType
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
+import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.ControllerArtefactHandler
@@ -37,6 +38,7 @@ import org.springframework.context.MessageSource
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.mock.web.MockServletContext
 
+@CompileStatic
 trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
 
     static String FORM_CONTENT_TYPE = MimeType.FORM.name
@@ -138,6 +140,7 @@ trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
      * @param controllerClass The controller class
      * @return An instance of the controller
      */
+    @CompileDynamic
     void mockArtefact(Class<T> controllerClass) {
         GrailsClass controllerArtefact = createAndEnhance(controllerClass)
         defineBeans(true) {
