@@ -9,3 +9,7 @@ include::services/basics.adoc[leveloffset=+1]
 == Unit Testing Tag Libraries
 
 include::taglibs/details.adoc[leveloffset=+1]
+
+== Dependency Injection
+
+include::spring/dependencyInjection.adoc[leveloffset=+1]
