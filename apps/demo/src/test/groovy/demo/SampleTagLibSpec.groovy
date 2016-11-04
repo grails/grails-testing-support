@@ -26,6 +26,13 @@ class SampleTagLibSpec extends Specification implements TagLibUnitTest<SampleTag
         tagLib.sayHello(name: 'Robert') == 'Hello, Robert!'
     }
     // end::test_tag_as_method_with_parameters[]
+    // tag::test_with_model[]
+    void "test a tag that access the model"() {
+        expect: 'the value attribute is used in the output'
+        applyTemplate('<demo:renderSomeNumber value="${x + y}"/>',
+                      [x: 23, y: 19]) == 'The Number Is 42'
+    }
+    // end::test_with_model[]
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]

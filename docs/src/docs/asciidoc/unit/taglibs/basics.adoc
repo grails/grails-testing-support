@@ -41,3 +41,23 @@ a `String` parameter that will be evaluated as if it were source code in a GSP.
 include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=0]
 ----
 
+The `applyTemplate` method accepts an optional second argument which is a `Map`
+containing model variables which may be accessed in the GSP snippet that is
+past as the first argument to `applyTemplate` as shown below.
+
+[source,groovy]
+----
+include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;render_some_number,indent=0]
+----
+[source,groovy]
+----
+include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_with_model,indent=0]
+----
+
+NOTE: The String being passed as the first argument to `applyTemplate` includes
+a Groovy String expression (`"${x + y}"`) that needs to be evaluated when the GSP snippet is
+evaluated, not when the code in the test is evaluated.  Because of that it is
+important that the containing String be surrounded by single quotes, not double
+quotes.  `'<demo:renderSomeNumber value="${x + y}"/>' works.
+"<demo:renderSomeNumber value='${x + y}'/>" would not.
+

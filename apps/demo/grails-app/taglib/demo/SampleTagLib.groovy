@@ -18,6 +18,12 @@ class SampleTagLib {
         out << "Hello, ${attrs.name}!"
     }
     // end::say_hello[]
+    // tag::render_some_number[]
+    def renderSomeNumber = { attrs ->
+        int number = attrs.int('value', -1)
+        out << "The Number Is ${number}"
+    }
+    // end::render_some_number[]
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]
