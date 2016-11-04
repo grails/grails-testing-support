@@ -107,5 +107,5 @@ trait GrailsUnitTest<T> {
             name = "testRuntimeRule",
             ordinal = 0
     )
-    private TestRule testRuntimeRule = testRuntimeJunitAdapter.newRule(this);
+    public TestRule testRuntimeRule = testRuntimeJunitAdapter.newRule(this);
 }
