@@ -159,18 +159,20 @@ class TestControllerSpec extends Specification implements ControllerUnitTest<Tes
         response.text == "Hello 10"
     }
 
-    @Ignore
+//    @Ignore
     void 'test render basic template with tags'() {
         when:
         messageSource.addMessage("foo.bar", request.locale, "World")
+        println "BEFORE: ${groovyPages['/test/_bar.gsp']}"
         groovyPages['/test/_bar.gsp'] = 'Hello <g:message code="foo.bar" />'
+        println "AFTER: ${groovyPages['/test/_bar.gsp']}"
         controller.renderTemplate()
 
         then:
         response.text == "Hello World"
     }
 
-    @Ignore
+//    @Ignore
     void 'test render basic template with link tag'() {
         when:
         groovyPages['/test/_bar.gsp'] = 'Hello <g:createLink controller="bar" />'

@@ -12,7 +12,7 @@ class FirstTagLibSpec extends Specification implements TagLibUnitTest<FirstTagLi
 
     void "test invoking a tag which invokes a tag in another taglib"() {
         expect:
-        tagLib.sayHello() == 'Hello From SecondTagLib'
+        tagLib.sayHello() == 'BEFORE Hello From SecondTagLib AFTER'
     }
 }
 // end::basic_declaration[]
