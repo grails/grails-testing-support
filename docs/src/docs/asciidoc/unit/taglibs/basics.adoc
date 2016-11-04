@@ -1,7 +1,6 @@
 
 == The Basics
 
-
 Tag libraries and GSP pages can be tested with the
 `grails.testing.web.taglib.TagLibUnitTest` trait.
 
@@ -42,6 +41,3 @@ a `String` parameter that will be evaluated as if it were source code in a GSP.
 include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=0]
 ----
 
-== Mocking Tags
-
-include::mockingTags.adoc[leveloffset=+1]

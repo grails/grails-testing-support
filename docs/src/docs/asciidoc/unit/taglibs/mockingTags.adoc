@@ -1,3 +1,5 @@
+== Mocking Tag Libraries
+
 In order to test a tag library which invokes tags from another tag library,
 the second tag library needs to be explicitly mocked by invoking the
 `mockTagLib` method.

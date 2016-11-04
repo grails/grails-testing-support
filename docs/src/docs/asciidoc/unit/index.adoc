@@ -8,4 +8,4 @@ include::services/basics.adoc[leveloffset=+1]
 
 == Unit Testing Tag Libraries
 
-include::taglibs/basics.adoc[leveloffset=+1]
+include::taglibs/details.adoc[leveloffset=+1]
