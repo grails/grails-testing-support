@@ -95,6 +95,10 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
         }
     }
 
+    void mockTagLib(Class<?> tagLibClass) {
+        mockArtefact tagLibClass
+    }
+
     T getTagLib() {
         getArtefactInstance()
     }

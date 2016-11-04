@@ -1,0 +1,19 @@
+In order to test a tag library which invokes tags from another tag library,
+the second tag library needs to be explicitly mocked by invoking the
+`mockTagLib` method.
+
+[source,groovy]
+----
+include::{demoAppDir}/grails-app/taglib/demo/FirstTagLib.groovy[tags=basic_declaration,indent=0]
+----
+
+[source,groovy]
+----
+include::{demoAppDir}/grails-app/taglib/demo/SecondTagLib.groovy[tags=basic_declaration,indent=0]
+----
+
+[source,groovy]
+----
+include::{demoAppDir}/src/test/groovy/demo/FirstTagLibSpec.groovy[tags=basic_declaration,indent=0]
+----
+
