@@ -787,8 +787,12 @@ the second tag library needs to be explicitly mocked by invoking the
     <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>
 
     <span class="keyword">def</span> sayHello = { attrs -&gt;
+        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">BEFORE </span><span class="delimiter">'</span></span>
+
         <span class="comment">// this is invoking a tag from another tag library</span>
         out &lt;&lt; two.sayHello()
+
+        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content"> AFTER</span><span class="delimiter">'</span></span>
     }
 }</code></pre>
 </div>
@@ -819,7 +823,7 @@ the second tag library needs to be explicitly mocked by invoking the
 
     <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test invoking a tag which invokes a tag in another taglib</span><span class="delimiter">&quot;</span></span>() {
         <span class="key">expect</span>:
-        tagLib.sayHello() == <span class="string"><span class="delimiter">'</span><span class="content">Hello From SecondTagLib</span><span class="delimiter">'</span></span>
+        tagLib.sayHello() == <span class="string"><span class="delimiter">'</span><span class="content">BEFORE Hello From SecondTagLib AFTER</span><span class="delimiter">'</span></span>
     }
 }</code></pre>
 </div>
@@ -839,7 +843,7 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 02:36:52 UTC
+Last updated 2016-11-04 03:16:21 UTC
 </div>
 </div>
 </body>
