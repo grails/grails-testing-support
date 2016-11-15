@@ -26,7 +26,7 @@ import org.grails.buffer.GrailsPrintWriter
 import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.taglib.TagLibraryLookup
-import org.junit.BeforeClass
+import org.junit.Before
 
 import java.lang.reflect.ParameterizedType
 
@@ -98,7 +98,7 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
         }
     }
 
-    @BeforeClass
+    @Before
     void configureTagLibUnderTest() {
         mockTagLib getTagLibTypeUnderTest()
     }
