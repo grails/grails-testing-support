@@ -30,6 +30,9 @@ import org.grails.taglib.TagLibraryLookup
 import java.lang.reflect.ParameterizedType
 
 trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
+
+    private boolean hasBeenMocked = false
+
     /**
      * Renders a template for the given contents and model
      *
@@ -117,7 +120,6 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
         getArtefactInstance()
     }
 
-    private boolean hasBeenMocked = false
 
     private void ensureTaglibHasBeenMocked() {
         if(!hasBeenMocked) {

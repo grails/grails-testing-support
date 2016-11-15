@@ -34,7 +34,19 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 trait GrailsUnitTest<T> {
 
+    private artefactInstance
+
     private TestRuntime currentRuntime;
+
+    private static TestRuntimeJunitAdapter testRuntimeJunitAdapter = new TestRuntimeJunitAdapter();
+
+    @Rule
+    @FieldMetadata(
+            line = -1,
+            name = "testRuntimeRule",
+            ordinal = 0
+    )
+    public TestRule testRuntimeRule = testRuntimeJunitAdapter.newRule(this);
 
     ConfigurableApplicationContext getApplicationContext() {
         getMainContext()
@@ -68,7 +80,7 @@ trait GrailsUnitTest<T> {
         runtime.publishEvent("defineBeans", [closure: closure], [immediateDelivery: immediateDelivery])
     }
 
-    abstract void mockArtefact(Class<T> controllerClass)
+    abstract void mockArtefact(Class<T> artefactClass)
 
     private Class<T> getTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
@@ -78,8 +90,6 @@ trait GrailsUnitTest<T> {
 
         parameterizedType?.actualTypeArguments[0]
     }
-
-    private artefactInstance
 
     def getArtefactInstance() {
         if (artefactInstance == null && applicationContext != null) {
@@ -95,16 +105,4 @@ trait GrailsUnitTest<T> {
         }
         artefactInstance
     }
-
-    private static TestRuntimeJunitAdapter testRuntimeJunitAdapter = new TestRuntimeJunitAdapter();
-
-    // TODO Probably need a @ClassRule as well
-
-    @Rule
-    @FieldMetadata(
-            line = -1,
-            name = "testRuntimeRule",
-            ordinal = 0
-    )
-    public TestRule testRuntimeRule = testRuntimeJunitAdapter.newRule(this);
 }
