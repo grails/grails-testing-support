@@ -18,53 +18,17 @@
  */
 package grails.testing.gorm
 
-import grails.core.GrailsDomainClass
-import grails.test.mixin.domain.MockCascadingDomainClassValidator
-import org.grails.core.artefact.DomainClassArtefactHandler
-import org.grails.datastore.gorm.GormEnhancer
-import org.grails.datastore.mapping.model.PersistentEntity
-import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.grails.testing.GrailsUnitTest
-import org.grails.validation.ConstraintEvalUtils
 import org.junit.Before
-import org.springframework.transaction.PlatformTransactionManager
-import org.springframework.validation.Validator
 
 import java.lang.reflect.ParameterizedType
 
-trait DomainUnitTest<T> extends GrailsUnitTest<T> {
+trait DomainUnitTest<T> implements GrailsUnitTest<T>, DomainMocker {
 
     private boolean hasBeenMocked = false
 
     void mockArtefact(Class c) {
         mockDomain c
-    }
-
-    void mockDomain(Class<?> domainClassToMock) {
-        mockDomains(domainClassToMock)
-        final entity = simpleDatastore.mappingContext.getPersistentEntity(domainClassToMock.name)
-    }
-    void mockDomains(Class<?>... domainClassesToMock) {
-        initialMockDomainSetup()
-        Collection<PersistentEntity> entities = simpleDatastore.mappingContext.addPersistentEntities(domainClassesToMock)
-        for (PersistentEntity entity in entities) {
-            GrailsDomainClass domain = registerGrailsDomainClass(entity.javaClass)
-
-            Validator validator = registerDomainClassValidator(domain)
-            simpleDatastore.mappingContext.addEntityValidator(entity, validator)
-        }
-        final failOnError = false //getFailOnError()
-        new GormEnhancer(simpleDatastore, transactionManager, failOnError instanceof Boolean ? (Boolean)failOnError : false)
-
-        initializeMappingContext()
-    }
-
-    SimpleMapDatastore getSimpleDatastore() {
-        grailsApplication.mainContext.getBean(SimpleMapDatastore)
-    }
-
-    PlatformTransactionManager getTransactionManager() {
-        grailsApplication.mainContext.getBean('transactionManager')
     }
 
     @Before
@@ -84,34 +48,4 @@ trait DomainUnitTest<T> extends GrailsUnitTest<T> {
         parameterizedType?.actualTypeArguments[0]
     }
 
-    private GrailsDomainClass registerGrailsDomainClass(Class<?> domainClassToMock) {
-        (GrailsDomainClass)grailsApplication.addArtefact(DomainClassArtefactHandler.TYPE, domainClassToMock)
-    }
-
-    private Validator registerDomainClassValidator(GrailsDomainClass domain) {
-        String validationBeanName = "${domain.fullName}Validator"
-        defineBeans(true) {
-            "${domain.fullName}"(domain.clazz) { bean ->
-                bean.singleton = false
-                bean.autowire = "byName"
-            }
-            "$validationBeanName"(MockCascadingDomainClassValidator) { bean ->
-                getDelegate().messageSource = ref("messageSource")
-                bean.lazyInit = true
-                getDelegate().domainClass = domain
-                getDelegate().grailsApplication = grailsApplication
-            }
-        }
-
-        applicationContext.getBean(validationBeanName, Validator)
-    }
-
-    private void initialMockDomainSetup() {
-        ConstraintEvalUtils.clearDefaultConstraints()
-        grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE).setGrailsApplication(grailsApplication)
-    }
-
-    private void initializeMappingContext() {
-        simpleDatastore.mappingContext.initialize()
-    }
 }
