@@ -21,11 +21,9 @@ package org.grails.testing
 import grails.core.GrailsApplication
 import grails.test.runtime.TestRuntime
 import grails.test.runtime.TestRuntimeFactory
-import grails.test.runtime.TestRuntimeJunitAdapter
 import groovy.transform.CompileStatic
-import org.junit.Rule
-import org.junit.rules.TestRule
-import org.spockframework.runtime.model.FieldMetadata
+import org.junit.After
+import org.junit.Before
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import org.springframework.context.ConfigurableApplicationContext
 
@@ -37,16 +35,6 @@ trait GrailsUnitTest<T> {
     private artefactInstance
 
     private TestRuntime currentRuntime;
-
-    private static TestRuntimeJunitAdapter testRuntimeJunitAdapter = new TestRuntimeJunitAdapter();
-
-    @Rule
-    @FieldMetadata(
-            line = -1,
-            name = "testRuntimeRule",
-            ordinal = 0
-    )
-    public TestRule testRuntimeRule = testRuntimeJunitAdapter.newRule(this);
 
     ConfigurableApplicationContext getApplicationContext() {
         getMainContext()
@@ -105,4 +93,18 @@ trait GrailsUnitTest<T> {
         }
         artefactInstance
     }
+
+    @Before
+    void initializeTestRuntime() {
+        def eventArguments = [testInstance: this]
+//        handleFreshContextAnnotation(runtime, description, eventArguments)
+        runtime.publishEvent("before", eventArguments, [immediateDelivery: true])
+    }
+
+    @After
+    void cleanupTestRuntime() {
+        runtime.publishEvent("after", [testInstance: this], [immediateDelivery: true, reverseOrderDelivery: true])
+//        handleDirtiesRuntimeAnnotation(runtime, description, testInstance)
+    }
+
 }
