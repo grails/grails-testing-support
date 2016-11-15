@@ -34,7 +34,7 @@ import org.springframework.validation.Validator
  * TODO This may be temporary
  */
 @SelfType(GrailsUnitTest)
-trait DomainMocker {
+trait DataTest {
 
     void mockDomain(Class<?> domainClassToMock) {
         mockDomains(domainClassToMock)

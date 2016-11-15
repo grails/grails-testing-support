@@ -1,10 +1,10 @@
 package demo
 
-import grails.testing.gorm.DomainMocker
+import grails.testing.gorm.DataTest
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class PersonControllerSpec extends Specification implements ControllerUnitTest<PersonController>, DomainMocker {
+class PersonControllerSpec extends Specification implements ControllerUnitTest<PersonController>, DataTest {
 
     void setupSpec() {
         mockDomain Person

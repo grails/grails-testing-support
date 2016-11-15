@@ -23,7 +23,7 @@ import org.junit.Before
 
 import java.lang.reflect.ParameterizedType
 
-trait DomainUnitTest<T> implements GrailsUnitTest<T>, DomainMocker {
+trait DomainUnitTest<T> implements GrailsUnitTest<T>, DataTest {
 
     private boolean hasBeenMocked = false
 
