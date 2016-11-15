@@ -26,6 +26,9 @@ import org.grails.buffer.GrailsPrintWriter
 import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.taglib.TagLibraryLookup
+import org.junit.BeforeClass
+
+import java.lang.reflect.ParameterizedType
 
 trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
     /**
@@ -93,6 +96,20 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
         if(taglibObject instanceof TagLibrary) {
             ((TagLibrary)taglibObject).setTagLibraryLookup(tagLookup)
         }
+    }
+
+    @BeforeClass
+    void configureTagLibUnderTest() {
+        mockTagLib getTagLibTypeUnderTest()
+    }
+
+    private Class<T> getTagLibTypeUnderTest() {
+        ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
+            genericInterface instanceof ParameterizedType &&
+                    TagLibUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
+        }
+
+        parameterizedType?.actualTypeArguments[0]
     }
 
     void mockTagLib(Class<?> tagLibClass) {
