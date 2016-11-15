@@ -26,7 +26,6 @@ import org.grails.buffer.GrailsPrintWriter
 import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.taglib.TagLibraryLookup
-import org.junit.Before
 
 import java.lang.reflect.ParameterizedType
 
@@ -39,12 +38,14 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
      * @return The rendered template
      */
     String applyTemplate(String contents, Map model = [:]) {
+        ensureTaglibHasBeenMocked()
         def sw = new StringWriter()
         applyTemplate sw, contents, model
         return sw.toString()
     }
 
     void applyTemplate(StringWriter sw, template, params = [:]) {
+        ensureTaglibHasBeenMocked()
         def engine = applicationContext.getBean(GroovyPagesTemplateEngine)
 
         def t = engine.createTemplate(template, "test_" + System.currentTimeMillis())
@@ -98,11 +99,6 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
         }
     }
 
-    @Before
-    void configureTagLibUnderTest() {
-        mockTagLib getTagLibTypeUnderTest()
-    }
-
     private Class<T> getTagLibTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
             genericInterface instanceof ParameterizedType &&
@@ -117,6 +113,16 @@ trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
     }
 
     T getTagLib() {
+        ensureTaglibHasBeenMocked()
         getArtefactInstance()
+    }
+
+    private boolean hasBeenMocked = false
+
+    private void ensureTaglibHasBeenMocked() {
+        if(!hasBeenMocked) {
+            mockTagLib getTagLibTypeUnderTest()
+            hasBeenMocked = true
+        }
     }
 }
