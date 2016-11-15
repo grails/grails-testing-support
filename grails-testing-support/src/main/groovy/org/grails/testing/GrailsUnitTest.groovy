@@ -23,7 +23,6 @@ import grails.test.runtime.TestRuntime
 import grails.test.runtime.TestRuntimeFactory
 import grails.test.runtime.TestRuntimeJunitAdapter
 import groovy.transform.CompileStatic
-import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
 import org.spockframework.runtime.model.FieldMetadata
@@ -71,21 +70,6 @@ trait GrailsUnitTest<T> {
 
     abstract void mockArtefact(Class<T> controllerClass)
 
-    @Before
-    void setupArtefactForTesting() {
-        if (artefactInstance == null && applicationContext != null) {
-            def cutType = getTypeUnderTest()
-            mockArtefact(cutType)
-            if (this.getApplicationContext().containsBean(cutType.name)) {
-                artefactInstance = applicationContext.getBean(cutType.name)
-            } else {
-                artefactInstance = cutType.newInstance()
-            }
-
-            applicationContext.autowireCapableBeanFactory.autowireBeanProperties artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
-        }
-    }
-
     private Class<T> getTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
             genericInterface instanceof ParameterizedType &&
@@ -98,6 +82,17 @@ trait GrailsUnitTest<T> {
     private artefactInstance
 
     def getArtefactInstance() {
+        if (artefactInstance == null && applicationContext != null) {
+            def cutType = getTypeUnderTest()
+            mockArtefact(cutType)
+            if (this.getApplicationContext().containsBean(cutType.name)) {
+                artefactInstance = applicationContext.getBean(cutType.name)
+            } else {
+                artefactInstance = cutType.newInstance()
+            }
+
+            applicationContext.autowireCapableBeanFactory.autowireBeanProperties artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+        }
         artefactInstance
     }
 
