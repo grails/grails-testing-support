@@ -16,36 +16,40 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package grails.testing.gorm
+package org.grails.testing
 
-import org.grails.testing.ParameterizedGrailsUnitTest
-import org.junit.Before
+import groovy.transform.CompileStatic
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 
 import java.lang.reflect.ParameterizedType
 
-trait DomainUnitTest<T> implements ParameterizedGrailsUnitTest<T>, DataTest {
+@CompileStatic
+trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
 
-    private boolean hasBeenMocked = false
+    private artefactInstance
 
-    void mockArtefact(Class c) {
-        mockDomain c
-    }
 
-    @Before
-    void mockDomainUnderTest() {
-        if(!hasBeenMocked) {
-            mockDomain(getDomainUnderTest())
-            hasBeenMocked = true
-        }
-    }
-
-    private Class<T> getDomainUnderTest() {
+    private Class<T> getTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
             genericInterface instanceof ParameterizedType &&
-                    DomainUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
+              ParameterizedGrailsUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
         }
 
         parameterizedType?.actualTypeArguments[0]
     }
 
+    def getArtefactInstance() {
+        if (artefactInstance == null && applicationContext != null) {
+            def cutType = getTypeUnderTest()
+            mockArtefact(cutType)
+            if (this.getApplicationContext().containsBean(cutType.name)) {
+                artefactInstance = applicationContext.getBean(cutType.name)
+            } else {
+                artefactInstance = cutType.newInstance()
+            }
+
+            applicationContext.autowireCapableBeanFactory.autowireBeanProperties artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+        }
+        artefactInstance
+    }
 }

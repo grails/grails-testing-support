@@ -24,15 +24,10 @@ import grails.test.runtime.TestRuntimeFactory
 import groovy.transform.CompileStatic
 import org.junit.After
 import org.junit.Before
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import org.springframework.context.ConfigurableApplicationContext
 
-import java.lang.reflect.ParameterizedType
-
 @CompileStatic
-trait GrailsUnitTest<T> {
-
-    private artefactInstance
+trait GrailsUnitTest {
 
     private TestRuntime currentRuntime;
 
@@ -68,32 +63,6 @@ trait GrailsUnitTest<T> {
         runtime.publishEvent("defineBeans", [closure: closure], [immediateDelivery: immediateDelivery])
     }
 
-    abstract void mockArtefact(Class<T> artefactClass)
-
-    private Class<T> getTypeUnderTest() {
-        ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
-            genericInterface instanceof ParameterizedType &&
-              GrailsUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
-        }
-
-        parameterizedType?.actualTypeArguments[0]
-    }
-
-    def getArtefactInstance() {
-        if (artefactInstance == null && applicationContext != null) {
-            def cutType = getTypeUnderTest()
-            mockArtefact(cutType)
-            if (this.getApplicationContext().containsBean(cutType.name)) {
-                artefactInstance = applicationContext.getBean(cutType.name)
-            } else {
-                artefactInstance = cutType.newInstance()
-            }
-
-            applicationContext.autowireCapableBeanFactory.autowireBeanProperties artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
-        }
-        artefactInstance
-    }
-
     @Before
     void initializeTestRuntime() {
         def eventArguments = [testInstance: this]
@@ -107,4 +76,5 @@ trait GrailsUnitTest<T> {
 //        handleDirtiesRuntimeAnnotation(runtime, description, testInstance)
     }
 
+    abstract void mockArtefact(Class<?> artefactClass)
 }

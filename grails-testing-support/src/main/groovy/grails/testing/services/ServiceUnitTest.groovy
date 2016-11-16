@@ -19,9 +19,9 @@
 package grails.testing.services
 
 import org.grails.core.artefact.ServiceArtefactHandler
-import org.grails.testing.GrailsUnitTest
+import org.grails.testing.ParameterizedGrailsUnitTest
 
-trait ServiceUnitTest<T> extends GrailsUnitTest<T> {
+trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
     /**
      * Mocks a service class, registering it with the application context
      *

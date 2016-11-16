@@ -20,7 +20,8 @@ package grails.testing.gorm
 
 import grails.core.GrailsDomainClass
 import grails.test.mixin.domain.MockCascadingDomainClassValidator
-import groovy.transform.SelfType
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
 import org.grails.datastore.mapping.model.PersistentEntity
@@ -30,11 +31,8 @@ import org.grails.validation.ConstraintEvalUtils
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
 
-/**
- * TODO This may be temporary
- */
-@SelfType(GrailsUnitTest)
-trait DataTest {
+@CompileStatic
+trait DataTest extends GrailsUnitTest {
 
     void mockDomain(Class<?> domainClassToMock) {
         mockDomains(domainClassToMock)
@@ -61,13 +59,14 @@ trait DataTest {
     }
 
     PlatformTransactionManager getTransactionManager() {
-        grailsApplication.mainContext.getBean('transactionManager')
+        grailsApplication.mainContext.getBean('transactionManager', PlatformTransactionManager)
     }
 
     private GrailsDomainClass registerGrailsDomainClass(Class<?> domainClassToMock) {
         (GrailsDomainClass)grailsApplication.addArtefact(DomainClassArtefactHandler.TYPE, domainClassToMock)
     }
 
+    @CompileDynamic
     private Validator registerDomainClassValidator(GrailsDomainClass domain) {
         String validationBeanName = "${domain.fullName}Validator"
         defineBeans(true) {
@@ -86,11 +85,13 @@ trait DataTest {
         applicationContext.getBean(validationBeanName, Validator)
     }
 
+    @CompileDynamic
     private void initialMockDomainSetup() {
         ConstraintEvalUtils.clearDefaultConstraints()
         grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE).setGrailsApplication(grailsApplication)
     }
 
+    @CompileDynamic
     private void initializeMappingContext() {
         simpleDatastore.mappingContext.initialize()
     }

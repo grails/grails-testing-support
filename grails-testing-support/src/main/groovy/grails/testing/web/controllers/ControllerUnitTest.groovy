@@ -30,7 +30,7 @@ import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
-import org.grails.testing.GrailsUnitTest
+import org.grails.testing.ParameterizedGrailsUnitTest
 import org.grails.web.pages.GroovyPagesUriSupport
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.GrailsApplicationAttributes
@@ -39,7 +39,7 @@ import org.springframework.mock.web.MockHttpSession
 import org.springframework.mock.web.MockServletContext
 
 @CompileStatic
-trait ControllerUnitTest<T> extends GrailsUnitTest<T> {
+trait ControllerUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
 
     static String FORM_CONTENT_TYPE = MimeType.FORM.name
     static String MULTIPART_FORM_CONTENT_TYPE = MimeType.MULTIPART_FORM.name
