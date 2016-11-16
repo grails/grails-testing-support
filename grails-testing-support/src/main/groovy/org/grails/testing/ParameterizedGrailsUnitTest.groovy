@@ -26,7 +26,7 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
 
-    private artefactInstance
+    private T artefactInstance
 
 
     private Class<T> getTypeUnderTest() {
@@ -38,12 +38,12 @@ trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
         parameterizedType?.actualTypeArguments[0]
     }
 
-    def getArtefactInstance() {
+    T getArtefactInstance() {
         if (artefactInstance == null && applicationContext != null) {
             def cutType = getTypeUnderTest()
             mockArtefact(cutType)
             if (this.getApplicationContext().containsBean(cutType.name)) {
-                artefactInstance = applicationContext.getBean(cutType.name)
+                artefactInstance = applicationContext.getBean(cutType.name) as T
             } else {
                 artefactInstance = cutType.newInstance()
             }

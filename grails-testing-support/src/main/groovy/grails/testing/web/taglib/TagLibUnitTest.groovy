@@ -20,16 +20,17 @@ package grails.testing.web.taglib
 
 import grails.artefact.TagLibrary
 import grails.core.GrailsTagLibClass
-import grails.testing.web.controllers.ControllerUnitTest
+import grails.testing.web.GrailsWebUnitTest
 import groovy.text.Template
 import org.grails.buffer.GrailsPrintWriter
 import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.taglib.TagLibraryLookup
+import org.grails.testing.ParameterizedGrailsUnitTest
 
 import java.lang.reflect.ParameterizedType
 
-trait TagLibUnitTest<T> extends ControllerUnitTest<T> {
+trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {
 
     private boolean hasBeenMocked = false
 

@@ -20,26 +20,20 @@ package grails.testing.web.controllers
 
 import grails.core.GrailsClass
 import grails.core.GrailsControllerClass
+import grails.testing.web.GrailsWebUnitTest
 import grails.util.GrailsMetaClassUtils
 import grails.web.mime.MimeType
-import grails.web.mvc.FlashScope
-import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.ControllerArtefactHandler
-import org.grails.plugins.testing.GrailsMockHttpServletRequest
-import org.grails.plugins.testing.GrailsMockHttpServletResponse
 import org.grails.testing.ParameterizedGrailsUnitTest
 import org.grails.web.pages.GroovyPagesUriSupport
-import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.GrailsApplicationAttributes
 import org.springframework.context.MessageSource
-import org.springframework.mock.web.MockHttpSession
-import org.springframework.mock.web.MockServletContext
 
 @CompileStatic
-trait ControllerUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
+trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {
 
     static String FORM_CONTENT_TYPE = MimeType.FORM.name
     static String MULTIPART_FORM_CONTENT_TYPE = MimeType.MULTIPART_FORM.name
@@ -53,51 +47,6 @@ trait ControllerUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
     static String HAL_JSON_CONTENT_TYPE = MimeType.HAL_JSON.name
     static String HAL_XML_CONTENT_TYPE = MimeType.HAL_XML.name
     static String ATOM_XML_CONTENT_TYPE = MimeType.ATOM_XML.name
-
-    GrailsWebRequest getWebRequest() {
-        (GrailsWebRequest) runtime.getValue("webRequest")
-    }
-
-    GrailsMockHttpServletRequest getRequest() {
-        return (GrailsMockHttpServletRequest) getWebRequest().getCurrentRequest()
-    }
-
-    GrailsMockHttpServletResponse getResponse() {
-        return (GrailsMockHttpServletResponse) getWebRequest().getCurrentResponse()
-    }
-
-    MockServletContext getServletContext() {
-        (MockServletContext) runtime.getValue("servletContext")
-    }
-
-    Map<String, String> getGroovyPages() {
-        (Map<String, String>) runtime.getValue("groovyPages")
-    }
-
-    Map<String, String> getViews() {
-        getGroovyPages()
-    }
-
-    /**
-     * The {@link org.springframework.mock.web.MockHttpSession} instance
-     */
-    MockHttpSession getSession() {
-        (MockHttpSession) request.session
-    }
-
-    /**
-     * @return The status code of the response
-     */
-    int getStatus() {
-        response.status
-    }
-
-    /**
-     * The Grails 'params' object which is an instance of {@link grails.web.servlet.mvc.GrailsParameterMap}
-     */
-    GrailsParameterMap getParams() {
-        webRequest.getParams()
-    }
 
     /**
      * @return The model of the current controller
@@ -124,14 +73,6 @@ trait ControllerUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
         } else {
             return null
         }
-    }
-
-    /**
-     * The Grails 'flash' object
-     * @return
-     */
-    FlashScope getFlash() {
-        webRequest.getFlashScope()
     }
 
     /**
