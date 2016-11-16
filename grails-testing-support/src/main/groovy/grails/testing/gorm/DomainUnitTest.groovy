@@ -18,12 +18,11 @@
  */
 package grails.testing.gorm
 
-import org.grails.testing.ParameterizedGrailsUnitTest
 import org.junit.Before
 
 import java.lang.reflect.ParameterizedType
 
-trait DomainUnitTest<T> implements ParameterizedGrailsUnitTest<T>, DataTest {
+trait DomainUnitTest<T> implements DataTest {
 
     private boolean hasBeenMocked = false
 
