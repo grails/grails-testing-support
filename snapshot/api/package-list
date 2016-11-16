@@ -1,5 +1,6 @@
 grails.testing.gorm
 grails.testing.services
+grails.testing.web
 grails.testing.web.controllers
 grails.testing.web.taglib
 org.grails.testing
