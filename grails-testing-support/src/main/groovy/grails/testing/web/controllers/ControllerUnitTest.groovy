@@ -141,7 +141,7 @@ trait ControllerUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
      * @return An instance of the controller
      */
     @CompileDynamic
-    void mockArtefact(Class<T> controllerClass) {
+    void mockArtefact(Class<?> controllerClass) {
         GrailsClass controllerArtefact = createAndEnhance(controllerClass)
         defineBeans(true) {
             "$controllerClass.name"(controllerClass) { bean ->
