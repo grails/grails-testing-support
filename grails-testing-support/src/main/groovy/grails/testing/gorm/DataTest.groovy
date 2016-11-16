@@ -26,6 +26,7 @@ import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
 import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.model.PersistentEntity
+import org.grails.datastore.mapping.model.lifecycle.Initializable
 import org.grails.testing.GrailsUnitTest
 import org.grails.validation.ConstraintEvalUtils
 import org.springframework.transaction.PlatformTransactionManager
@@ -91,8 +92,10 @@ trait DataTest extends GrailsUnitTest {
         grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE).setGrailsApplication(grailsApplication)
     }
 
-    @CompileDynamic
     private void initializeMappingContext() {
-        dataStore.mappingContext.initialize()
+        def context = dataStore.mappingContext
+        if(context instanceof Initializable) {
+            context.initialize()
+        }
     }
 }
