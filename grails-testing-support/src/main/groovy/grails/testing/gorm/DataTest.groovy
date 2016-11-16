@@ -86,10 +86,9 @@ trait DataTest extends GrailsUnitTest {
         applicationContext.getBean(validationBeanName, Validator)
     }
 
-    @CompileDynamic
     private void initialMockDomainSetup() {
         ConstraintEvalUtils.clearDefaultConstraints()
-        grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE).setGrailsApplication(grailsApplication)
+        ((DomainClassArtefactHandler)grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE)).setGrailsApplication(grailsApplication)
     }
 
     private void initializeMappingContext() {
