@@ -24,8 +24,8 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
+import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.model.PersistentEntity
-import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.grails.testing.GrailsUnitTest
 import org.grails.validation.ConstraintEvalUtils
 import org.springframework.transaction.PlatformTransactionManager
@@ -36,26 +36,26 @@ trait DataTest extends GrailsUnitTest {
 
     void mockDomain(Class<?> domainClassToMock) {
         mockDomains(domainClassToMock)
-        simpleDatastore.mappingContext.getPersistentEntity(domainClassToMock.name)
+        dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
     }
 
     void mockDomains(Class<?>... domainClassesToMock) {
         initialMockDomainSetup()
-        Collection<PersistentEntity> entities = simpleDatastore.mappingContext.addPersistentEntities(domainClassesToMock)
+        Collection<PersistentEntity> entities = dataStore.mappingContext.addPersistentEntities(domainClassesToMock)
         for (PersistentEntity entity in entities) {
             GrailsDomainClass domain = registerGrailsDomainClass(entity.javaClass)
 
             Validator validator = registerDomainClassValidator(domain)
-            simpleDatastore.mappingContext.addEntityValidator(entity, validator)
+            dataStore.mappingContext.addEntityValidator(entity, validator)
         }
         final failOnError = false //getFailOnError()
-        new GormEnhancer(simpleDatastore, transactionManager, failOnError instanceof Boolean ? (Boolean)failOnError : false)
+        new GormEnhancer(dataStore, transactionManager, failOnError instanceof Boolean ? (Boolean)failOnError : false)
 
         initializeMappingContext()
     }
 
-    SimpleMapDatastore getSimpleDatastore() {
-        grailsApplication.mainContext.getBean(SimpleMapDatastore)
+    AbstractDatastore getDataStore() {
+        grailsApplication.mainContext.getBean(AbstractDatastore)
     }
 
     PlatformTransactionManager getTransactionManager() {
@@ -93,6 +93,6 @@ trait DataTest extends GrailsUnitTest {
 
     @CompileDynamic
     private void initializeMappingContext() {
-        simpleDatastore.mappingContext.initialize()
+        dataStore.mappingContext.initialize()
     }
 }
