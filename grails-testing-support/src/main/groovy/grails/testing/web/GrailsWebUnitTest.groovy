@@ -18,11 +18,16 @@
  */
 package grails.testing.web
 
+import grails.artefact.TagLibrary
+import grails.core.GrailsTagLibClass
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
+import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
+import org.grails.taglib.TagLibraryLookup
 import org.grails.testing.GrailsUnitTest
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.mock.web.MockHttpSession
@@ -81,5 +86,31 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
      */
     FlashScope getFlash() {
         webRequest.getFlashScope()
+    }
+
+    @CompileDynamic
+    void mockTagLib(Class<?> tagLibClass) {
+        GrailsTagLibClass tagLib = grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLibClass)
+        final tagLookup = applicationContext.getBean(TagLibraryLookup)
+
+
+        defineBeans(true) {
+            "${tagLib.fullName}"(tagLibClass) { bean ->
+                bean.autowire = true
+            }
+        }
+
+        tagLookup.registerTagLib(tagLib)
+
+        def taglibObject = applicationContext.getBean(tagLib.fullName)
+        if(taglibObject instanceof TagLibrary) {
+            ((TagLibrary)taglibObject).setTagLibraryLookup(tagLookup)
+        }
+    }
+
+    void mockTagLibs(Class<?>... tagLibClasses) {
+        for(Class c : tagLibClasses) {
+            mockTagLib c
+        }
     }
 }

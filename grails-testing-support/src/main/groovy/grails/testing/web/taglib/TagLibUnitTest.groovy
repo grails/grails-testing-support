@@ -85,22 +85,7 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
      */
 
     void mockArtefact(Class<T> tagLibClass) {
-        GrailsTagLibClass tagLib = grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLibClass)
-        final tagLookup = applicationContext.getBean(TagLibraryLookup)
-
-
-        defineBeans(true) {
-            "${tagLib.fullName}"(tagLibClass) { bean ->
-                bean.autowire = true
-            }
-        }
-
-        tagLookup.registerTagLib(tagLib)
-
-        def taglibObject = applicationContext.getBean(tagLib.fullName)
-        if(taglibObject instanceof TagLibrary) {
-            ((TagLibrary)taglibObject).setTagLibraryLookup(tagLookup)
-        }
+        mockTagLib tagLibClass
     }
 
     private Class<T> getTagLibTypeUnderTest() {
@@ -110,10 +95,6 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         }
 
         parameterizedType?.actualTypeArguments[0]
-    }
-
-    void mockTagLib(Class<?> tagLibClass) {
-        mockArtefact tagLibClass
     }
 
     T getTagLib() {

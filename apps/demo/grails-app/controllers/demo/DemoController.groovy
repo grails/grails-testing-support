@@ -15,6 +15,10 @@ class DemoController {
     def clearDatabase() {
         render 'Success'
     }
+
+    def invokeTagWhichInvokesTag() {
+        response.writer << one.sayHello()
+    }
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]
