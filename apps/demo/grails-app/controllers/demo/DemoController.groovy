@@ -19,6 +19,11 @@ class DemoController {
     def invokeTagWhichInvokesTag() {
         response.writer << one.sayHello()
     }
+
+    def invokeCoreTagAsMethod() {
+        // test invoke core tag
+        response.writer << link(controller:'demo',action:'clearDatabase')
+    }
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]

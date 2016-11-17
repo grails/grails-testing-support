@@ -16,4 +16,12 @@ class ControllerTagLibMethodDispatchSpec extends Specification implements Contro
         then:
         response.text == 'BEFORE Hello From SecondTagLib AFTER'
     }
+
+    void 'test invoking a core tag as a method'() {
+        when:
+        controller.invokeCoreTagAsMethod()
+
+        then:
+        response.text == '<a href="/demo/clearDatabase"></a>'
+    }
 }
