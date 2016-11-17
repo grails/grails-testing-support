@@ -1,7 +1,10 @@
 package demo
 
-// tag::basic_declaration[]
 import grails.testing.web.taglib.TagLibUnitTest
+
+// tag::basic_declaration[]
+import grails.validation.Validateable
+import org.springframework.context.i18n.LocaleContextHolder
 import spock.lang.Specification
 
 class SampleTagLibSpec extends Specification implements TagLibUnitTest<SampleTagLib> {
@@ -33,7 +36,31 @@ class SampleTagLibSpec extends Specification implements TagLibUnitTest<SampleTag
                       [x: 23, y: 19]) == 'The Number Is 42'
     }
     // end::test_with_model[]
+
+    void 'test customizing messageSource'() {
+        given:
+        def w = new Widget()
+        LocaleContextHolder.setLocale(Locale.US)
+        messageSource.addMessage("demo.Widget.title.label", Locale.US, "Title Of Widget")
+        messageSource.addMessage("demo.Widget.label", Locale.US, "Widget")
+
+        when:
+        w.validate()
+
+        then:
+        w.hasErrors()
+
+        when:
+        def template = '<g:renderErrors bean="${widget}" />'
+
+        then:
+        applyTemplate(template, [widget: w]).contains("<li>Property [Title Of Widget] of class [Widget] cannot be null</li>")
+    }
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]
+
+class Widget implements Validateable {
+    String title
+}
 

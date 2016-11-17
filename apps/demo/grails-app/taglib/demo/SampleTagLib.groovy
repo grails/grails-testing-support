@@ -24,6 +24,10 @@ class SampleTagLib {
         out << "The Number Is ${number}"
     }
     // end::render_some_number[]
+
+    def renderMessage = {
+        out << message(code: 'some.custom.message', locale: request.locale)
+    }
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]

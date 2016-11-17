@@ -25,6 +25,7 @@ import groovy.transform.CompileStatic
 import org.junit.After
 import org.junit.Before
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.MessageSource
 
 @CompileStatic
 trait GrailsUnitTest {
@@ -74,5 +75,9 @@ trait GrailsUnitTest {
     void cleanupTestRuntime() {
         runtime.publishEvent("after", [testInstance: this], [immediateDelivery: true, reverseOrderDelivery: true])
 //        handleDirtiesRuntimeAnnotation(runtime, description, testInstance)
+    }
+
+    MessageSource getMessageSource() {
+        applicationContext.getBean("messageSource", MessageSource)
     }
 }
