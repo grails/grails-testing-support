@@ -29,11 +29,27 @@ import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.lifecycle.Initializable
 import org.grails.testing.GrailsUnitTest
 import org.grails.validation.ConstraintEvalUtils
+import org.junit.Before
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
 
 @CompileStatic
 trait DataTest extends GrailsUnitTest {
+
+    private domainsHaveBeenMocked = false
+
+    Class<?>[] getDomainClassesToMock() {}
+
+    @Before
+    void mockDomainClass() {
+        if(!domainsHaveBeenMocked) {
+            def classes = getDomainClassesToMock()
+            if(classes) {
+                mockDomains classes
+            }
+            domainsHaveBeenMocked = true
+        }
+    }
 
     void mockDomain(Class<?> domainClassToMock) {
         mockDomains(domainClassToMock)
