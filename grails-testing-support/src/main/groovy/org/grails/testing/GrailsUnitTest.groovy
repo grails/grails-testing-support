@@ -75,6 +75,4 @@ trait GrailsUnitTest {
         runtime.publishEvent("after", [testInstance: this], [immediateDelivery: true, reverseOrderDelivery: true])
 //        handleDirtiesRuntimeAnnotation(runtime, description, testInstance)
     }
-
-    abstract void mockArtefact(Class<?> artefactClass)
 }

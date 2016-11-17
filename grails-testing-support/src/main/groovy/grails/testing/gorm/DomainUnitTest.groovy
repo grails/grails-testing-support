@@ -28,10 +28,6 @@ trait DomainUnitTest<T> implements DataTest {
 
     private boolean hasBeenMocked = false
 
-    void mockArtefact(Class c) {
-        mockDomain c
-    }
-
     @Before
     void mockDomainUnderTest() {
         if(!hasBeenMocked) {

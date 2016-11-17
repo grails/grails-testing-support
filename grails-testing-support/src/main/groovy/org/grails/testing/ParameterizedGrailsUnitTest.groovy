@@ -52,4 +52,7 @@ trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
         }
         artefactInstance
     }
+
+
+    abstract void mockArtefact(Class<?> artefactClass)
 }
