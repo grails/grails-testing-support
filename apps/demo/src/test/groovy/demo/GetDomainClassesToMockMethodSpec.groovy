@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 class GetDomainClassesToMockMethodSpec extends Specification implements DataTest {
 
-    Class<?>[] getDomainClassesToMock() {
+    Class[] getDomainClassesToMock() {
         Person
     }
 
