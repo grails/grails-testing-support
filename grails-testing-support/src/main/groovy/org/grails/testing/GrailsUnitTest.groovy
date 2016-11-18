@@ -32,10 +32,18 @@ trait GrailsUnitTest {
 
     private TestRuntime currentRuntime;
 
+    /**
+     *
+     * @return grailsApplication.mainContext
+     */
     ConfigurableApplicationContext getApplicationContext() {
         (ConfigurableApplicationContext) grailsApplication.mainContext
     }
 
+    /**
+     *
+     * @return The GrailsApplication instance
+     */
     GrailsApplication getGrailsApplication() {
         (GrailsApplication) runtime.getValue("grailsApplication")
     }
@@ -73,6 +81,10 @@ trait GrailsUnitTest {
 //        handleDirtiesRuntimeAnnotation(runtime, description, testInstance)
     }
 
+    /**
+     *
+     * @return the MessageSource bean from the applicatin context
+     */
     MessageSource getMessageSource() {
         applicationContext.getBean("messageSource", MessageSource)
     }
