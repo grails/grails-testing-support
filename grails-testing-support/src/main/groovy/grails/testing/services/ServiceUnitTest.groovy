@@ -28,7 +28,7 @@ trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
      * @param serviceClass The service class
      * @return An instance of the service
      */
-    void mockArtefact(Class<T> serviceClass) {
+    void mockArtefact(Class<?> serviceClass) {
         final serviceArtefact = grailsApplication.addArtefact(ServiceArtefactHandler.TYPE, serviceClass)
 
         defineBeans(true) {
