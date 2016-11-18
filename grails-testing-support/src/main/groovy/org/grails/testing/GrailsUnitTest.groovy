@@ -33,10 +33,6 @@ trait GrailsUnitTest {
     private TestRuntime currentRuntime;
 
     ConfigurableApplicationContext getApplicationContext() {
-        getMainContext()
-    }
-
-    ConfigurableApplicationContext getMainContext() {
         (ConfigurableApplicationContext) grailsApplication.mainContext
     }
 
