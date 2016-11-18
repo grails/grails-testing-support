@@ -113,8 +113,4 @@ trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWeb
     T getController() {
         getArtefactInstance()
     }
-
-    MessageSource getMessageSource() {
-        applicationContext.getBean("messageSource", MessageSource)
-    }
 }
