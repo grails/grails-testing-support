@@ -1,5 +1,5 @@
-package demo
 // tag::basic_declaration[]
+package demo
 
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification

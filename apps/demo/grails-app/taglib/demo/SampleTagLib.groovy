@@ -1,6 +1,6 @@
+// tag::basic_declaration[]
 package demo
 
-// tag::basic_declaration[]
 class SampleTagLib {
 
     static defaultEncodeAs = [taglib:'html']

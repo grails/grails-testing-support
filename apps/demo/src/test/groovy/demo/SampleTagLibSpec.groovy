@@ -1,8 +1,8 @@
+// tag::basic_declaration[]
 package demo
 
 import grails.testing.web.taglib.TagLibUnitTest
 
-// tag::basic_declaration[]
 import grails.validation.Validateable
 import org.springframework.context.i18n.LocaleContextHolder
 import spock.lang.Specification

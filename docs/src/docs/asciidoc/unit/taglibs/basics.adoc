@@ -5,11 +5,13 @@ Tag libraries and GSP pages can be tested with the
 `grails.testing.web.taglib.TagLibUnitTest` trait.
 
 [source,groovy]
+.grails-app/taglib/demo/SampleTagLib.groovy
 ----
 include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;hello_world,indent=0]
 ----
 
 [source,groovy]
+.src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
 include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_as_method,indent=0]
 ----
@@ -25,10 +27,12 @@ To test a tag which accepts parameters, specify the parameter values as named
 arguments to the method call.
 
 [source,groovy]
+.grails-app/taglib/demo/SampleTagLib.groovy
 ----
 include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;say_hello,indent=0]
 ----
 [source,groovy]
+.src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
 include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_tag_as_method_with_parameters,indent=0]
 ----
@@ -37,6 +41,7 @@ Alternatively, tags may be tested with the `applyTemplate` method which accepts
 a `String` parameter that will be evaluated as if it were source code in a GSP.
 
 [source,groovy]
+.src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
 include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=0]
 ----
@@ -46,10 +51,12 @@ containing model variables which may be accessed in the GSP snippet that is
 past as the first argument to `applyTemplate` as shown below.
 
 [source,groovy]
+.grails-app/taglib/demo/SampleTagLib.groovy
 ----
 include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;render_some_number,indent=0]
 ----
 [source,groovy]
+.src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
 include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_with_model,indent=0]
 ----

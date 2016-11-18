@@ -1,6 +1,6 @@
+// tag::basic_declaration[]
 package demo
 
-// tag::basic_declaration[]
 import grails.testing.web.taglib.TagLibUnitTest
 import spock.lang.Specification
 

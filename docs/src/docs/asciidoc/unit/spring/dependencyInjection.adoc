@@ -8,16 +8,19 @@ may be used in `grails-app/conf/spring/resources.groovy` for defining bean
 definitions.
 
 [source,groovy]
+.grails-app/services/demo/ReportingService.groovy
 ----
 include::{demoAppDir}/grails-app/services/demo/ReportingService.groovy[tags=basic_declaration,indent=0]
 ----
 
 [source,groovy]
+.src/main/groovy/demo/MathHelper.groovy
 ----
 include::{demoAppDir}/src/main/groovy/demo/MathHelper.groovy[tags=basic_declaration,indent=0]
 ----
 
 [source,groovy]
+.src/test/groovy/demo/ReportingServiceSpec.groovy
 ----
 include::{demoAppDir}/src/test/groovy/demo/ReportingServiceSpec.groovy[tags=basic_declaration,indent=0]
 ----
