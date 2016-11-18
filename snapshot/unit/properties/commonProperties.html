@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Untitled</title>
+<title>Properties Available In All Unit Tests</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -422,14 +422,79 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-
+<ul class="sectlevel1">
+<li><a href="#_properties_available_in_all_unit_tests">Properties Available In All Unit Tests</a></li>
+<li><a href="#_controller_unit_test_properties">Controller Unit Test Properties</a></li>
+<li><a href="#_service_unit_test_properties">Service Unit Test Properties</a></li>
+<li><a href="#_tag_library_unit_test_properties">Tag Library Unit Test Properties</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The Grails Testing Support library provides support for writing concise
-expressive tests for Grails artifacts with simple easy to use traits and
-supporting classes.</p>
+<p>The testing framework provides and initializes a number of properties that
+might be of interest in unit tests.  The <a href="api/index.html">javadocs</a> for the
+various traits describe those properties.  Some particular properties of interest:</p>
+</div>
+<div class="sect1">
+<h2 id="_properties_available_in_all_unit_tests">Properties Available In All Unit Tests</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/org/grails/testing/GrailsUnitTest.html#getMessageSource()">messageSource</a></p>
+</li>
+<li>
+<p><a href="api/org/grails/testing/GrailsUnitTest.html#getGrailsApplication()">grailsApplication</a></p>
+</li>
+<li>
+<p><a href="api/org/grails/testing/GrailsUnitTest.html#getApplicationContext()">applicationContext</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_controller_unit_test_properties">Controller Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/grails/testing/web/controllers/ControllerUnitTest.html#getController()">controller</a></p>
+</li>
+<li>
+<p><a href="api/grails/testing/web/controllers/ControllerUnitTest.html#getView()">view</a></p>
+</li>
+<li>
+<p><a href="api/grails/testing/web/controllers/ControllerUnitTest.html#getModel()">model</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_service_unit_test_properties">Service Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/grails/testing/services/ServiceUnitTest.html#getService()">service</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tag_library_unit_test_properties">Tag Library Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/grails/testing/web/taglib/TagLibUnitTest.html#getTagLib()">tagLib</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">

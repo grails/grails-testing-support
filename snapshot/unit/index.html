@@ -440,6 +440,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_dependency_injection">Dependency Injection</a></li>
+<li><a href="#_useful_properties">Useful Properties</a>
+<ul class="sectlevel2">
+<li><a href="#_properties_available_in_all_unit_tests">Properties Available In All Unit Tests</a></li>
+<li><a href="#_controller_unit_test_properties">Controller Unit Test Properties</a></li>
+<li><a href="#_service_unit_test_properties">Service Unit Test Properties</a></li>
+<li><a href="#_tag_library_unit_test_properties">Tag Library Unit Test Properties</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -835,10 +843,72 @@ class RushHelper implements MathHelper {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_useful_properties">Useful Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The testing framework provides and initializes a number of properties that
+might be of interest in unit tests.  The <a href="api/index.html">javadocs</a> for the
+various traits describe those properties.  Some particular properties of interest:</p>
+</div>
+<div class="sect2">
+<h3 id="_properties_available_in_all_unit_tests">Properties Available In All Unit Tests</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/org/grails/testing/GrailsUnitTest.html#getMessageSource()">messageSource</a></p>
+</li>
+<li>
+<p><a href="api/org/grails/testing/GrailsUnitTest.html#getGrailsApplication()">grailsApplication</a></p>
+</li>
+<li>
+<p><a href="api/org/grails/testing/GrailsUnitTest.html#getApplicationContext()">applicationContext</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controller_unit_test_properties">Controller Unit Test Properties</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/grails/testing/web/controllers/ControllerUnitTest.html#getController()">controller</a></p>
+</li>
+<li>
+<p><a href="api/grails/testing/web/controllers/ControllerUnitTest.html#getView()">view</a></p>
+</li>
+<li>
+<p><a href="api/grails/testing/web/controllers/ControllerUnitTest.html#getModel()">model</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_service_unit_test_properties">Service Unit Test Properties</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/grails/testing/services/ServiceUnitTest.html#getService()">service</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tag_library_unit_test_properties">Tag Library Unit Test Properties</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="api/grails/testing/web/taglib/TagLibUnitTest.html#getTagLib()">tagLib</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-17 04:34:30 UTC
+Last updated 2016-11-18 19:17:43 UTC
 </div>
 </div>
 </body>
