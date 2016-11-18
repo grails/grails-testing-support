@@ -572,8 +572,11 @@ supporting classes.</p>
 test controllers.</p>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
 <span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
@@ -587,8 +590,11 @@ test controllers.</p>
 <p>To test the simplest "Hello World"-style example you can do the following:</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/controllers/demo/DemoController.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">DemoController</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">DemoController</span> {
 
     <span class="keyword">def</span> <span class="function">hello</span>() {
         render <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
@@ -598,8 +604,11 @@ test controllers.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
 <span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
@@ -649,8 +658,11 @@ docs for information on all of the available properties.</p>
 test services.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/services/demo/HelperService.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">HelperService</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">HelperService</span> {
 
     <span class="keyword">def</span> <span class="function">getMagicNumber</span>() {
         <span class="integer">42</span>
@@ -659,8 +671,11 @@ test services.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/HelperServiceSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
 <span class="type">class</span> <span class="class">HelperServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;HelperService&gt; {
@@ -687,8 +702,11 @@ be automatically created for the Service class under test.</p>
 <code>grails.testing.web.taglib.TagLibUnitTest</code> trait.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SampleTagLib</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SampleTagLib</span> {
 
     <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
 
@@ -701,8 +719,13 @@ be automatically created for the Service class under test.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+
+<span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
 <span class="keyword">import</span> <span class="include">org.springframework.context.i18n.LocaleContextHolder</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
@@ -728,8 +751,11 @@ instance or the object returned from the tag closure when
 arguments to the method call.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SampleTagLib</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SampleTagLib</span> {
 
     <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
 
@@ -742,8 +768,13 @@ arguments to the method call.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+
+<span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
 <span class="keyword">import</span> <span class="include">org.springframework.context.i18n.LocaleContextHolder</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
@@ -761,8 +792,13 @@ arguments to the method call.</p>
 a <code>String</code> parameter that will be evaluated as if it were source code in a GSP.</p>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+
+<span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
 <span class="keyword">import</span> <span class="include">org.springframework.context.i18n.LocaleContextHolder</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
@@ -782,8 +818,11 @@ containing model variables which may be accessed in the GSP snippet that is
 past as the first argument to <code>applyTemplate</code> as shown below.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SampleTagLib</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SampleTagLib</span> {
 
     <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
 
@@ -797,8 +836,13 @@ past as the first argument to <code>applyTemplate</code> as shown below.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+
+<span class="keyword">import</span> <span class="include">grails.validation.Validateable</span>
 <span class="keyword">import</span> <span class="include">org.springframework.context.i18n.LocaleContextHolder</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
@@ -838,8 +882,11 @@ the second tag library needs to be explicitly mocked by invoking the
 <code>mockTagLib</code> method.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/FirstTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">FirstTagLib</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">FirstTagLib</span> {
     <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
 
     <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>
@@ -856,8 +903,11 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SecondTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">SecondTagLib</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SecondTagLib</span> {
     <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
 
     <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>
@@ -869,8 +919,11 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/FirstTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
 <span class="type">class</span> <span class="class">FirstTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;FirstTagLib&gt; {
@@ -901,8 +954,11 @@ may be used in <code>grails-app/conf/spring/resources.groovy</code> for defining
 definitions.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/services/demo/ReportingService.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">ReportingService</span> {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">ReportingService</span> {
 
     MathHelper someHelper
 
@@ -913,15 +969,21 @@ definitions.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/main/groovy/demo/MathHelper.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">interface</span> MathHelper {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">interface</span> MathHelper {
     <span class="type">int</span> getSomeNumber()
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/ReportingServiceSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
 <span class="type">class</span> <span class="class">ReportingServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;ReportingService&gt; {
@@ -1019,7 +1081,7 @@ various traits describe those properties.  Some particular properties of interes
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-18 19:22:26 UTC
+Last updated 2016-11-18 22:06:56 UTC
 </div>
 </div>
 </body>

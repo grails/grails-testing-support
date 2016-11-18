@@ -436,8 +436,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 test controllers.</p>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.controllers.ControllerUnitTest
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
 class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
@@ -451,8 +454,11 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;
 <p>To test the simplest "Hello World"-style example you can do the following:</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/controllers/demo/DemoController.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class DemoController {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class DemoController {
 
     def hello() {
         render 'Hello, World!'
@@ -462,8 +468,11 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.controllers.ControllerUnitTest
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
 class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
@@ -507,7 +516,7 @@ docs for information on all of the available properties.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-18 19:22:26 UTC
+Last updated 2016-11-18 22:06:56 UTC
 </div>
 </div>
 </body>

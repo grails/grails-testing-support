@@ -437,8 +437,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <code>grails.testing.web.taglib.TagLibUnitTest</code> trait.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleTagLib {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class SampleTagLib {
 
     static defaultEncodeAs = [taglib:'html']
 
@@ -451,8 +454,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.validation.Validateable
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.taglib.TagLibUnitTest
+
+import grails.validation.Validateable
 import org.springframework.context.i18n.LocaleContextHolder
 import spock.lang.Specification
 
@@ -478,8 +486,11 @@ instance or the object returned from the tag closure when
 arguments to the method call.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleTagLib {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class SampleTagLib {
 
     static defaultEncodeAs = [taglib:'html']
 
@@ -492,8 +503,13 @@ arguments to the method call.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.validation.Validateable
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.taglib.TagLibUnitTest
+
+import grails.validation.Validateable
 import org.springframework.context.i18n.LocaleContextHolder
 import spock.lang.Specification
 
@@ -511,8 +527,13 @@ class SampleTagLibSpec extends Specification implements TagLibUnitTest&lt;Sample
 a <code>String</code> parameter that will be evaluated as if it were source code in a GSP.</p>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.validation.Validateable
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.taglib.TagLibUnitTest
+
+import grails.validation.Validateable
 import org.springframework.context.i18n.LocaleContextHolder
 import spock.lang.Specification
 
@@ -532,8 +553,11 @@ containing model variables which may be accessed in the GSP snippet that is
 past as the first argument to <code>applyTemplate</code> as shown below.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SampleTagLib {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class SampleTagLib {
 
     static defaultEncodeAs = [taglib:'html']
 
@@ -547,8 +571,13 @@ past as the first argument to <code>applyTemplate</code> as shown below.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.validation.Validateable
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.taglib.TagLibUnitTest
+
+import grails.validation.Validateable
 import org.springframework.context.i18n.LocaleContextHolder
 import spock.lang.Specification
 
@@ -590,8 +619,11 @@ the second tag library needs to be explicitly mocked by invoking the
 <code>mockTagLib</code> method.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/FirstTagLib.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class FirstTagLib {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class FirstTagLib {
     static defaultEncodeAs = [taglib:'html']
 
     static namespace = 'one'
@@ -608,8 +640,11 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/taglib/demo/SecondTagLib.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class SecondTagLib {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class SecondTagLib {
     static defaultEncodeAs = [taglib:'html']
 
     static namespace = 'two'
@@ -621,8 +656,11 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/FirstTagLibSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.web.taglib.TagLibUnitTest
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.web.taglib.TagLibUnitTest
 import spock.lang.Specification
 
 class FirstTagLibSpec extends Specification implements TagLibUnitTest&lt;FirstTagLib&gt; {
@@ -643,7 +681,7 @@ class FirstTagLibSpec extends Specification implements TagLibUnitTest&lt;FirstTa
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-18 19:22:26 UTC
+Last updated 2016-11-18 22:06:56 UTC
 </div>
 </div>
 </body>

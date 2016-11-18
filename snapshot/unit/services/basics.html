@@ -436,8 +436,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 test services.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/services/demo/HelperService.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class HelperService {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class HelperService {
 
     def getMagicNumber() {
         42
@@ -446,8 +449,11 @@ test services.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/HelperServiceSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.services.ServiceUnitTest
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
 class HelperServiceSpec extends Specification implements ServiceUnitTest&lt;HelperService&gt; {
@@ -468,7 +474,7 @@ be automatically created for the Service class under test.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-18 19:22:26 UTC
+Last updated 2016-11-18 22:06:56 UTC
 </div>
 </div>
 </body>

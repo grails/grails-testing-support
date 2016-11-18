@@ -437,8 +437,11 @@ may be used in <code>grails-app/conf/spring/resources.groovy</code> for defining
 definitions.</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-app/services/demo/ReportingService.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">class ReportingService {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+class ReportingService {
 
     MathHelper someHelper
 
@@ -449,15 +452,21 @@ definitions.</p>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/main/groovy/demo/MathHelper.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">interface MathHelper {
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+interface MathHelper {
     int getSomeNumber()
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
+<div class="title">src/test/groovy/demo/ReportingServiceSpec.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">import grails.testing.services.ServiceUnitTest
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
 class ReportingServiceSpec extends Specification implements ServiceUnitTest&lt;ReportingService&gt; {
@@ -484,7 +493,7 @@ class RushHelper implements MathHelper {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-18 19:22:26 UTC
+Last updated 2016-11-18 22:06:56 UTC
 </div>
 </div>
 </body>
