@@ -22,8 +22,6 @@ import grails.core.GrailsApplication
 import grails.test.runtime.TestRuntime
 import grails.test.runtime.TestRuntimeFactory
 import groovy.transform.CompileStatic
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.spockframework.runtime.model.FieldMetadata
 import org.springframework.context.ConfigurableApplicationContext
@@ -40,7 +38,7 @@ trait GrailsUnitTest {
             name = "freshRuntimeRule",
             ordinal = 0
     )
-    public FreshRuntimeRule freshRuntimeRule = new FreshRuntimeRule()
+    public TestRuntimeRule freshRuntimeRule = new TestRuntimeRule(testInstance: this)
 
     /**
      *
@@ -76,19 +74,6 @@ trait GrailsUnitTest {
 
     void defineBeans(boolean immediateDelivery = true, Closure<?> closure) {
         runtime.publishEvent("defineBeans", [closure: closure], [immediateDelivery: immediateDelivery])
-    }
-
-    @Before
-    void initializeTestRuntime() {
-        def eventArguments = [testInstance: this]
-//        handleFreshContextAnnotation(runtime, description, eventArguments)
-        runtime.publishEvent("before", eventArguments, [immediateDelivery: true])
-    }
-
-    @After
-    void cleanupTestRuntime() {
-        runtime.publishEvent("after", [testInstance: this], [immediateDelivery: true, reverseOrderDelivery: true])
-//        handleDirtiesRuntimeAnnotation(runtime, description, testInstance)
     }
 
     /**

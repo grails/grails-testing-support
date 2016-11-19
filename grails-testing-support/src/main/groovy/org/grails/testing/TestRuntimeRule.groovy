@@ -27,7 +27,9 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 @CompileStatic
-class FreshRuntimeRule implements TestRule {
+class TestRuntimeRule implements TestRule {
+
+    def testInstance
 
     @Override
     Statement apply(Statement statement, Description description) {
@@ -35,11 +37,15 @@ class FreshRuntimeRule implements TestRule {
             public void evaluate() throws Throwable {
                 Class testClass = description.getTestClass()
                 TestRuntime runtime = TestRuntimeFactory.getRuntimeForTestClass(testClass)
+                def eventArguments = [testInstance: testInstance]
                 handleFreshContextAnnotation(runtime, description)
+                runtime.publishEvent("before", eventArguments, [immediateDelivery: true])
                 try {
                     statement.evaluate()
                 } catch (Throwable t) {
                     throw t
+                } finally {
+                    runtime.publishEvent("after", [testInstance: testInstance], [immediateDelivery: true, reverseOrderDelivery: true])
                 }
             }
         }
