@@ -2,6 +2,10 @@
 
 include::controllers/basics.adoc[leveloffset=+1]
 
+== Unit Testing Domain Classes
+
+include::domain/basics.adoc[leveloffset=+1]
+
 == Unit Testing Services
 
 include::services/basics.adoc[leveloffset=+1]

@@ -7,6 +7,9 @@ class DataTestTraitSpec extends Specification implements DataTest {
 
     void setupSpec() {
         mockDomain Person
+
+        // for multiple domains, call mockDomains...
+        // mockDomains Person, Address, Company
     }
 
     void "test basic persistence mocking"() {
