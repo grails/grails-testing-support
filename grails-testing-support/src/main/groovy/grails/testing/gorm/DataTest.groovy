@@ -19,6 +19,7 @@
 package grails.testing.gorm
 
 import grails.core.GrailsDomainClass
+import grails.test.mixin.domain.MockCascadingDomainClassValidator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.DomainClassArtefactHandler
@@ -28,7 +29,6 @@ import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.lifecycle.Initializable
 import org.grails.testing.GrailsUnitTest
 import org.grails.validation.ConstraintEvalUtils
-import org.grails.validation.GrailsDomainClassValidator
 import org.junit.Before
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
@@ -91,7 +91,7 @@ trait DataTest extends GrailsUnitTest {
                 bean.singleton = false
                 bean.autowire = "byName"
             }
-            "$validationBeanName"(GrailsDomainClassValidator) { bean ->
+            "$validationBeanName"(MockCascadingDomainClassValidator) { bean ->
                 getDelegate().messageSource = ref("messageSource")
                 bean.lazyInit = true
                 getDelegate().domainClass = domain

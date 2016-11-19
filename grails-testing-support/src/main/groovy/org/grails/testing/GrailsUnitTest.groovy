@@ -19,9 +19,9 @@
 package org.grails.testing
 
 import grails.core.GrailsApplication
+import grails.test.runtime.TestRuntime
+import grails.test.runtime.TestRuntimeFactory
 import groovy.transform.CompileStatic
-import org.grails.testing.runtime.TestRuntime
-import org.grails.testing.runtime.TestRuntimeFactory
 import org.junit.Rule
 import org.spockframework.runtime.model.FieldMetadata
 import org.springframework.context.ConfigurableApplicationContext
