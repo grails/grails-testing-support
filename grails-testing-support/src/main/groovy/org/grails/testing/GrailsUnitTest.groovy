@@ -24,6 +24,8 @@ import grails.test.runtime.TestRuntimeFactory
 import groovy.transform.CompileStatic
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
+import org.spockframework.runtime.model.FieldMetadata
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.MessageSource
 
@@ -31,6 +33,14 @@ import org.springframework.context.MessageSource
 trait GrailsUnitTest {
 
     private TestRuntime currentRuntime;
+
+    @Rule
+    @FieldMetadata(
+            line = -1,
+            name = "freshRuntimeRule",
+            ordinal = 0
+    )
+    public FreshRuntimeRule freshRuntimeRule = new FreshRuntimeRule()
 
     /**
      *
