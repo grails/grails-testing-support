@@ -45,7 +45,7 @@ trait GrailsUnitTest {
      * @return The GrailsApplication instance
      */
     GrailsApplication getGrailsApplication() {
-        (GrailsApplication) runtime.getValue("grailsApplication")
+        (GrailsApplication) runtime.getValue("grailsApplication", [testInstance: this])
     }
 
     public TestRuntime getRuntime() {
