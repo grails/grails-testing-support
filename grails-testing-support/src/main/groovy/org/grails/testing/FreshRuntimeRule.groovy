@@ -39,6 +39,7 @@ class FreshRuntimeRule implements TestRule {
                 try {
                     statement.evaluate()
                 } catch (Throwable t) {
+                    throw t
                 }
             }
         }
