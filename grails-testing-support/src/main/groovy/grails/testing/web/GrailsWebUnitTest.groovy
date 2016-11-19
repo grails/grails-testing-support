@@ -19,17 +19,22 @@
 package grails.testing.web
 
 import grails.artefact.TagLibrary
+import grails.core.GrailsClass
+import grails.core.GrailsControllerClass
 import grails.core.GrailsTagLibClass
+import grails.util.GrailsMetaClassUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
 import org.grails.taglib.TagLibraryLookup
 import org.grails.testing.GrailsUnitTest
 import org.grails.web.servlet.mvc.GrailsWebRequest
+import org.grails.web.util.GrailsApplicationAttributes
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.mock.web.MockServletContext
 
@@ -107,6 +112,36 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
             ((TagLibrary)taglibObject).setTagLibraryLookup(tagLookup)
         }
     }
+
+    @CompileDynamic
+    void mockController(Class<?> controllerClass) {
+        GrailsClass controllerArtefact = createAndEnhanceController(controllerClass)
+        defineBeans(true) {
+            "$controllerClass.name"(controllerClass) { bean ->
+                bean.scope = 'prototype'
+                bean.autowire = true
+            }
+        }
+
+        def callable = { ->
+            final controller = applicationContext.getBean(controllerClass.name)
+            webRequest.controllerName = controllerArtefact.logicalPropertyName
+            request.setAttribute(GrailsApplicationAttributes.CONTROLLER, controller)
+            controller
+        }
+
+        GrailsMetaClassUtils.getExpandoMetaClass(controllerClass).constructor = callable
+
+        callable.call()
+    }
+
+    @CompileStatic
+    private GrailsClass createAndEnhanceController(Class controllerClass) {
+        final GrailsControllerClass controllerArtefact = (GrailsControllerClass) grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, controllerClass)
+        controllerArtefact.initialize()
+        return controllerArtefact
+    }
+
 
     void mockTagLibs(Class<?>... tagLibClasses) {
         for(Class c : tagLibClasses) {

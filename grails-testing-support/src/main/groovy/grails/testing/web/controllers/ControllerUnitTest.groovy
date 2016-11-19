@@ -81,33 +81,8 @@ trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWeb
      * @param controllerClass The controller class
      * @return An instance of the controller
      */
-    @CompileDynamic
     void mockArtefact(Class<?> controllerClass) {
-        GrailsClass controllerArtefact = createAndEnhance(controllerClass)
-        defineBeans(true) {
-            "$controllerClass.name"(controllerClass) { bean ->
-                bean.scope = 'prototype'
-                bean.autowire = true
-            }
-        }
-
-        def callable = { ->
-            final controller = applicationContext.getBean(controllerClass.name)
-            webRequest.controllerName = controllerArtefact.logicalPropertyName
-            request.setAttribute(GrailsApplicationAttributes.CONTROLLER, controller)
-            controller
-        }
-
-        GrailsMetaClassUtils.getExpandoMetaClass(controllerClass).constructor = callable
-
-        callable.call()
-    }
-
-    @CompileStatic
-    private GrailsClass createAndEnhance(Class controllerClass) {
-        final GrailsControllerClass controllerArtefact = (GrailsControllerClass) grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, controllerClass)
-        controllerArtefact.initialize()
-        return controllerArtefact
+        mockController(controllerClass)
     }
 
     T getController() {

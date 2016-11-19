@@ -26,6 +26,7 @@ dependencies {
     compile "org.grails:grails-plugin-testing:$grailsVersion"
     compile "org.grails:grails-web-common:$grailsVersion"
     compile "org.grails:grails-validation:$grailsVersion"
+    compile "org.grails:grails-web-url-mappings:$grailsVersion"
     compile "org.grails:grails-datastore-core:$datastoreVersion"
     compile "org.grails:grails-datastore-gorm:$datastoreVersion"
     compile "org.grails:grails-datastore-simple:$datastoreVersion"
