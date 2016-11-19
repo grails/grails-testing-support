@@ -432,84 +432,139 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_the_basics">The Basics</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Use the <code>grails.testing.web.controllers.ControllerUnitTest</code> trait to unit
-test controllers.</p>
+<p>Use the <a href="api/grails/testing/gorm/DomainUnitTest.html"><code>grails.testing.gorm.DomainUnitTest</code></a>
+trait to unit test a domain class.</p>
 </div>
 <div class="listingblock">
-<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
+<div class="title">grails-app/domain/demo/Person.groovy</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
 
-import grails.testing.web.controllers.ControllerUnitTest
+class Person {
+    String firstName
+    String lastName
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/demo/PersonSpec.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
+class PersonSpec extends Specification implements DomainUnitTest&lt;Person&gt; {
 
-    // ...
+    void "test basic persistence mocking"() {
+        setup:
+        new Person(firstName: 'Robert', lastName: 'Fripp').save()
+        new Person(firstName: 'Adrian', lastName: 'Belew').save()
 
+        expect:
+        Person.count() == 2
+    }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To test the simplest "Hello World"-style example you can do the following:</p>
+<p>Alternatively, the <a href="api/grails/testing/gorm/DataTest.html"><code>grails.testing.gorm.DataTest</code></a>
+trait may be used.  When using <code>DataTest</code>, an explicit call to the
+<a href="api/grails/testing/gorm/DataTest.html#mockDomain(Class&lt;?&gt;)">mockDomain</a> or
+<a href="api/grails/testing/gorm/DataTest.html#mockDomains(Class&lt;?&gt;)">mockDomains</a>
+method may be used to specify which domain class(es) should be mocked for this
+test.</p>
 </div>
 <div class="listingblock">
-<div class="title">grails-app/controllers/demo/DemoController.groovy</div>
+<div class="title">src/test/groovy/demo/DataTestTraitSpec.groovy</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
 
-class DemoController {
+import grails.testing.gorm.DataTest
+import spock.lang.Specification
 
-    def hello() {
-        render 'Hello, World!'
+class DataTestTraitSpec extends Specification implements DataTest {
+
+    void setupSpec() {
+        mockDomain Person
+
+        // for multiple domains, call mockDomains...
+        // mockDomains Person, Address, Company
     }
 
+    void "test basic persistence mocking"() {
+        setup:
+        new Person(firstName: 'Robert', lastName: 'Fripp').save()
+        new Person(firstName: 'Adrian', lastName: 'Belew').save()
+
+        expect:
+        Person.count() == 2
+    }
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Another way to express which domain classes should be mocked for this test is
+to provide a <code>Class[] GetDomainClassesToMockMethodSpec()</code> method in the test.</p>
+</div>
 <div class="listingblock">
-<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
+<div class="title">src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
 
+import grails.testing.gorm.DataTest
+import spock.lang.Specification
+
+class GetDomainClassesToMockMethodSpec extends Specification implements DataTest {
+
+    Class[] getDomainClassesToMock() {
+        Person
+    }
+
+    void "test basic persistence mocking"() {
+        setup:
+        new Person(firstName: 'Robert', lastName: 'Fripp').save()
+        new Person(firstName: 'Adrian', lastName: 'Belew').save()
+
+        expect:
+        Person.count() == 2
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When mocking domain classes in a test for another artifact type (like a
+<code>ControllerUnitTest</code> test, for example), the test must implement the <code>DataTest</code>
+trait in order to mock the related domain classes.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/demo/PersonControllerSpec.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.testing.gorm.DataTest
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class DemoControllerSpec extends Specification implements ControllerUnitTest&lt;DemoController&gt; {
+class PersonControllerSpec extends Specification implements ControllerUnitTest&lt;PersonController&gt;, DataTest {
 
-    // ...
+    void setupSpec() {
+        mockDomain Person
+    }
 
-    void "test action which renders text"() {
+    void "test action which invokes GORM method"() {
+        setup:
+        new Person(firstName: 'Robert', lastName: 'Fripp').save()
+        new Person(firstName: 'Adrian', lastName: 'Belew').save()
+
         when:
-        controller.hello()               <i class="conum" data-value="1"></i><b>(1)</b>
+        def model = controller.index()
 
         then:
-        status == 200                    <i class="conum" data-value="2"></i><b>(2)</b>
-        response.text == 'Hello, World!' <i class="conum" data-value="3"></i><b>(3)</b>
+        model.people.size() == 2
     }
-
 }</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>controller</code> property will be an instance of <code>DemoController</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>status</code> property will contain the value of the response status</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <code>response</code> property will be a reference to the HTTP response object</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>See the <a href="api/grails/testing/web/controllers/ControllerUnitTest.html"><code>ControllerUnitTest</code></a>
-docs for information on all of the available properties.</p>
 </div>
 </div>
 </div>
