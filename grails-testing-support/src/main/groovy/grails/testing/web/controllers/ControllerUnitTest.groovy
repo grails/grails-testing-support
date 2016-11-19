@@ -18,19 +18,13 @@
  */
 package grails.testing.web.controllers
 
-import grails.core.GrailsClass
-import grails.core.GrailsControllerClass
 import grails.testing.web.GrailsWebUnitTest
-import grails.util.GrailsMetaClassUtils
 import grails.web.mime.MimeType
-import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
-import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.testing.ParameterizedGrailsUnitTest
 import org.grails.web.pages.GroovyPagesUriSupport
 import org.grails.web.util.GrailsApplicationAttributes
-import org.springframework.context.MessageSource
 
 @CompileStatic
 trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {

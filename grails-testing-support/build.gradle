@@ -23,8 +23,13 @@ apply plugin: 'groovy'
 apply plugin: "com.jfrog.artifactory"
 
 dependencies {
-    compile "org.grails:grails-plugin-testing:$grailsVersion"
+    compile "junit:junit:4.12"
+    compile "org.springframework:spring-test:4.3.3.RELEASE"
+    compile "org.grails:grails-plugin-gsp:$grailsVersion"
+    compile "org.grails:grails-plugin-rest:$grailsVersion"
+    compile "org.grails:grails-plugin-interceptors:$grailsVersion"
     compile "org.grails:grails-web-common:$grailsVersion"
+    compile "org.grails:grails-test:$grailsVersion"
     compile "org.grails:grails-validation:$grailsVersion"
     compile "org.grails:grails-web-url-mappings:$grailsVersion"
     compile "org.grails:grails-datastore-core:$datastoreVersion"
