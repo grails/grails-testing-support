@@ -27,15 +27,7 @@ dependencies {
     compile "org.springframework:spring-test:4.3.3.RELEASE"
     compile "org.grails:grails-plugin-gsp:$grailsVersion"
     compile "org.grails:grails-plugin-rest:$grailsVersion"
-    compile "org.grails:grails-plugin-interceptors:$grailsVersion"
-    compile "org.grails:grails-web-common:$grailsVersion"
     compile "org.grails:grails-test:$grailsVersion"
-    compile "org.grails:grails-validation:$grailsVersion"
-    compile "org.grails:grails-web-url-mappings:$grailsVersion"
-    compile "org.grails:grails-datastore-core:$datastoreVersion"
-    compile "org.grails:grails-datastore-gorm:$datastoreVersion"
-    compile "org.grails:grails-datastore-simple:$datastoreVersion"
-    compile "org.grails:grails-web-taglib:$grailsVersion"
     compile 'javax.servlet:javax.servlet-api:3.0.1'
 }
 
