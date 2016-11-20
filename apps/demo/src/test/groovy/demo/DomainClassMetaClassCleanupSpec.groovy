@@ -1,6 +1,6 @@
 package demo
 
-import grails.test.runtime.FreshRuntime
+import grails.testing.runtime.FreshRuntime
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Issue
 import spock.lang.Specification

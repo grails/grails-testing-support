@@ -18,10 +18,10 @@
  */
 package org.grails.testing
 
-import grails.test.runtime.FreshRuntime
-import grails.test.runtime.TestRuntime
-import grails.test.runtime.TestRuntimeFactory
+import grails.testing.runtime.FreshRuntime
 import groovy.transform.CompileStatic
+import org.grails.testing.runtime.TestRuntime
+import org.grails.testing.runtime.TestRuntimeFactory
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
