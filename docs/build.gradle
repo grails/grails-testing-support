@@ -14,6 +14,7 @@ asciidoctor {
                'icons'                 : 'font',
                'testingSupportVersion' : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.version}",
                'sourcedir'             : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.projectDir}/src/main/groovy",
+               'mainprojectdir'        : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.projectDir}",
                'demoAppDir'            : "${rootProject.allprojects.find { it.name == 'demo'}.projectDir}"
 }
 

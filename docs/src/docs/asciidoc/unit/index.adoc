@@ -18,6 +18,10 @@ include::taglibs/details.adoc[leveloffset=+1]
 
 include::spring/dependencyInjection.adoc[leveloffset=+1]
 
+== Annotations
+
+include::annotations/basics.adoc[leveloffset=+1]
+
 == Useful Properties
 
 include::properties/commonProperties.adoc[leveloffset=+1]
