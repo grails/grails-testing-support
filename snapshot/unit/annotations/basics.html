@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Untitled</title>
+<title>@RunOnce</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -422,14 +422,205 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-
+<ul class="sectlevel1">
+<li><a href="#__runonce">@RunOnce</a></li>
+<li><a href="#__oncebefore">@OnceBefore</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="__runonce">@RunOnce</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The Grails Testing Support library provides support for writing concise
-expressive tests for Grails artifacts with simple easy to use traits and
-supporting classes.</p>
+<p>The <code>grails.testing.spock.RunOnce</code> annotation may be applied to any Spock test
+fixture method that you wish to be executed only once.  This is useful when
+applied in conjunction with a fixture annnotation like <code>@Before</code> as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/grails/testing/spock/RunOnceSpec.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package grails.testing.spock
+
+import org.junit.Before
+import spock.lang.Shared
+import spock.lang.Specification
+import spock.lang.Stepwise
+
+@Stepwise
+class RunOnceSpec extends Specification {
+
+    @Shared
+    int setupSpecCounter = 0
+
+    @Shared
+    int setupCounter = 0
+
+    @Shared
+    int onceBeforeCounter = 0
+
+    @Shared
+    int anotherOnceBeforeCounter = 0
+
+    @Shared
+    int beforeCounter = 0
+
+    void setupSpec() {
+        setupSpecCounter++
+    }
+
+    void setup() {
+        setupCounter++
+    }
+
+    @Before
+    void someBeforeMethod() {
+        beforeCounter++
+    }
+
+    @Before
+    @RunOnce
+    void someOnceBeforeMethod() {
+        onceBeforeCounter++
+    }
+
+    @Before
+    @RunOnce
+    void someOtherOnceBeforeMethod() {
+        anotherOnceBeforeCounter++
+    }
+
+    void 'first test'() {
+        expect:
+        setupSpecCounter == 1
+        setupCounter == 1
+        beforeCounter == 1
+        onceBeforeCounter == 1
+        anotherOnceBeforeCounter == 1
+    }
+
+    void 'second test'() {
+        expect:
+        setupSpecCounter == 1
+        setupCounter == 2
+        beforeCounter == 2
+        onceBeforeCounter == 1
+        anotherOnceBeforeCounter == 1
+    }
+
+    void 'third test'() {
+        expect:
+        setupSpecCounter == 1
+        setupCounter == 3
+        beforeCounter == 3
+        onceBeforeCounter == 1
+        anotherOnceBeforeCounter == 1
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Applying both the <code>@RunOnce</code> and <code>@Before</code> annotations to a method will yield
+behavior similar to the behavior associated with Spock&#8217;s <code>setupSpec</code> method but
+an important difference is that <code>setupSpec</code> is run before the test instance is
+subjected to dependency injection while <code>@Before</code> methods are run after the
+test instance is subjected to dependency injection.  This means that the
+<code>setupSpec</code> method will not have access to injected variables but methods marked
+with <code>@Before</code> will have access to injected variables.  If a test as some one
+time setup logic that needs to be executed after dependency injection happens,
+the <code>RunOnce</code> annotation can help accomplish that.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__oncebefore">@OnceBefore</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>grails.testing.spock.OnceBefore</code> annotation is a shorthand way of
+accomplishing the same behavior that would be accomplished by applying both the
+<code>@RunOnce</code> and <code>@Before</code> annotations to a fixture method.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/grails/testing/spock/RunOnceSpec.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package grails.testing.spock
+
+import org.junit.Before
+import spock.lang.Shared
+import spock.lang.Specification
+import spock.lang.Stepwise
+
+@Stepwise
+class OnceBeforeSpec extends Specification {
+
+    @Shared
+    int setupSpecCounter = 0
+
+    @Shared
+    int setupCounter = 0
+
+    @Shared
+    int onceBeforeCounter = 0
+
+    @Shared
+    int anotherOnceBeforeCounter = 0
+
+    @Shared
+    int beforeCounter = 0
+
+    void setupSpec() {
+        setupSpecCounter++
+    }
+
+    void setup() {
+        setupCounter++
+    }
+
+    @Before
+    void someBeforeMethod() {
+        beforeCounter++
+    }
+
+    @OnceBefore
+    void someOnceBeforeMethod() {
+        onceBeforeCounter++
+    }
+
+    @OnceBefore
+    void someOtherOnceBeforeMethod() {
+        anotherOnceBeforeCounter++
+    }
+
+    void 'first test'() {
+        expect:
+        setupSpecCounter == 1
+        setupCounter == 1
+        beforeCounter == 1
+        onceBeforeCounter == 1
+        anotherOnceBeforeCounter == 1
+    }
+
+    void 'second test'() {
+        expect:
+        setupSpecCounter == 1
+        setupCounter == 2
+        beforeCounter == 2
+        onceBeforeCounter == 1
+        anotherOnceBeforeCounter == 1
+    }
+
+    void 'third test'() {
+        expect:
+        setupSpecCounter == 1
+        setupCounter == 3
+        beforeCounter == 3
+        onceBeforeCounter == 1
+        anotherOnceBeforeCounter == 1
+    }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
