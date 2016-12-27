@@ -28,7 +28,7 @@ accomplishing the same behavior that would be accomplished by applying both the
 `@RunOnce` and `@Before` annotations to a fixture method.
 
 [source,groovy]
-.src/test/groovy/grails/testing/spock/RunOnceSpec.groovy
+.src/test/groovy/grails/testing/spock/OnceBeforeSpec.groovy
 ----
 include::{mainprojectdir}/src/test/groovy/grails/testing/spock/OnceBeforeSpec.groovy[indent=0]
 ----
