@@ -1329,6 +1329,36 @@ accomplishing the same behavior that would be accomplished by applying both the
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This is useful in the context of an integration test which once to reference
+dependency injected values during setup as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/integration-test/groovy/demo/DependencyInjectionSpec.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.test.mixin.integration.Integration</span>
+<span class="keyword">import</span> <span class="include">grails.testing.spock.OnceBefore</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="annotation">@Integration</span>
+<span class="type">class</span> <span class="class">DependencyInjectionSpec</span> <span class="directive">extends</span> Specification {
+
+    HelperService helperService
+
+    <span class="annotation">@OnceBefore</span>
+    <span class="type">void</span> init() {
+        <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some test method</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        helperService != <span class="predefined-constant">null</span>
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1404,7 +1434,7 @@ various traits describe those properties.  Some particular properties of interes
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-27 15:19:21 UTC
+Last updated 2016-12-27 15:40:12 UTC
 </div>
 </div>
 </body>

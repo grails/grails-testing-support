@@ -620,12 +620,42 @@ class OnceBeforeSpec extends Specification {
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This is useful in the context of an integration test which once to reference
+dependency injected values during setup as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/integration-test/groovy/demo/DependencyInjectionSpec.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">package demo
+
+import grails.test.mixin.integration.Integration
+import grails.testing.spock.OnceBefore
+import spock.lang.Specification
+
+@Integration
+class DependencyInjectionSpec extends Specification {
+
+    HelperService helperService
+
+    @OnceBefore
+    void init() {
+        assert helperService != null
+    }
+
+    void 'some test method'() {
+        expect:
+        helperService != null
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-27 15:19:21 UTC
+Last updated 2016-12-27 15:40:12 UTC
 </div>
 </div>
 </body>
