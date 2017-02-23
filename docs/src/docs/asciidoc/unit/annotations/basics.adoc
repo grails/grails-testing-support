@@ -33,7 +33,7 @@ accomplishing the same behavior that would be accomplished by applying both the
 include::{mainprojectdir}/src/test/groovy/grails/testing/spock/OnceBeforeSpec.groovy[indent=0]
 ----
 
-This is useful in the context of an integration test which once to reference
+This is useful in the context of an integration test which wants to reference
 dependency injected values during setup as shown below.
 
 [source,groovy]
