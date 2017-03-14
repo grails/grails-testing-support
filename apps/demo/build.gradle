@@ -53,7 +53,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
-    testCompile project(':grails-testing-support')
+    testCompile project(':grails-web-testing-support')
 
     // this is here only temporarily to reference @Integration
     testCompile 'org.grails:grails-plugin-testing'

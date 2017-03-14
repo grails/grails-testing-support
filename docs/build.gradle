@@ -24,6 +24,7 @@ configurations {
 
 dependencies {
     documentation project(':grails-testing-support')
+    documentation project(':grails-web-testing-support')
     documentation 'org.codehaus.groovy:groovy-all:2.4.7'
 }
 
@@ -31,7 +32,7 @@ dependencies {
 
 task apidocs(type: Groovydoc) {
     def allProjects = rootProject.allprojects.findAll { project ->
-      ['grails-testing-support'].contains(project.name)
+      ['grails-testing-support', 'grails-web-testing-support'].contains(project.name)
     }
     source allProjects.collect { project ->
       project.files('src/main/groovy')

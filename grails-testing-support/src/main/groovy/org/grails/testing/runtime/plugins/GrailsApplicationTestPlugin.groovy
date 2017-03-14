@@ -42,8 +42,6 @@ import org.grails.spring.RuntimeSpringConfiguration
 import org.grails.testing.runtime.TestEvent
 import org.grails.testing.runtime.TestPlugin
 import org.grails.testing.runtime.TestRuntime
-import org.grails.web.context.ServletEnvironmentGrailsApplicationDiscoveryStrategy
-import org.grails.web.servlet.context.GrailsConfigUtils
 import org.springframework.beans.CachedIntrospectionResults
 import org.springframework.beans.MutablePropertyValues
 import org.springframework.beans.factory.config.BeanDefinition
@@ -103,8 +101,24 @@ class GrailsApplicationTestPlugin implements TestPlugin {
     @CompileDynamic
     protected void configureServletEnvironment(servletContext, GrailsApplication grailsApplication, ConfigurableApplicationContext mainContext) {
         Holders.setServletContext(servletContext);
-        Holders.addApplicationDiscoveryStrategy(new ServletEnvironmentGrailsApplicationDiscoveryStrategy(servletContext));
-        GrailsConfigUtils.configureServletContextAttributes(servletContext, grailsApplication, mainContext.getBean(GrailsPluginManager.BEAN_NAME, GrailsPluginManager), mainContext)
+
+        // NOTE: The following dynamic class loading hack is temporary so the
+        // compile time dependency on the servlet api can be removed from this
+        // sub project.  This whole GrailsApplicationTestPlugin class will soon
+        // be removed so rather than implement a real solution, this hack will
+        // do for now to keep the build healthy.
+        try {
+            Class segads = Class.forName('org.grails.web.context.ServletEnvironmentGrailsApplicationDiscoveryStrategy')
+            Holders.addApplicationDiscoveryStrategy(segads.newInstance(servletContext))
+        } catch (Throwable t) {
+
+        }
+        try {
+            Class gcu = Class.forName('org.grails.web.servlet.context.GrailsConfigUtils')
+            gcu.configureServletContextAttributes(servletContext, grailsApplication, mainContext.getBean(GrailsPluginManager.BEAN_NAME, GrailsPluginManager), mainContext)
+        } catch (Throwable t) {
+
+        }
     }
 
     protected ConfigurableApplicationContext createMainContext(final TestRuntime runtime, final Map callerInfo, final servletContext) {
