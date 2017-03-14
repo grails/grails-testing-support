@@ -32,7 +32,7 @@ dependencies {
 
 task apidocs(type: Groovydoc) {
     def allProjects = rootProject.allprojects.findAll { project ->
-      ['grails-testing-support', 'grails-web-testing-support'].contains(project.name)
+      ['grails-testing-support', 'grails-web-testing-support', 'grails-gorm-testing-support'].contains(project.name)
     }
     source allProjects.collect { project ->
       project.files('src/main/groovy')
