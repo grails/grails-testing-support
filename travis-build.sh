@@ -12,7 +12,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST
       # ./gradlew bintrayUpload || EXIT_STATUS=$?
       echo "Bintray Upload Not yet Configured"
   else
-      ./gradlew :grails-testing-support:artifactoryPublish || EXIT_STATUS=$?
+      ./gradlew artifactoryPublish || EXIT_STATUS=$?
   fi
 
   ./gradlew :docs:docs || EXIT_STATUS=$?
