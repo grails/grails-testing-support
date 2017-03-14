@@ -6,13 +6,12 @@ import org.spockframework.runtime.extension.IMethodInvocation
 
 @CompileStatic
 class RunOnceInterceptor extends AbstractMethodInterceptor {
-    protected Set<String> processedMethods = [] as Set
+    boolean hasRun = false
 
     @Override
     void interceptSetupMethod(IMethodInvocation invocation) throws Throwable {
-        String testClassName = invocation.instance.getClass().name
-        if(!processedMethods.contains(testClassName)) {
-            processedMethods.add testClassName
+        if(!hasRun) {
+            hasRun = true
             invocation.proceed()
         }
     }
