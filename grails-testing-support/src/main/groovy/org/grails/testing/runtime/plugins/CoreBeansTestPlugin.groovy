@@ -21,7 +21,6 @@ package org.grails.testing.runtime.plugins
 
 import grails.core.GrailsApplication
 import grails.core.support.proxy.DefaultProxyHandler
-import grails.validation.ConstraintsEvaluator
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
 import org.grails.spring.beans.GrailsApplicationAwareBeanPostProcessor
@@ -31,7 +30,6 @@ import org.grails.testing.runtime.TestEvent
 import org.grails.testing.runtime.TestPlugin
 import org.grails.testing.runtime.TestRuntime
 import org.grails.transaction.TransactionManagerPostProcessor
-import org.grails.validation.DefaultConstraintEvaluator
 import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.context.support.StaticMessageSource
 import org.springframework.util.ClassUtils
@@ -69,7 +67,6 @@ public class CoreBeansTestPlugin implements TestPlugin {
 
             proxyHandler(DefaultProxyHandler)
             messageSource(StaticMessageSource)
-            "${ConstraintsEvaluator.BEAN_NAME}"(DefaultConstraintEvaluator)
             grailsApplicationPostProcessor(GrailsApplicationAwareBeanPostProcessor, grailsApplicationParam)
             transactionManagerAwarePostProcessor(TransactionManagerPostProcessor)
             grailsPlaceholderConfigurer(GrailsPlaceholderConfigurer, '${', grailsApplicationParam.config.toProperties())

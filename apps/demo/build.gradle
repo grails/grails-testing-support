@@ -54,6 +54,7 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
     testCompile project(':grails-web-testing-support')
+    testCompile project(':grails-gorm-testing-support')
 
     // this is here only temporarily to reference @Integration
     testCompile 'org.grails:grails-plugin-testing'

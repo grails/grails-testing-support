@@ -32,15 +32,18 @@ dependencies {
         exclude module: 'grails-plugin-converters'
         exclude module: 'grails-web'
     }
+    compile "org.grails:grails-plugin-domain-class:$grailsVersion"
     compile "org.grails:grails-core:$grailsVersion"
     compile "org.grails:grails-async:$grailsVersion"
     compile "org.grails:grails-bootstrap:$grailsVersion"
     compile "org.grails:grails-test:$grailsVersion"
+
+    compile project(':grails-testing-support')
 }
 
 project.ext {
     githubUrl = 'https://github.com/grails/grails-testing-support'
-    artifactId = 'grails-testing-support'
+    artifactId = 'grails-gorm-testing-support'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
