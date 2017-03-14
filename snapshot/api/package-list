@@ -2,6 +2,7 @@ grails.testing.gorm
 grails.testing.runtime
 grails.testing.services
 grails.testing.spock
+grails.testing.spring
 grails.testing.web
 grails.testing.web.controllers
 grails.testing.web.taglib
