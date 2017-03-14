@@ -1,3 +1,4 @@
+grails.testing.gorm
 grails.testing.runtime
 grails.testing.services
 grails.testing.spock
@@ -5,6 +6,7 @@ grails.testing.web
 grails.testing.web.controllers
 grails.testing.web.taglib
 org.grails.testing
+org.grails.testing.gorm
 org.grails.testing.runtime
 org.grails.testing.runtime.plugins
 org.grails.testing.runtime.support
