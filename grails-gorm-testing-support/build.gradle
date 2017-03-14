@@ -25,18 +25,7 @@ apply plugin: "com.jfrog.artifactory"
 apply plugin: 'project-reports'
 
 dependencies {
-    compile "junit:junit:4.12"
-    compile "org.springframework:spring-test:4.3.3.RELEASE"
-    compile ("org.grails:grails-plugin-codecs:$grailsVersion") {
-        exclude module: 'grails-plugin-mimetypes'
-        exclude module: 'grails-plugin-converters'
-        exclude module: 'grails-web'
-    }
     compile "org.grails:grails-plugin-domain-class:$grailsVersion"
-    compile "org.grails:grails-core:$grailsVersion"
-    compile "org.grails:grails-async:$grailsVersion"
-    compile "org.grails:grails-bootstrap:$grailsVersion"
-    compile "org.grails:grails-test:$grailsVersion"
 
     compile project(':grails-testing-support')
 }

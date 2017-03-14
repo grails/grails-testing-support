@@ -32,9 +32,7 @@ dependencies {
         exclude module: 'grails-plugin-converters'
         exclude module: 'grails-web'
     }
-    compile "org.grails:grails-core:$grailsVersion"
     compile "org.grails:grails-async:$grailsVersion"
-    compile "org.grails:grails-bootstrap:$grailsVersion"
     compile "org.grails:grails-test:$grailsVersion"
 }
 
