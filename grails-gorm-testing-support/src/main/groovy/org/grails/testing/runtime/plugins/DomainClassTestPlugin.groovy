@@ -21,24 +21,17 @@ package org.grails.testing.runtime.plugins
 
 import grails.core.GrailsApplication
 import grails.validation.ConstrainedProperty
-import grails.validation.ConstraintsEvaluator
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
-import org.grails.datastore.gorm.events.AutoTimestampEventListener
-import org.grails.datastore.gorm.events.DomainEventListener
 import org.grails.datastore.gorm.validation.constraints.UniqueConstraintFactory
 import org.grails.datastore.mapping.core.DatastoreUtils
 import org.grails.datastore.mapping.core.Session
-import org.grails.datastore.mapping.model.AbstractMappingContext
 import org.grails.datastore.mapping.reflect.ClassPropertyFetcher
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.grails.datastore.mapping.transactions.DatastoreTransactionManager
-import org.grails.plugins.domain.DomainClassGrailsPlugin
-import org.grails.plugins.domain.support.GrailsDomainClassCleaner
 import org.grails.testing.runtime.TestEvent
 import org.grails.testing.runtime.TestPlugin
 import org.grails.testing.runtime.TestRuntime
-import org.grails.validation.ConstraintsEvaluatorFactoryBean
 import org.springframework.context.ConfigurableApplicationContext
 
 /**
@@ -64,18 +57,8 @@ class DomainClassTestPlugin implements TestPlugin {
     }
     
     protected void applicationInitialized(TestRuntime runtime, GrailsApplication grailsApplication) {
-        initializeDatastoreImplementation(grailsApplication)
     }
     
-    protected void initializeDatastoreImplementation(GrailsApplication grailsApplication) {
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
-        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
-        ((AbstractMappingContext)simpleDatastore.mappingContext).setCanInitializeEntities(false)
-        applicationContext.addApplicationListener applicationContext.getBean(GrailsDomainClassCleaner)
-        applicationContext.addApplicationListener new DomainEventListener(simpleDatastore)
-        applicationContext.addApplicationListener new AutoTimestampEventListener(simpleDatastore)
-    }
-
     protected void cleanupDatastore() {
         ClassPropertyFetcher.clearCache()
         ConstrainedProperty.removeConstraint("unique")
