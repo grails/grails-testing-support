@@ -60,10 +60,6 @@ class DomainClassTestPlugin implements TestPlugin {
             transactionManager(DatastoreTransactionManager) {
                 datastore = ref("grailsDatastore")
             }
-            "${ConstraintsEvaluator.BEAN_NAME}"(ConstraintsEvaluatorFactoryBean) {
-                defaultConstraints = DomainClassGrailsPlugin.getDefaultConstraints(grailsApplication.config)
-            }
-            grailsDomainClassCleaner(GrailsDomainClassCleaner, grailsApplication)
         }
     }
     

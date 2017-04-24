@@ -19,6 +19,8 @@
 package grails.testing.gorm
 
 import grails.core.GrailsDomainClass
+import grails.testing.spock.OnceBefore
+import grails.validation.ConstraintsEvaluator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.DomainClassArtefactHandler
@@ -26,9 +28,11 @@ import org.grails.datastore.gorm.GormEnhancer
 import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.lifecycle.Initializable
+import org.grails.plugins.domain.DomainClassGrailsPlugin
 import org.grails.testing.GrailsUnitTest
 import org.grails.testing.gorm.MockCascadingDomainClassValidator
 import org.grails.validation.ConstraintEvalUtils
+import org.grails.validation.ConstraintsEvaluatorFactoryBean
 import org.junit.Before
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
@@ -42,9 +46,9 @@ trait DataTest extends GrailsUnitTest {
 
     @Before
     void mockDomainClass() {
-        if(!domainsHaveBeenMocked) {
+        if (!domainsHaveBeenMocked) {
             def classes = getDomainClassesToMock()
-            if(classes) {
+            if (classes) {
                 mockDomains classes
             }
             domainsHaveBeenMocked = true
@@ -66,7 +70,7 @@ trait DataTest extends GrailsUnitTest {
             dataStore.mappingContext.addEntityValidator(entity, validator)
         }
         final failOnError = false //getFailOnError()
-        new GormEnhancer(dataStore, transactionManager, failOnError instanceof Boolean ? (Boolean)failOnError : false)
+        new GormEnhancer(dataStore, transactionManager, failOnError instanceof Boolean ? (Boolean) failOnError : false)
 
         initializeMappingContext()
     }
@@ -80,7 +84,7 @@ trait DataTest extends GrailsUnitTest {
     }
 
     private GrailsDomainClass registerGrailsDomainClass(Class<?> domainClassToMock) {
-        (GrailsDomainClass)grailsApplication.addArtefact(DomainClassArtefactHandler.TYPE, domainClassToMock)
+        (GrailsDomainClass) grailsApplication.addArtefact(DomainClassArtefactHandler.TYPE, domainClassToMock)
     }
 
     @CompileDynamic
@@ -104,12 +108,22 @@ trait DataTest extends GrailsUnitTest {
 
     private void initialMockDomainSetup() {
         ConstraintEvalUtils.clearDefaultConstraints()
-        ((DomainClassArtefactHandler)grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE)).setGrailsApplication(grailsApplication)
+        ((DomainClassArtefactHandler) grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE)).setGrailsApplication(grailsApplication)
+    }
+
+    @OnceBefore
+    @CompileDynamic
+    void initializeConstraintEvaluator() {
+        defineBeans(true) {
+            "${ConstraintsEvaluator.BEAN_NAME}"(ConstraintsEvaluatorFactoryBean) {
+                getDelegate().defaultConstraints = DomainClassGrailsPlugin.getDefaultConstraints(grailsApplication.config)
+            }
+        }
     }
 
     private void initializeMappingContext() {
         def context = dataStore.mappingContext
-        if(context instanceof Initializable) {
+        if (context instanceof Initializable) {
             context.initialize()
         }
     }

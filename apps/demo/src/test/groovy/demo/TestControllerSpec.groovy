@@ -1,5 +1,6 @@
 package demo
 
+import grails.testing.gorm.DataTest
 import grails.testing.web.controllers.ControllerUnitTest
 import org.grails.plugins.testing.GrailsMockMultipartFile
 import org.grails.web.servlet.mvc.SynchronizerTokensHolder
@@ -8,7 +9,7 @@ import spock.lang.Specification
 
 import javax.servlet.http.HttpServletResponse
 
-class TestControllerSpec extends Specification implements ControllerUnitTest<TestController> {
+class TestControllerSpec extends Specification implements ControllerUnitTest<TestController>, DataTest {
 
     void 'test render text'() {
         when:
