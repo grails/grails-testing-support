@@ -41,7 +41,6 @@ class TestRuntime {
 
     public TestRuntime(Set<String> features, List<TestPlugin> plugins) {
         this.interceptors=new ArrayList<TestEventInterceptor>()
-        interceptors.add(new TestRuntimeEventInterceptor())
         changeFeaturesAndPlugins(features, plugins)
     }
     
@@ -55,68 +54,17 @@ class TestRuntime {
         interceptors.addAll(pluginsRegisteredAsInterceptors)
     }
     
-    public void addInterceptor(TestEventInterceptor interceptor) {
-        if(!interceptors.contains(interceptor)) {
-            interceptors.add(interceptor)
-        }
-    }
-    
-    public void removeInterceptor(TestEventInterceptor interceptor) {
-        interceptors.remove(interceptor)
-    }
-    
-    @CompileStatic
-    private class TestRuntimeEventInterceptor implements TestEventInterceptor {
-        private void eventProcessed(TestEvent event) {
-            switch(event.name) {
-                case 'closeRuntime':
-                    if(!event.stopDelivery) {
-                        close()
-                    }
-                    break
-                case 'requestFreshRuntime':
-                    if(!event.stopDelivery) {
-                        publishEvent('startFreshRuntime')
-                    }
-                    break
-            }
-        }
-        
-        @Override
-        public void eventPublished(TestEvent event) {
-            
-        }
-    
-        @Override
-        public void eventsProcessed(TestEvent event, List<TestEvent> consequenceEvents) {
-            eventProcessed(event)
-            for(TestEvent consequenceEvent : consequenceEvents) {
-                eventProcessed(event)
-            }
-        }
-    
-        @Override
-        public void eventDelivered(TestEvent event) {
-            
-        }
-    
-        @Override
-        public void mutateDeferredEvents(TestEvent initialEvent, List<TestEvent> deferredEvents) {
-            
-        }
-    }
-    
     public Object getValue(String name, Map callerInfo = [:]) {
         if(!containsValueFor(name)) {
             publishEvent("valueMissing", [name: name, callerInfo: callerInfo], [immediateDelivery: true])
         }
         getValueIfExists(name, callerInfo)
     }
-    
+
     public <T> T getValue(String name, Class<T> requiredType, Map callerInfo = [:]) {
         return (T)getValue(name, callerInfo)
     }
-    
+
     public Object getValueIfExists(String name, Map callerInfo = [:]) {
         Object val = registry.get(name)
         if(val instanceof LazyValue) {
@@ -129,7 +77,7 @@ class TestRuntime {
     public <T> T getValueIfExists(String name, Class<T> requiredType, Map callerInfo = [:]) {
         return (T)getValueIfExists(name, callerInfo)
     }
-        
+
     public Object getValueOrCreate(String name, Closure valueCreator) {
         if(containsValueFor(name)) {
             return getValue(name)
@@ -139,16 +87,16 @@ class TestRuntime {
             return value
         }
     }
-    
+
     public <T> T getValueOrCreate(String name, Class<T> requiredType, Closure valueCreator) {
         (T)getValueOrCreate(name, valueCreator)
     }
-    
-    
+
+
     public boolean containsValueFor(String name) {
         registry.containsKey(name)
     }
-    
+
     public Object removeValue(String name) {
         if(registry.containsKey(name)) {
             Object value = registry.remove(name)
@@ -158,22 +106,22 @@ class TestRuntime {
             null
         }
     }
-    
+
     public <T> T removeValue(String name, Class<T> requiredType) {
         (T)removeValue(name)
     }
-    
+
     public void putValue(String name, Object value) {
         registry.put(name, value)
         publishEvent("valueChanged", [name: name, value: value, lazy: false])
     }
-    
+
     public void putLazyValue(String name, Closure closure) {
         def lazyValue = new LazyValue(this, name, closure)
         registry.put(name, lazyValue)
         publishEvent("valueChanged", [name: name, value: lazyValue, lazy: true])
     }
-    
+
     @Immutable
     static class LazyValue {
         TestRuntime runtime
