@@ -1,1 +1,26 @@
-balalala
+Artifacts under test are subjected to dependency injection just like they are
+in the running application.  The unit testing environment does not spin up the
+entire Spring application context with all of the beans that would normally be
+configured in the running application.  Unit tests may register any beans
+necessary to carry out the test by defining a static method in the test named
+`doWithSpring`.  The syntax available in this closure is the same syntax that
+may be used in `grails-app/conf/spring/resources.groovy` for defining bean
+definitions.
+
+[source,groovy]
+.grails-app/services/demo/ReportingService.groovy
+----
+include::{sourcedir}/apps/demo/grails-app/services/demo/ReportingService.groovy[tags=basic_declaration,indent=0]
+----
+
+[source,groovy]
+.src/main/groovy/demo/MathHelper.groovy
+----
+include::{sourcedir}/apps/demo/src/main/groovy/demo/MathHelper.groovy[tags=basic_declaration,indent=0]
+----
+
+[source,groovy]
+.src/test/groovy/demo/ReportingServiceSpec.groovy
+----
+include::{sourcedir}/apps/demo/src/test/groovy/demo/ReportingServiceSpec.groovy[tags=basic_declaration,indent=0]
+----
