@@ -1,0 +1,1 @@
+By implementing rRails Testing Support traits, unit tests inherit functionality that make writing tests concise and simple.
