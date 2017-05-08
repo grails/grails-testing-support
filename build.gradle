@@ -22,7 +22,6 @@ ext {
     commonBuild = "https://raw.githubusercontent.com/grails/grails-common-build/1a6b9e24fd2ec49e321ab983994f850663adcc6d/"
 }
 
-
 apply from:"${commonBuild}/common-docs.gradle"
 
-println "PROJECT name: $project -- $tasks"
+println "********** $testingSupportVersion"
