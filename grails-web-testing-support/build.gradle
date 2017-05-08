@@ -16,7 +16,7 @@ repositories {
     maven { url "https://repo.grails.org/grails/core" }
 }
 
-version "1.0.0.BUILD-SNAPSHOT"
+version "$webTestingSupportVersion"
 group "org.grails"
 
 apply plugin: 'groovy'
