@@ -25,5 +25,5 @@ include::{sourcedir}/apps/demo/src/test/groovy/demo/DemoControllerSpec.groovy[ta
 <2> The `status` property will contain the value of the response status
 <3> The `response` property will be a reference to the HTTP response object
 
-See the link:api/grails/testing/web/controllers/ControllerUnitTest.html[`ControllerUnitTest`]
+See the link:../api/grails/testing/web/controllers/ControllerUnitTest.html[`ControllerUnitTest`]
 docs for information on all of the available properties.
