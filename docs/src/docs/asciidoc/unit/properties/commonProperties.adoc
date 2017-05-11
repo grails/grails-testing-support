@@ -1,5 +1,5 @@
 The testing framework provides and initializes a number of properties that
-might be of interest in unit tests.  The link:api/index.html[javadocs] for the
+are directly accessible unit tests.  The link:api/index.html[javadocs] for the
 various traits describe those properties.  Some particular properties of interest:
 
 

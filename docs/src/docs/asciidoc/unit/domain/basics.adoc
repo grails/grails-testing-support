@@ -2,7 +2,7 @@
 == The Basics
 
 Use the link:api/grails/testing/gorm/DomainUnitTest.html[`grails.testing.gorm.DomainUnitTest`]
-trait to unit test a domain class.
+trait to unit test single domain class.
 
 [source,groovy]
 .grails-app/domain/demo/Person.groovy
@@ -21,7 +21,7 @@ trait may be used.  When using `DataTest`, an explicit call to the
 link:api/grails/testing/gorm/DataTest.html#mockDomain(Class<?>)[mockDomain] or
 link:api/grails/testing/gorm/DataTest.html#mockDomains(Class<?>)[mockDomains]
 method may be used to specify which domain class(es) should be mocked for this
-test.
+test. This is useful when mocking more than one Domain class at a time to test persistence.
 
 [source,groovy]
 .src/test/groovy/demo/DataTestTraitSpec.groovy

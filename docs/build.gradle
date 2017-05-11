@@ -13,6 +13,8 @@ asciidoctor {
                'toc'                   : 'left',
                'icons'                 : 'font',
                'testingSupportVersion' : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.version}",
+               'gormTestingSupportVersion' : "${rootProject.allprojects.find { it.name == 'grails-gorm-testing-support'}.version}",
+               'webTestingSupportVersion' : "${rootProject.allprojects.find { it.name == 'grails-web-testing-support'}.version}",
                'sourcedir'             : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.projectDir}/src/main/groovy",
                'mainprojectdir'        : "${rootProject.allprojects.find { it.name == 'grails-testing-support'}.projectDir}",
                'demoAppDir'            : "${rootProject.allprojects.find { it.name == 'demo'}.projectDir}"

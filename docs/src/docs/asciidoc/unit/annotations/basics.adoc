@@ -17,7 +17,7 @@ an important difference is that `setupSpec` is run before the test instance is
 subjected to dependency injection while `@Before` methods are run after the
 test instance is subjected to dependency injection.  This means that the
 `setupSpec` method will not have access to injected variables but methods marked
-with `@Before` will have access to injected variables.  If a test as some one
+with `@Before` will have access to injected variables.  If a test has some one
 time setup logic that needs to be executed after dependency injection happens,
 the `RunOnce` annotation can help accomplish that.
 
