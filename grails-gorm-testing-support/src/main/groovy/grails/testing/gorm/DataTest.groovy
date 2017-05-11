@@ -20,20 +20,30 @@ package grails.testing.gorm
 
 import grails.core.GrailsDomainClass
 import grails.testing.spock.OnceBefore
+import grails.validation.ConstrainedProperty
 import grails.validation.ConstraintsEvaluator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
+import org.grails.datastore.gorm.validation.constraints.UniqueConstraintFactory
 import org.grails.datastore.mapping.core.AbstractDatastore
+import org.grails.datastore.mapping.core.DatastoreUtils
+import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.lifecycle.Initializable
+import org.grails.datastore.mapping.reflect.ClassPropertyFetcher
+import org.grails.datastore.mapping.simple.SimpleMapDatastore
+import org.grails.datastore.mapping.transactions.DatastoreTransactionManager
 import org.grails.plugins.domain.DomainClassGrailsPlugin
 import org.grails.testing.GrailsUnitTest
 import org.grails.testing.gorm.MockCascadingDomainClassValidator
 import org.grails.validation.ConstraintEvalUtils
 import org.grails.validation.ConstraintsEvaluatorFactoryBean
+import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
 
@@ -44,18 +54,8 @@ trait DataTest extends GrailsUnitTest {
 
     Class<?>[] getDomainClassesToMock() {}
 
-    @Before
-    void mockDomainClass() {
-        if (!domainsHaveBeenMocked) {
-            def classes = getDomainClassesToMock()
-            if (classes) {
-                mockDomains classes
-            }
-            domainsHaveBeenMocked = true
-        }
-    }
-
     void mockDomain(Class<?> domainClassToMock) {
+        setupDataStuff()
         mockDomains(domainClassToMock)
         dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
     }
@@ -111,6 +111,40 @@ trait DataTest extends GrailsUnitTest {
         ((DomainClassArtefactHandler) grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE)).setGrailsApplication(grailsApplication)
     }
 
+    @Before
+    @CompileDynamic
+    void setupDataStuff() {
+        defineBeans(true) {
+            grailsDatastore(SimpleMapDatastore, grailsApplication.mainContext)
+            getDelegate().transactionManager(DatastoreTransactionManager) {
+                getDelegate().datastore = ref("grailsDatastore")
+            }
+        }
+        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
+        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
+        ConstrainedProperty.registerNewConstraint("unique", new UniqueConstraintFactory(simpleDatastore))
+        DatastoreUtils.bindSession(simpleDatastore.connect())
+        if (!domainsHaveBeenMocked) {
+            def classes = getDomainClassesToMock()
+            if (classes) {
+                mockDomains classes
+            }
+            domainsHaveBeenMocked = true
+        }
+    }
+
+    @After
+    void shutdownDatastoreImplementation() {
+        Session currentSession = (Session)runtime.removeValue("domainClassCurrentSession")
+        if (currentSession != null) {
+            currentSession.disconnect()
+            DatastoreUtils.unbindSession(currentSession)
+        }
+        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
+        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
+        simpleDatastore.clearData()
+    }
+
     @OnceBefore
     @CompileDynamic
     void initializeConstraintEvaluator() {
@@ -119,6 +153,12 @@ trait DataTest extends GrailsUnitTest {
                 getDelegate().defaultConstraints = DomainClassGrailsPlugin.getDefaultConstraints(grailsApplication.config)
             }
         }
+    }
+
+    @AfterClass
+    void cleanupDatastore() {
+        ClassPropertyFetcher.clearCache()
+        ConstrainedProperty.removeConstraint("unique")
     }
 
     private void initializeMappingContext() {

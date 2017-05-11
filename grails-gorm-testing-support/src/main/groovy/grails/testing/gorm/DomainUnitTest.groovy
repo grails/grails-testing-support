@@ -30,6 +30,7 @@ trait DomainUnitTest<T> implements DataTest {
 
     @Before
     void mockDomainUnderTest() {
+        setupDataStuff()
         if(!hasBeenMocked) {
             mockDomain(getDomainUnderTest())
             hasBeenMocked = true

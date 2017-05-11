@@ -46,52 +46,12 @@ class DomainClassTestPlugin implements TestPlugin {
     String[] providedFeatures = ['domainClass']
     int ordinal = 0
 
-    @CompileStatic(TypeCheckingMode.SKIP)
-    protected void registerBeans(TestRuntime runtime, GrailsApplication grailsApplication) {
-        defineBeans(runtime) {
-            grailsDatastore(SimpleMapDatastore, grailsApplication.mainContext)
-            transactionManager(DatastoreTransactionManager) {
-                datastore = ref("grailsDatastore")
-            }
-        }
-    }
-    
     protected void applicationInitialized(TestRuntime runtime, GrailsApplication grailsApplication) {
     }
     
     protected void cleanupDatastore() {
-        ClassPropertyFetcher.clearCache()
-        ConstrainedProperty.removeConstraint("unique")
     }
 
-    protected void connectDatastore(TestRuntime runtime, GrailsApplication grailsApplication) {
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
-        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
-        ConstrainedProperty.registerNewConstraint("unique", new UniqueConstraintFactory(simpleDatastore))
-        Session currentSession = DatastoreUtils.bindSession(simpleDatastore.connect())
-        runtime.putValue("domainClassCurrentSession", currentSession)
-    }
-
-    protected void shutdownDatastoreImplementation(TestRuntime runtime, GrailsApplication grailsApplication) {
-        Session currentSession = (Session)runtime.removeValue("domainClassCurrentSession")
-        if (currentSession != null) {
-            currentSession.disconnect()
-            DatastoreUtils.unbindSession(currentSession)
-        }
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
-        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
-        simpleDatastore.clearData()
-    }
-
-    protected void before(TestRuntime runtime, GrailsApplication grailsApplication) {
-        connectDatastore(runtime, grailsApplication)
-    }
-
-    @CompileStatic(TypeCheckingMode.SKIP)
-    protected void after(TestRuntime runtime, GrailsApplication grailsApplication) {
-        shutdownDatastoreImplementation(runtime, grailsApplication)
-    }
-    
     void defineBeans(TestRuntime runtime, Closure closure) {
         runtime.publishEvent("defineBeans", [closure: closure])
     }
@@ -101,26 +61,6 @@ class DomainClassTestPlugin implements TestPlugin {
     }
 
     public void onTestEvent(TestEvent event) {
-        switch(event.name) {
-            case 'before':
-                before(event.runtime, getGrailsApplication(event))
-                break
-            case 'after':
-                after(event.runtime, getGrailsApplication(event))
-                break
-            case 'registerBeans':
-                registerBeans(event.runtime, (GrailsApplication)event.arguments.grailsApplication)
-                break
-            case 'applicationInitialized':
-                applicationInitialized(event.runtime, (GrailsApplication)event.arguments.grailsApplication)
-                break
-            case 'beforeClass':
-                ClassPropertyFetcher.clearCache()
-                break
-            case 'afterClass':
-                cleanupDatastore()
-                break
-        }
     }
     
     public void close(TestRuntime runtime) {
