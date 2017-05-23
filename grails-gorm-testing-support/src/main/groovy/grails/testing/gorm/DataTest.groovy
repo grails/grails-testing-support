@@ -50,12 +50,11 @@ import org.springframework.validation.Validator
 @CompileStatic
 trait DataTest extends GrailsUnitTest {
 
-    private domainsHaveBeenMocked = false
+    boolean domainsHaveBeenMocked = false
 
     Class<?>[] getDomainClassesToMock() {}
 
     void mockDomain(Class<?> domainClassToMock) {
-        setupDataStuff()
         mockDomains(domainClassToMock)
         dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
     }
@@ -109,28 +108,6 @@ trait DataTest extends GrailsUnitTest {
     private void initialMockDomainSetup() {
         ConstraintEvalUtils.clearDefaultConstraints()
         ((DomainClassArtefactHandler) grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE)).setGrailsApplication(grailsApplication)
-    }
-
-    @Before
-    @CompileDynamic
-    void setupDataStuff() {
-        defineBeans(true) {
-            grailsDatastore(SimpleMapDatastore, grailsApplication.mainContext)
-            getDelegate().transactionManager(DatastoreTransactionManager) {
-                getDelegate().datastore = ref("grailsDatastore")
-            }
-        }
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
-        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
-        ConstrainedProperty.registerNewConstraint("unique", new UniqueConstraintFactory(simpleDatastore))
-        DatastoreUtils.bindSession(simpleDatastore.connect())
-        if (!domainsHaveBeenMocked) {
-            def classes = getDomainClassesToMock()
-            if (classes) {
-                mockDomains classes
-            }
-            domainsHaveBeenMocked = true
-        }
     }
 
     @After
