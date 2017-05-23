@@ -1,5 +1,5 @@
 
-== The Basics
+=== The Basics
 
 Tag libraries and GSP pages can be tested with the
 `grails.testing.web.taglib.TagLibUnitTest` trait.
@@ -7,13 +7,13 @@ Tag libraries and GSP pages can be tested with the
 [source,groovy]
 .grails-app/taglib/demo/SampleTagLib.groovy
 ----
-include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;hello_world,indent=0]
+include::{sourcedir}/apps/demo/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;hello_world,indent=0]
 ----
 
 [source,groovy]
 .src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
-include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_as_method,indent=0]
+include::{sourcedir}/apps/demo/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_as_method,indent=0]
 ----
 
 Adding the `TagLibUnitTest` trait to a test causes a new `tagLib` field to be
@@ -29,12 +29,12 @@ arguments to the method call.
 [source,groovy]
 .grails-app/taglib/demo/SampleTagLib.groovy
 ----
-include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;say_hello,indent=0]
+include::{sourcedir}/apps/demo/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;say_hello,indent=0]
 ----
 [source,groovy]
 .src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
-include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_tag_as_method_with_parameters,indent=0]
+include::{sourcedir}/apps/demo/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_tag_as_method_with_parameters,indent=0]
 ----
 
 Alternatively, tags may be tested with the `applyTemplate` method which accepts
@@ -43,7 +43,7 @@ a `String` parameter that will be evaluated as if it were source code in a GSP.
 [source,groovy]
 .src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
-include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=0]
+include::{sourcedir}/apps/demo/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=0]
 ----
 
 The `applyTemplate` method accepts an optional second argument which is a `Map`
@@ -53,12 +53,12 @@ past as the first argument to `applyTemplate` as shown below.
 [source,groovy]
 .grails-app/taglib/demo/SampleTagLib.groovy
 ----
-include::{demoAppDir}/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;render_some_number,indent=0]
+include::{sourcedir}/apps/demo/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;render_some_number,indent=0]
 ----
 [source,groovy]
 .src/test/groovy/demo/SampleTagLibSpec.groovy
 ----
-include::{demoAppDir}/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_with_model,indent=0]
+include::{sourcedir}/apps/demo/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_with_model,indent=0]
 ----
 
 NOTE: The String being passed as the first argument to `applyTemplate` includes
@@ -68,3 +68,26 @@ important that the containing String be surrounded by single quotes, not double
 quotes.  `'<demo:renderSomeNumber value="${x + y}"/>'` works.
 `"<demo:renderSomeNumber value='${x + y}'/>"` would not.
 
+=== Mocking Tag Libraries
+
+In order to test a tag library which invokes tags from another tag library,
+the second tag library needs to be explicitly mocked by invoking the
+`mockTagLib` method.
+
+[source,groovy]
+.grails-app/taglib/demo/FirstTagLib.groovy
+----
+include::{sourcedir}/apps/demo/grails-app/taglib/demo/FirstTagLib.groovy[tags=basic_declaration,indent=0]
+----
+
+[source,groovy]
+.grails-app/taglib/demo/SecondTagLib.groovy
+----
+include::{sourcedir}/apps/demo/grails-app/taglib/demo/SecondTagLib.groovy[tags=basic_declaration,indent=0]
+----
+
+[source,groovy]
+.src/test/groovy/demo/FirstTagLibSpec.groovy
+----
+include::{sourcedir}/apps/demo/src/test/groovy/demo/FirstTagLibSpec.groovy[tags=basic_declaration,indent=0]
+----

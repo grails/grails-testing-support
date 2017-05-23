@@ -1,9 +1,9 @@
+rootProject.name = 'testing-support'
+
 include 'grails-testing-support',
         'grails-web-testing-support',
         'grails-gorm-testing-support',
-        'demo',
-        'docs'
+        'demo'
 
 project(':demo').projectDir = new File('apps/demo')
 
-rootProject.name = 'testing-support'
