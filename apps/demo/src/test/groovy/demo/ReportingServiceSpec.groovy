@@ -6,9 +6,9 @@ import spock.lang.Specification
 
 class ReportingServiceSpec extends Specification implements ServiceUnitTest<ReportingService> {
 
-    static doWithSpring = {
+    Closure doWithSpring() {{ ->
         someHelper RushHelper
-    }
+    }}
 
     void "test dependency injection"() {
         expect:

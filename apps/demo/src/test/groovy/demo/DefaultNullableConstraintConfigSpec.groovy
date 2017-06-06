@@ -5,11 +5,11 @@ import spock.lang.Specification
 
 class DefaultNullableConstraintConfigSpec extends Specification implements DomainUnitTest<Person> {
 
-    static doWithConfig = { c ->
+    Closure doWithConfig() {{ c ->
         c.grails.gorm.default.constraints = {
             '*'(nullable: true)
         }
-    }
+    }}
 
     void 'test default nullable'() {
         expect:

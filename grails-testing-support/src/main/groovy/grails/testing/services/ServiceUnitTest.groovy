@@ -18,7 +18,9 @@
  */
 package grails.testing.services
 
+import groovy.transform.CompileStatic
 import org.grails.core.artefact.ServiceArtefactHandler
+import org.grails.spring.BeanConfiguration
 import org.grails.testing.ParameterizedGrailsUnitTest
 
 trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
@@ -31,9 +33,9 @@ trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
     void mockArtefact(Class<?> serviceClass) {
         final serviceArtefact = grailsApplication.addArtefact(ServiceArtefactHandler.TYPE, serviceClass)
 
-        defineBeans(true) {
-            "${serviceArtefact.propertyName}"(serviceClass) { bean ->
-                bean.autowire = true
+        defineBeans {
+            "${serviceArtefact.propertyName}"(serviceClass) { BeanConfiguration bean ->
+                bean.setAutowire("byName")
             }
         }
     }

@@ -37,10 +37,10 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         []
     }
 
-    @Before
     void configuredMockedControllers() {
         for(Class c : controllersToMock) {
-            mockController c
+            final GrailsControllerClass controllerArtefact = (GrailsControllerClass)grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, c)
+            controllerArtefact.initialize()
         }
         getArtefactInstance()
     }
@@ -155,15 +155,15 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         }
     }
 
-    public GrailsControllerClass getControllerClass(controller) {
-        return grailsApplication.getArtefactByLogicalPropertyName(ControllerArtefactHandler.TYPE, controller)
+    GrailsControllerClass getControllerClass(controller) {
+        (GrailsControllerClass)grailsApplication.getArtefactByLogicalPropertyName(ControllerArtefactHandler.TYPE, controller)
     }
 
     @CompileDynamic
     void mockArtefact(Class<?> urlMappingsClass) {
         grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, urlMappingsClass)
 
-        defineBeans(true) {
+        defineBeans {
             grailsUrlMappingsHolder(UrlMappingsHolderFactoryBean) {
                 getDelegate().grailsApplication = grailsApplication
             }

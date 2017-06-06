@@ -18,27 +18,32 @@
  */
 package org.grails.testing
 
+import grails.async.Promises
+import grails.core.DefaultGrailsApplication
 import grails.core.GrailsApplication
+import grails.spring.BeanBuilder
+import grails.util.Holders
+import grails.validation.DeferredBindingActions
 import groovy.transform.CompileStatic
-import org.grails.testing.runtime.TestRuntime
-import org.grails.testing.runtime.TestRuntimeFactory
-import org.junit.Rule
-import org.spockframework.runtime.model.FieldMetadata
+import org.grails.core.lifecycle.ShutdownOperations
+import org.grails.core.util.ClassPropertyFetcher
+import org.springframework.beans.factory.support.BeanDefinitionRegistry
+import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.MessageSource
 
 @CompileStatic
 trait GrailsUnitTest {
 
-    private TestRuntime currentRuntime;
+    private static GrailsApplication _grailsApplication
+    private static Object _servletContext
 
-    @Rule
-    @FieldMetadata(
-            line = -1,
-            name = "freshRuntimeRule",
-            ordinal = 0
-    )
-    public TestRuntimeRule freshRuntimeRule = new TestRuntimeRule(testInstance: this)
+    /**
+     * @return the servlet context
+     */
+    Object getOptionalServletContext() {
+        _servletContext
+    }
 
     /**
      *
@@ -53,34 +58,81 @@ trait GrailsUnitTest {
      * @return The GrailsApplication instance
      */
     GrailsApplication getGrailsApplication() {
-        (GrailsApplication) runtime.getValue("grailsApplication", [testInstance: this])
-    }
-
-    public TestRuntime getRuntime() {
-        if (currentRuntime == null) {
-            currentRuntime = TestRuntimeFactory.getRuntimeForTestClass(this.class);
+        if (_grailsApplication == null) {
+            def builder = new GrailsApplicationBuilder(
+                    doWithSpring: doWithSpring(),
+                    doWithConfig: doWithConfig(),
+                    includePlugins: getIncludePlugins(),
+                    loadExternalBeans: loadExternalBeans()
+            ).build()
+            _grailsApplication = builder.grailsApplication
+            _servletContext = builder.servletContext
         }
-        if (currentRuntime == null) {
-            throw new IllegalStateException("Current TestRuntime instance is null.");
-        } else if (currentRuntime.isClosed()) {
-            throw new IllegalStateException("Current TestRuntime instance is closed.");
-        }
-        return currentRuntime;
-    }
-
-    public void setRuntime(TestRuntime runtime) {
-        this.currentRuntime = runtime;
-    }
-
-    void defineBeans(boolean immediateDelivery = true, Closure<?> closure) {
-        runtime.publishEvent("defineBeans", [closure: closure], [immediateDelivery: immediateDelivery])
+        _grailsApplication
     }
 
     /**
      *
-     * @return the MessageSource bean from the applicatin context
+     * @return the MessageSource bean from the application context
      */
     MessageSource getMessageSource() {
         applicationContext.getBean("messageSource", MessageSource)
+    }
+
+    void defineBeans(Closure closure) {
+        def binding = new Binding()
+        def bb = new BeanBuilder(null, null, grailsApplication.getClassLoader())
+        binding.setVariable "application", grailsApplication
+        bb.setBinding binding
+        bb.beans(closure)
+        bb.registerBeans((BeanDefinitionRegistry)applicationContext)
+        applicationContext.beanFactory.preInstantiateSingletons()
+    }
+
+    Closure doWithSpring() {
+        null
+    }
+
+    Closure doWithConfig() {
+        null
+    }
+
+    Set<String> getIncludePlugins() {
+        new HashSet<String>()
+    }
+
+    boolean loadExternalBeans() {
+        false
+    }
+
+    void cleanupGrailsApplication() {
+        if (_grailsApplication != null) {
+            ClassPropertyFetcher.clearClassPropertyFetcherCache()
+            if (_grailsApplication instanceof DefaultGrailsApplication) {
+                ((DefaultGrailsApplication)_grailsApplication).clear()
+            }
+
+            ApplicationContext applicationContext = grailsApplication.getParentContext()
+
+            if (applicationContext instanceof ConfigurableApplicationContext) {
+                if (((ConfigurableApplicationContext) applicationContext).isActive()) {
+                    if(grailsApplication.mainContext instanceof Closeable) {
+                        ((Closeable)grailsApplication.mainContext).close()
+                    }
+                    if (applicationContext instanceof Closeable) {
+                        ((Closeable)applicationContext).close()
+                    }
+                }
+            }
+
+            ShutdownOperations.runOperations()
+            DeferredBindingActions.clear()
+
+            this._grailsApplication = null
+
+            Promises.promiseFactory = null
+
+            Holders.clear()
+        }
     }
 }

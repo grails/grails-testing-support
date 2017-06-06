@@ -27,8 +27,11 @@ import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import org.grails.commons.CodecArtefactHandler
+import org.grails.commons.DefaultGrailsCodecClass
 import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.core.artefact.TagLibArtefactHandler
+import org.grails.plugins.codecs.DefaultCodecLookup
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
 import org.grails.taglib.TagLibraryLookup
@@ -40,9 +43,10 @@ import org.springframework.mock.web.MockServletContext
 
 @CompileStatic
 trait GrailsWebUnitTest implements GrailsUnitTest {
-    GrailsWebRequest getWebRequest() {
-        (GrailsWebRequest) runtime.getValue("webRequest")
-    }
+
+    private Set<Class> loadedCodecs = new HashSet<Class>()
+    static Map<String, String> groovyPages = [:]
+    GrailsWebRequest webRequest
 
     GrailsMockHttpServletRequest getRequest() {
         return (GrailsMockHttpServletRequest) getWebRequest().getCurrentRequest()
@@ -53,15 +57,11 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
     }
 
     MockServletContext getServletContext() {
-        (MockServletContext) runtime.getValue("servletContext")
-    }
-
-    Map<String, String> getGroovyPages() {
-        (Map<String, String>) runtime.getValue("groovyPages")
+        (MockServletContext)optionalServletContext
     }
 
     Map<String, String> getViews() {
-        getGroovyPages()
+        groovyPages
     }
 
     /**
@@ -99,7 +99,7 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         final tagLookup = applicationContext.getBean(TagLibraryLookup)
 
 
-        defineBeans(true) {
+        defineBeans {
             "${tagLib.fullName}"(tagLibClass) { bean ->
                 bean.autowire = true
             }
@@ -116,7 +116,7 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
     @CompileDynamic
     void mockController(Class<?> controllerClass) {
         GrailsClass controllerArtefact = createAndEnhanceController(controllerClass)
-        defineBeans(true) {
+        defineBeans {
             "$controllerClass.name"(controllerClass) { bean ->
                 bean.scope = 'prototype'
                 bean.autowire = true
@@ -146,6 +146,19 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
     void mockTagLibs(Class<?>... tagLibClasses) {
         for(Class c : tagLibClasses) {
             mockTagLib c
+        }
+    }
+
+    void mockCodec(Class<?> codecClass, boolean reinitialize = true) {
+        if (loadedCodecs.contains(codecClass)) {
+            return
+        }
+        loadedCodecs << codecClass
+        DefaultGrailsCodecClass grailsCodecClass = new DefaultGrailsCodecClass(codecClass)
+        grailsCodecClass.configureCodecMethods()
+        grailsApplication.addArtefact(CodecArtefactHandler.TYPE, grailsCodecClass)
+        if (reinitialize) {
+            applicationContext.getBean(DefaultCodecLookup).reInitialize()
         }
     }
 }

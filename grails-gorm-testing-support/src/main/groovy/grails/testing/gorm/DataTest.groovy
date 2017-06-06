@@ -51,6 +51,7 @@ import org.springframework.validation.Validator
 trait DataTest extends GrailsUnitTest {
 
     boolean domainsHaveBeenMocked = false
+    Session currentSession
 
     Class<?>[] getDomainClassesToMock() {}
 
@@ -75,11 +76,11 @@ trait DataTest extends GrailsUnitTest {
     }
 
     AbstractDatastore getDataStore() {
-        grailsApplication.mainContext.getBean(AbstractDatastore)
+        applicationContext.getBean(AbstractDatastore)
     }
 
     PlatformTransactionManager getTransactionManager() {
-        grailsApplication.mainContext.getBean('transactionManager', PlatformTransactionManager)
+        applicationContext.getBean('transactionManager', PlatformTransactionManager)
     }
 
     private GrailsDomainClass registerGrailsDomainClass(Class<?> domainClassToMock) {
@@ -89,7 +90,7 @@ trait DataTest extends GrailsUnitTest {
     @CompileDynamic
     private Validator registerDomainClassValidator(GrailsDomainClass domain) {
         String validationBeanName = "${domain.fullName}Validator"
-        defineBeans(true) {
+        defineBeans {
             "${domain.fullName}"(domain.clazz) { bean ->
                 bean.singleton = false
                 bean.autowire = "byName"
@@ -108,34 +109,6 @@ trait DataTest extends GrailsUnitTest {
     private void initialMockDomainSetup() {
         ConstraintEvalUtils.clearDefaultConstraints()
         ((DomainClassArtefactHandler) grailsApplication.getArtefactHandler(DomainClassArtefactHandler.TYPE)).setGrailsApplication(grailsApplication)
-    }
-
-    @After
-    void shutdownDatastoreImplementation() {
-        Session currentSession = (Session)runtime.removeValue("domainClassCurrentSession")
-        if (currentSession != null) {
-            currentSession.disconnect()
-            DatastoreUtils.unbindSession(currentSession)
-        }
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)grailsApplication.mainContext
-        SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
-        simpleDatastore.clearData()
-    }
-
-    @OnceBefore
-    @CompileDynamic
-    void initializeConstraintEvaluator() {
-        defineBeans(true) {
-            "${ConstraintsEvaluator.BEAN_NAME}"(ConstraintsEvaluatorFactoryBean) {
-                getDelegate().defaultConstraints = DomainClassGrailsPlugin.getDefaultConstraints(grailsApplication.config)
-            }
-        }
-    }
-
-    @AfterClass
-    void cleanupDatastore() {
-        ClassPropertyFetcher.clearCache()
-        ConstrainedProperty.removeConstraint("unique")
     }
 
     private void initializeMappingContext() {

@@ -6,9 +6,9 @@ import spock.lang.Specification
 
 class AutowiredTestSpec extends Specification implements AutowiredTest {
 
-    static doWithSpring = {
+    Closure doWithSpring() {{ ->
         helperService HelperService
-    }
+    }}
 
     HelperService helperService
 

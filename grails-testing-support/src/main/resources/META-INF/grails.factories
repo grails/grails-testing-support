@@ -1,4 +1,0 @@
-org.grails.testing.runtime.TestPlugin=\
-org.grails.testing.runtime.plugins.GrailsApplicationTestPlugin,\
-org.grails.testing.runtime.plugins.CoreBeansTestPlugin,\
-org.grails.testing.runtime.plugins.MetaClassCleanerTestPlugin

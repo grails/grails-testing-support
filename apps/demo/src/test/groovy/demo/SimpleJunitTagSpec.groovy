@@ -2,11 +2,12 @@ package demo
 
 import grails.testing.web.taglib.TagLibUnitTest
 import org.junit.Test
+import spock.lang.Specification
 
-class SimpleJunitTagSpec implements TagLibUnitTest<SampleTagLib> {
+class SimpleJunitTagSpec extends Specification implements TagLibUnitTest<SampleTagLib> {
 
-    @Test
     void testSomethingSimple() {
-        assert applyTemplate('<demo:helloWorld/>') == 'Hello, World!'
+        expect:
+        applyTemplate('<demo:helloWorld/>') == 'Hello, World!'
     }
 }

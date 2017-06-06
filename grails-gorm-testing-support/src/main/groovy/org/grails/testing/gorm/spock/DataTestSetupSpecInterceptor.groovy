@@ -2,12 +2,16 @@ package org.grails.testing.gorm.spock
 
 import grails.testing.gorm.DataTest
 import grails.validation.ConstrainedProperty
+import grails.validation.ConstraintsEvaluator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.UniqueConstraintFactory
 import org.grails.datastore.mapping.core.DatastoreUtils
+import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.grails.datastore.mapping.transactions.DatastoreTransactionManager
+import org.grails.plugins.domain.DomainClassGrailsPlugin
+import org.grails.validation.ConstraintsEvaluatorFactoryBean
 import org.spockframework.runtime.IRunListener
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
@@ -15,24 +19,25 @@ import org.spockframework.runtime.model.ErrorInfo
 import org.spockframework.runtime.model.FeatureInfo
 import org.spockframework.runtime.model.IterationInfo
 import org.spockframework.runtime.model.SpecInfo
+import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 
 @CompileStatic
-class DataTestSetupExtension implements IMethodInterceptor, IRunListener{
+class DataTestSetupSpecInterceptor implements IMethodInterceptor {
 
     @Override
     void intercept(IMethodInvocation invocation) throws Throwable {
-        def theInstance = invocation.instance
-        if(theInstance instanceof DataTest) {
-            configureDataTest theInstance
-        }
+        configureDataTest((DataTest)invocation.instance)
         invocation.proceed()
     }
 
     @CompileDynamic
     void setupDataTestBeans(DataTest testInstance) {
-        testInstance.defineBeans(true) {
-            grailsDatastore SimpleMapDatastore, testInstance.grailsApplication.mainContext
+        testInstance.defineBeans {
+            "${ConstraintsEvaluator.BEAN_NAME}"(ConstraintsEvaluatorFactoryBean) {
+                defaultConstraints = DomainClassGrailsPlugin.getDefaultConstraints(application.config)
+            }
+            grailsDatastore SimpleMapDatastore, application.mainContext
             transactionManager(DatastoreTransactionManager) {
                 datastore = ref('grailsDatastore')
             }
@@ -41,10 +46,9 @@ class DataTestSetupExtension implements IMethodInterceptor, IRunListener{
 
     void configureDataTest(DataTest testInstance) {
         setupDataTestBeans testInstance
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)testInstance.grailsApplication.mainContext
+        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)testInstance.applicationContext
         SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
         ConstrainedProperty.registerNewConstraint('unique', new UniqueConstraintFactory(simpleDatastore))
-        DatastoreUtils.bindSession(simpleDatastore.connect())
         if (!testInstance.domainsHaveBeenMocked) {
             def classes = testInstance.domainClassesToMock
             if (classes) {
@@ -54,46 +58,4 @@ class DataTestSetupExtension implements IMethodInterceptor, IRunListener{
         }
     }
 
-    @Override
-    void beforeSpec(SpecInfo spec) {
-    }
-
-    @Override
-    void beforeFeature(FeatureInfo feature) {
-    }
-
-    @Override
-    void beforeIteration(IterationInfo iteration) {
-
-    }
-
-    @Override
-    void afterIteration(IterationInfo iteration) {
-
-    }
-
-    @Override
-    void afterFeature(FeatureInfo feature) {
-
-    }
-
-    @Override
-    void afterSpec(SpecInfo spec) {
-
-    }
-
-    @Override
-    void error(ErrorInfo error) {
-
-    }
-
-    @Override
-    void specSkipped(SpecInfo spec) {
-
-    }
-
-    @Override
-    void featureSkipped(FeatureInfo feature) {
-
-    }
 }

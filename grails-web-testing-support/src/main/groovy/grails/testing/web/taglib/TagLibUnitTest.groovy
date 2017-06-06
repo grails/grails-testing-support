@@ -20,12 +20,14 @@ package grails.testing.web.taglib
 
 import grails.testing.web.GrailsWebUnitTest
 import groovy.text.Template
+import groovy.transform.CompileStatic
 import org.grails.buffer.GrailsPrintWriter
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.testing.ParameterizedGrailsUnitTest
 
 import java.lang.reflect.ParameterizedType
 
+@CompileStatic
 trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {
 
     private boolean hasBeenMocked = false
@@ -44,7 +46,7 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         return sw.toString()
     }
 
-    void applyTemplate(StringWriter sw, template, params = [:]) {
+    void applyTemplate(StringWriter sw, String template, Map params = [:]) {
         ensureTaglibHasBeenMocked()
         def engine = applicationContext.getBean(GroovyPagesTemplateEngine)
 
@@ -52,7 +54,7 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         renderTemplateToStringWriter(sw, t, params)
     }
 
-    private renderTemplateToStringWriter(StringWriter sw, Template t, params) {
+    private renderTemplateToStringWriter(StringWriter sw, Template t, Map params) {
         if (!webRequest.controllerName) {
             webRequest.controllerName = 'test'
         }

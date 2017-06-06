@@ -26,14 +26,8 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 trait DomainUnitTest<T> implements DataTest {
 
-    private boolean hasBeenMocked = false
-
-    @Before
-    void mockDomainUnderTest() {
-        if(!hasBeenMocked) {
-            mockDomain(getDomainUnderTest())
-            hasBeenMocked = true
-        }
+    Class<?>[] getDomainClassesToMock() {
+        [getDomainUnderTest()].toArray(Class)
     }
 
     private Class<T> getDomainUnderTest() {

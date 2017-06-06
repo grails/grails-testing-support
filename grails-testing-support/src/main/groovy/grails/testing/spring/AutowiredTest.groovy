@@ -18,12 +18,15 @@
  */
 package grails.testing.spring
 
+import groovy.transform.CompileStatic
 import org.grails.testing.GrailsUnitTest
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 
+@CompileStatic
 trait AutowiredTest extends GrailsUnitTest {
 
     void autowire() {
-        applicationContext.autowireCapableBeanFactory.autowireBeanProperties this, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+        AutowireCapableBeanFactory beanFactory = applicationContext.autowireCapableBeanFactory
+        beanFactory.autowireBeanProperties this, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
     }
 }

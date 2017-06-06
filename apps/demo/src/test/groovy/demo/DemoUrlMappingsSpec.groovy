@@ -2,15 +2,19 @@ package demo
 
 import grails.testing.web.UrlMappingTest
 import org.junit.Test
+import spock.lang.Specification
 
-class DemoUrlMappingsSpec implements UrlMappingTest<DemoUrlMappings> {
+class DemoUrlMappingsSpec extends Specification implements UrlMappingTest<DemoUrlMappings> {
 
     Class[] getControllersToMock() {
         DemoController
     }
 
-    @Test
     void testUrlMapping() {
+        when:
         assertUrlMapping '/sayHello', controller: 'demo', action: 'hello'
+
+        then:
+        noExceptionThrown()
     }
 }
