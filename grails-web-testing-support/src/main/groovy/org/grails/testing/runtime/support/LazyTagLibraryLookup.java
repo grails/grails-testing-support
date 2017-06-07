@@ -21,7 +21,6 @@ package org.grails.testing.runtime.support;
 
 import grails.core.GrailsTagLibClass;
 import groovy.lang.GroovyObject;
-import org.grails.core.DefaultGrailsTagLibClass;
 import org.grails.plugins.web.GroovyPagesGrailsPlugin;
 import org.grails.taglib.TagLibraryLookup;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -50,7 +49,22 @@ public class LazyTagLibraryLookup extends TagLibraryLookup {
     }
 
     public void registerLazyLoadableTagLibClass(Class tagLibClass) {
-        GrailsTagLibClass grailsTagLibClass = new DefaultGrailsTagLibClass(tagLibClass);
+        Class defaultTagLibClass = null;
+        GrailsTagLibClass grailsTagLibClass = null;
+        try {
+            defaultTagLibClass = Class.forName("org.grails.core.gsp.DefaultGrailsTagLibClass");
+        } catch (ClassNotFoundException e) {
+            try {
+                defaultTagLibClass = Class.forName("org.grails.core.DefaultGrailsTagLibClass");
+            } catch (ClassNotFoundException f) {
+            }
+        }
+
+        try {
+            grailsTagLibClass = (GrailsTagLibClass)defaultTagLibClass.getConstructor(Class.class).newInstance(tagLibClass);
+        } catch (Exception e) {
+        }
+
         if (!hasNamespace(grailsTagLibClass.getNamespace())) {
             registerNamespaceDispatcher(grailsTagLibClass.getNamespace());
         }
@@ -86,7 +100,7 @@ public class LazyTagLibraryLookup extends TagLibraryLookup {
     }
 
     @Override
-    protected void putTagLib(Map<String, Object> tags, String name, GrailsTagLibClass taglib) {
+    protected void putTagLib(Map<String, Object> tags, String name, grails.core.GrailsTagLibClass taglib) {
         if (applicationContext.containsBean(taglib.getFullName())) {
             super.putTagLib(tags, name, taglib);
         }

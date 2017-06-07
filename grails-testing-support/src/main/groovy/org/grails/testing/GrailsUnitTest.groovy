@@ -21,6 +21,7 @@ package org.grails.testing
 import grails.async.Promises
 import grails.core.DefaultGrailsApplication
 import grails.core.GrailsApplication
+import grails.plugins.Plugin
 import grails.spring.BeanBuilder
 import grails.util.Holders
 import grails.validation.DeferredBindingActions
@@ -31,6 +32,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.MessageSource
+import java.lang.reflect.Method
 
 @CompileStatic
 trait GrailsUnitTest {
@@ -87,6 +89,23 @@ trait GrailsUnitTest {
         bb.beans(closure)
         bb.registerBeans((BeanDefinitionRegistry)applicationContext)
         applicationContext.beanFactory.preInstantiateSingletons()
+    }
+
+    void defineBeans(Object plugin) {
+        Class clazz = plugin.getClass()
+        try {
+            Method doWithSpringMethod = clazz.getMethod('doWithSpring')
+            Closure config = (Closure)doWithSpringMethod.invoke(plugin)
+            if (config != null) {
+                defineBeans(config)
+                return
+            }
+        } catch (NoSuchMethodException e) {}
+
+        try {
+            Method doWithSpringField = clazz.getMethod('getDoWithSpring')
+            defineBeans((Closure)doWithSpringField.invoke(plugin))
+        } catch (NoSuchFieldException e) {}
     }
 
     Closure doWithSpring() {

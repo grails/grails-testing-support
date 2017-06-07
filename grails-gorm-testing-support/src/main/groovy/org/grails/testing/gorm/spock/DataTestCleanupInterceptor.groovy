@@ -5,7 +5,6 @@ import org.grails.datastore.mapping.core.DatastoreUtils
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
-import org.springframework.context.ApplicationContext
 
 /**
  * Created by jameskleeh on 6/2/17.

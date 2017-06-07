@@ -2,24 +2,17 @@ package org.grails.testing.gorm.spock
 
 import grails.testing.gorm.DataTest
 import grails.validation.ConstrainedProperty
-import grails.validation.ConstraintsEvaluator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.UniqueConstraintFactory
-import org.grails.datastore.mapping.core.DatastoreUtils
-import org.grails.datastore.mapping.core.Session
+import org.grails.datastore.gorm.validation.constraints.registry.DefaultConstraintRegistry
+import org.grails.datastore.mapping.model.MappingContext
+import org.grails.datastore.mapping.reflect.ClassUtils
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.grails.datastore.mapping.transactions.DatastoreTransactionManager
-import org.grails.plugins.domain.DomainClassGrailsPlugin
-import org.grails.validation.ConstraintsEvaluatorFactoryBean
-import org.spockframework.runtime.IRunListener
+import org.grails.validation.ConstraintEvalUtils
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
-import org.spockframework.runtime.model.ErrorInfo
-import org.spockframework.runtime.model.FeatureInfo
-import org.spockframework.runtime.model.IterationInfo
-import org.spockframework.runtime.model.SpecInfo
-import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 
 @CompileStatic
@@ -33,14 +26,41 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
 
     @CompileDynamic
     void setupDataTestBeans(DataTest testInstance) {
-        testInstance.defineBeans {
-            "${ConstraintsEvaluator.BEAN_NAME}"(ConstraintsEvaluatorFactoryBean) {
-                defaultConstraints = DomainClassGrailsPlugin.getDefaultConstraints(application.config)
+
+        Class constraintsEvaluator
+
+        boolean oldSetup = false
+        if (ClassUtils.isPresent("org.grails.validation.ConstraintsEvaluatorFactoryBean")) {
+            constraintsEvaluator = ClassUtils.forName("org.grails.validation.ConstraintsEvaluatorFactoryBean")
+            if (constraintsEvaluator.getAnnotation(Deprecated) == null) {
+                oldSetup = true
             }
+        }
+
+        testInstance.defineBeans {
             grailsDatastore SimpleMapDatastore, application.mainContext
+
+            if (oldSetup) {
+                "org.grails.beans.ConstraintsEvaluator"(constraintsEvaluator) {
+                    defaultConstraints = ConstraintEvalUtils.getDefaultConstraints(application.config)
+                }
+            } else {
+                constraintsEvaluator = ClassUtils.forName("org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator")
+                constraintRegistry(DefaultConstraintRegistry, ref("messageSource"))
+                grailsDomainClassMappingContext(grailsDatastore: "getMappingContext")
+
+                "org.grails.beans.ConstraintsEvaluator"(constraintsEvaluator, constraintRegistry, grailsDomainClassMappingContext, ConstraintEvalUtils.getDefaultConstraints(application.config))
+            }
+
             transactionManager(DatastoreTransactionManager) {
                 datastore = ref('grailsDatastore')
             }
+        }
+
+        if (!oldSetup) {
+            testInstance.grailsApplication.setMappingContext(
+                    testInstance.applicationContext.getBean('grailsDomainClassMappingContext', MappingContext)
+            )
         }
     }
 

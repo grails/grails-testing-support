@@ -3,7 +3,9 @@ rootProject.name = 'testing-support'
 include 'grails-testing-support',
         'grails-web-testing-support',
         'grails-gorm-testing-support',
-        'demo'
+        'demo',
+        'demo33'
 
 project(':demo').projectDir = new File('apps/demo')
+project(':demo33').projectDir = new File('apps/demo33')
 

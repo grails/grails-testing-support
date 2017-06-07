@@ -49,8 +49,8 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
         GrailsApplication grailsApplication = test.grailsApplication
         Map<String, String> groovyPages = test.groovyPages
 
-        test.defineBeans(new MimeTypesGrailsPlugin().doWithSpring())
-        test.defineBeans(new ConvertersGrailsPlugin().doWithSpring)
+        test.defineBeans(new MimeTypesGrailsPlugin())
+        test.defineBeans(new ConvertersGrailsPlugin())
 
         def config = grailsApplication.config
         test.defineBeans {
@@ -116,9 +116,10 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
             localeResolver(SessionLocaleResolver)
         }
 
-        test.defineBeans(new CodecsGrailsPlugin().doWithSpring())
+        CodecsGrailsPlugin codecsGrailsPlugin = new CodecsGrailsPlugin()
+        test.defineBeans(codecsGrailsPlugin)
 
-        new CodecsGrailsPlugin().providedArtefacts.each { Class codecClass ->
+        codecsGrailsPlugin.providedArtefacts.each { Class codecClass ->
             test.mockCodec(codecClass, false)
         }
 
