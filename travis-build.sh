@@ -15,7 +15,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST
       ./gradlew artifactoryPublish || EXIT_STATUS=$?
   fi
 
-  ./gradlew :docs:docs || EXIT_STATUS=$?
+  ./gradlew docs || EXIT_STATUS=$?
 
   git config --global user.name "$GIT_NAME"
   git config --global user.email "$GIT_EMAIL"
