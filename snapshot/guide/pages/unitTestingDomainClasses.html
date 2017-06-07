@@ -95,33 +95,13 @@ trait to unit test single domain class.</p>
 <div class="listingblock">
 <div class="title">grails-app/domain/demo/Person.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">Person</span> {
-    <span class="predefined-type">String</span> firstName
-    <span class="predefined-type">String</span> lastName
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/grails-app/domain/demo/Person.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/PersonSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DomainUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">PersonSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> DomainUnitTest&lt;Person&gt; {
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test basic persistence mocking</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">expect</span>:
-        Person.count() == <span class="integer">2</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/test/groovy/demo/PersonSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -135,29 +115,7 @@ test. This is useful when mocking more than one Domain class at a time to test p
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/DataTestTraitSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DataTestTraitSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> DataTest {
-
-    <span class="type">void</span> setupSpec() {
-        mockDomain Person
-
-        <span class="comment">// for multiple domains, call mockDomains...</span>
-        <span class="comment">// mockDomains Person, Address, Company</span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test basic persistence mocking</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">expect</span>:
-        Person.count() == <span class="integer">2</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/test/groovy/demo/DataTestTraitSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -167,26 +125,7 @@ to provide a <code>Class[] GetDomainClassesToMockMethodSpec()</code> method in t
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">GetDomainClassesToMockMethodSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> DataTest {
-
-    <span class="predefined-type">Class</span><span class="type">[]</span> getDomainClassesToMock() {
-        Person
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test basic persistence mocking</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">expect</span>:
-        Person.count() == <span class="integer">2</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -197,30 +136,7 @@ trait in order to mock the related domain classes.</p>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/PersonControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">PersonControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;PersonController&gt;, DataTest {
-
-    <span class="type">void</span> setupSpec() {
-        mockDomain Person
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which invokes GORM method</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">when</span>:
-        <span class="keyword">def</span> model = controller.index()
-
-        <span class="key">then</span>:
-        model.people.size() == <span class="integer">2</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/test/groovy/demo/PersonControllerSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 

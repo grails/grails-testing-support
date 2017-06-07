@@ -101,55 +101,19 @@ definitions.</p>
 <div class="listingblock">
 <div class="title">grails-app/services/demo/ReportingService.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">ReportingService</span> {
-
-    MathHelper someHelper
-
-    <span class="type">int</span> retrieveSomeNumber() {
-        someHelper.someNumber
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/grails-app/services/demo/ReportingService.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/main/groovy/demo/MathHelper.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">interface</span> MathHelper {
-    <span class="type">int</span> getSomeNumber()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/main/groovy/demo/MathHelper.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/ReportingServiceSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">ReportingServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;ReportingService&gt; {
-
-    Closure doWithSpring() {{ -&gt;
-        someHelper RushHelper
-    }}
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test dependency injection</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        service.retrieveSomeNumber() == <span class="integer">2112</span>
-    }
-}
-
-<span class="type">class</span> <span class="class">RushHelper</span> <span class="directive">implements</span> MathHelper {
-
-    <span class="annotation">@Override</span>
-    <span class="type">int</span> getSomeNumber() {
-        <span class="integer">2112</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/test/groovy/demo/ReportingServiceSpec.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 
