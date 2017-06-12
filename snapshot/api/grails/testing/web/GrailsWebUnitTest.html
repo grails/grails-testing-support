@@ -181,7 +181,7 @@ trait GrailsWebUnitTest
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>void</strong></code></td>
-                            <td class="colLast"><code><strong><a href="#applyTemplate(java.io.StringWriter, java.lang.String, java.util.Map)">applyTemplate</a></strong>(java.io.StringWriter sw, java.lang.String template, java.util.Map params = [:])</code><br></td>
+                            <td class="colLast"><code><strong><a href="#applyTemplate(java.io.StringWriter, java.lang.String, java.util.Map)">applyTemplate</a></strong>(java.io.StringWriter sw, java.lang.String template, java.util.Map params = [:])</code><br>Renders a template for the given contents and model to the provided writer</td>
                         </tr>
                         
                         <tr class="altColor">
@@ -243,6 +243,11 @@ trait GrailsWebUnitTest
                         <tr class="rowColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#mockTagLibs(Class<?>)">mockTagLibs</a></strong>(java.lang.Class&lt;?&gt;... tagLibClasses)</code><br></td>
+                        </tr>
+                        
+                        <tr class="altColor">
+                            <td class="colFirst"><code>java.lang.String</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#render(java.util.Map)">render</a></strong>(java.util.Map args)</code><br>Mimics the behavior of the render method in controllers but returns the rendered contents directly</td>
                         </tr>
                         
                     </table>
@@ -316,7 +321,8 @@ trait GrailsWebUnitTest
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>void <strong>applyTemplate</strong>(java.io.StringWriter sw, java.lang.String template, java.util.Map params = [:])</h4>
-                                <p></p>
+                                <p> Renders a template for the given contents and model to the provided writer
+     <DL><DT><B>Parameters:</B></DT><DD><code>sw</code> -  The write to write the rendered template to</DD><DD><code>contents</code> -  The contents</DD><DD><code>model</code> -  The model</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -418,6 +424,15 @@ void <strong>mockTagLib</strong>(java.lang.Class&lt;?&gt; tagLibClass)</h4>
                             <li class="blockList">
                                 <h4>void <strong>mockTagLibs</strong>(java.lang.Class&lt;?&gt;... tagLibClasses)</h4>
                                 <p></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="render(java.util.Map)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>java.lang.String <strong>render</strong>(java.util.Map args)</h4>
+                                <p> Mimics the behavior of the render method in controllers but returns the rendered contents directly
+     <DL><DT><B>Parameters:</B></DT><DD><code>args</code> -  The same arguments as the controller render method accepts</DD></DL><DL><DT><B>Returns:</B></DT><DD>The resulting rendering GSP</DD></DL></p>
                             </li>
                         </ul>
                     
