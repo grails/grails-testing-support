@@ -34,7 +34,7 @@ dependencies {
     }
     compile "org.grails:grails-async:$grailsVersion"
     compile "org.grails:grails-test:$grailsVersion"
-    compile "org.springframework.boot:spring-boot-test"
+    compile "org.springframework.boot:spring-boot-test:1.5.3.RELEASE"
 }
 
 project.ext {
