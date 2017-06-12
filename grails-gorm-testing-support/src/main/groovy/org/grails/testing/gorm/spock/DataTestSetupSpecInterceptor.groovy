@@ -18,6 +18,22 @@ import org.springframework.context.ConfigurableApplicationContext
 @CompileStatic
 class DataTestSetupSpecInterceptor implements IMethodInterceptor {
 
+    public static Boolean IS_OLD_SETUP = false
+    public static final BEAN_NAME = "org.grails.beans.ConstraintsEvaluator"
+    private static Class constraintsEvaluator
+
+    static {
+        if (ClassUtils.isPresent("org.grails.validation.ConstraintsEvaluatorFactoryBean")) {
+            constraintsEvaluator = ClassUtils.forName("org.grails.validation.ConstraintsEvaluatorFactoryBean")
+            if (constraintsEvaluator.getAnnotation(Deprecated) == null) {
+                IS_OLD_SETUP = true
+            }
+        }
+        if (!IS_OLD_SETUP) {
+            constraintsEvaluator = ClassUtils.forName("org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator")
+        }
+    }
+
     @Override
     void intercept(IMethodInvocation invocation) throws Throwable {
         configureDataTest((DataTest)invocation.instance)
@@ -27,29 +43,18 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
     @CompileDynamic
     void setupDataTestBeans(DataTest testInstance) {
 
-        Class constraintsEvaluator
-
-        boolean oldSetup = false
-        if (ClassUtils.isPresent("org.grails.validation.ConstraintsEvaluatorFactoryBean")) {
-            constraintsEvaluator = ClassUtils.forName("org.grails.validation.ConstraintsEvaluatorFactoryBean")
-            if (constraintsEvaluator.getAnnotation(Deprecated) == null) {
-                oldSetup = true
-            }
-        }
-
         testInstance.defineBeans {
             grailsDatastore SimpleMapDatastore, application.mainContext
 
-            if (oldSetup) {
-                "org.grails.beans.ConstraintsEvaluator"(constraintsEvaluator) {
+            if (IS_OLD_SETUP) {
+                "${BEAN_NAME}"(constraintsEvaluator) {
                     defaultConstraints = ConstraintEvalUtils.getDefaultConstraints(application.config)
                 }
             } else {
-                constraintsEvaluator = ClassUtils.forName("org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator")
                 constraintRegistry(DefaultConstraintRegistry, ref("messageSource"))
                 grailsDomainClassMappingContext(grailsDatastore: "getMappingContext")
 
-                "org.grails.beans.ConstraintsEvaluator"(constraintsEvaluator, constraintRegistry, grailsDomainClassMappingContext, ConstraintEvalUtils.getDefaultConstraints(application.config))
+                "${BEAN_NAME}"(constraintsEvaluator, constraintRegistry, grailsDomainClassMappingContext, ConstraintEvalUtils.getDefaultConstraints(application.config))
             }
 
             transactionManager(DatastoreTransactionManager) {
@@ -57,7 +62,7 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
             }
         }
 
-        if (!oldSetup) {
+        if (!IS_OLD_SETUP) {
             testInstance.grailsApplication.setMappingContext(
                     testInstance.applicationContext.getBean('grailsDomainClassMappingContext', MappingContext)
             )

@@ -19,16 +19,19 @@
 package grails.testing.gorm
 
 import grails.core.GrailsDomainClass
+import grails.gorm.validation.PersistentEntityValidator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
+import org.grails.datastore.gorm.validation.constraints.eval.ConstraintsEvaluator
 import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.lifecycle.Initializable
 import org.grails.testing.GrailsUnitTest
 import org.grails.testing.gorm.MockCascadingDomainClassValidator
+import org.grails.testing.gorm.spock.DataTestSetupSpecInterceptor
 import org.grails.validation.ConstraintEvalUtils
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
@@ -52,7 +55,7 @@ trait DataTest extends GrailsUnitTest {
         for (PersistentEntity entity in entities) {
             GrailsDomainClass domain = registerGrailsDomainClass(entity.javaClass)
 
-            Validator validator = registerDomainClassValidator(domain)
+            Validator validator = registerDomainClassValidator(entity)
             dataStore.mappingContext.addEntityValidator(entity, validator)
         }
         final failOnError = false //getFailOnError()
@@ -74,19 +77,27 @@ trait DataTest extends GrailsUnitTest {
     }
 
     @CompileDynamic
-    private Validator registerDomainClassValidator(GrailsDomainClass domain) {
-        String validationBeanName = "${domain.fullName}Validator"
+    private Validator registerDomainClassValidator(PersistentEntity domain) {
+        String validationBeanName = "${domain.javaClass.name}Validator"
         defineBeans {
-            "${domain.fullName}"(domain.clazz) { bean ->
+            "${domain.javaClass.name}"(domain.javaClass) { bean ->
                 bean.singleton = false
                 bean.autowire = "byName"
             }
-            "$validationBeanName"(MockCascadingDomainClassValidator) { bean ->
-                getDelegate().messageSource = ref("messageSource")
-                bean.lazyInit = true
-                getDelegate().domainClass = domain
-                getDelegate().grailsApplication = grailsApplication
+
+            if (DataTestSetupSpecInterceptor.IS_OLD_SETUP) {
+                GrailsDomainClass grailsDomain = grailsApplication.getArtefact(DomainClassArtefactHandler.TYPE, domain.javaClass.name)
+
+                "$validationBeanName"(MockCascadingDomainClassValidator) { bean ->
+                    getDelegate().messageSource = ref("messageSource")
+                    bean.lazyInit = true
+                    getDelegate().domainClass = grailsDomain
+                    getDelegate().grailsApplication = grailsApplication
+                }
+            } else {
+                "$validationBeanName"(PersistentEntityValidator, domain, ref("messageSource"), ref(DataTestSetupSpecInterceptor.BEAN_NAME))
             }
+
         }
 
         applicationContext.getBean(validationBeanName, Validator)
