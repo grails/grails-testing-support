@@ -166,6 +166,39 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
     }
 
     /**
+     * Mimics the behavior of the render method in controllers but returns the rendered contents directly
+     *
+     * @param args The same arguments as the controller render method accepts
+     * @return The resulting rendering GSP
+     */
+    String render(Map args) {
+        String uri = null
+        Map model
+        if (args.containsKey('model')) {
+            model = (Map)args.model
+        } else {
+            model = [:]
+        }
+        final attributes = webRequest.attributes
+        if (args.template) {
+            uri = attributes.getTemplateUri(args.template as String, request)
+        }
+        else if (args.view) {
+            uri = attributes.getViewUri(args.view as String, request)
+        }
+        if (uri != null) {
+            GroovyPagesTemplateEngine engine = applicationContext.getBean(GroovyPagesTemplateEngine)
+            final Template t = engine.createTemplate(uri)
+            if (t != null) {
+                def sw = new StringWriter()
+                renderTemplateToStringWriter(sw, t, model)
+                return sw.toString()
+            }
+        }
+        return null
+    }
+
+    /**
      * Renders a template for the given contents and model
      *
      * @param contents The contents
@@ -178,6 +211,13 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         return sw.toString()
     }
 
+    /**
+     * Renders a template for the given contents and model to the provided writer
+     *
+     * @param sw The write to write the rendered template to
+     * @param contents The contents
+     * @param model The model
+     */
     void applyTemplate(StringWriter sw, String template, Map params = [:]) {
         def engine = applicationContext.getBean(GroovyPagesTemplateEngine)
 
