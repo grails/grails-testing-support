@@ -25,12 +25,15 @@ import grails.core.GrailsTagLibClass
 import grails.util.GrailsMetaClassUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
+import groovy.text.Template
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import org.grails.buffer.GrailsPrintWriter
 import org.grails.commons.CodecArtefactHandler
 import org.grails.commons.DefaultGrailsCodecClass
 import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.core.artefact.TagLibArtefactHandler
+import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.plugins.codecs.DefaultCodecLookup
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
@@ -159,6 +162,46 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         grailsApplication.addArtefact(CodecArtefactHandler.TYPE, grailsCodecClass)
         if (reinitialize) {
             applicationContext.getBean(DefaultCodecLookup).reInitialize()
+        }
+    }
+
+    /**
+     * Renders a template for the given contents and model
+     *
+     * @param contents The contents
+     * @param model The model
+     * @return The rendered template
+     */
+    String applyTemplate(String contents, Map model = [:]) {
+        def sw = new StringWriter()
+        applyTemplate sw, contents, model
+        return sw.toString()
+    }
+
+    void applyTemplate(StringWriter sw, String template, Map params = [:]) {
+        def engine = applicationContext.getBean(GroovyPagesTemplateEngine)
+
+        def t = engine.createTemplate(template, "test_" + System.currentTimeMillis())
+        renderTemplateToStringWriter(sw, t, params)
+    }
+
+    private renderTemplateToStringWriter(StringWriter sw, Template t, Map params) {
+        if (!webRequest.controllerName) {
+            webRequest.controllerName = 'test'
+        }
+        if (!webRequest.actionName) {
+            webRequest.actionName = 'index'
+        }
+        def w = t.make(params)
+        def previousOut = webRequest.out
+        try {
+            def out = new GrailsPrintWriter(sw)
+            webRequest.out = out
+            w.writeTo(out)
+
+        }
+        finally {
+            webRequest.out = previousOut
         }
     }
 }

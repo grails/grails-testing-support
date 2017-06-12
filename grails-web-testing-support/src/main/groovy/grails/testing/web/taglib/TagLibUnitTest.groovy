@@ -41,37 +41,12 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
      */
     String applyTemplate(String contents, Map model = [:]) {
         ensureTaglibHasBeenMocked()
-        def sw = new StringWriter()
-        applyTemplate sw, contents, model
-        return sw.toString()
+        GrailsWebUnitTest.super.applyTemplate(contents, model)
     }
 
     void applyTemplate(StringWriter sw, String template, Map params = [:]) {
         ensureTaglibHasBeenMocked()
-        def engine = applicationContext.getBean(GroovyPagesTemplateEngine)
-
-        def t = engine.createTemplate(template, "test_" + System.currentTimeMillis())
-        renderTemplateToStringWriter(sw, t, params)
-    }
-
-    private renderTemplateToStringWriter(StringWriter sw, Template t, Map params) {
-        if (!webRequest.controllerName) {
-            webRequest.controllerName = 'test'
-        }
-        if (!webRequest.actionName) {
-            webRequest.actionName = 'index'
-        }
-        def w = t.make(params)
-        def previousOut = webRequest.out
-        try {
-            def out = new GrailsPrintWriter(sw)
-            webRequest.out = out
-            w.writeTo(out)
-
-        }
-        finally {
-            webRequest.out = previousOut
-        }
+        GrailsWebUnitTest.super.applyTemplate(sw, template, params)
     }
 
     /**
