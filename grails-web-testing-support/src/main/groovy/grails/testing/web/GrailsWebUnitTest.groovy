@@ -33,12 +33,14 @@ import org.grails.commons.CodecArtefactHandler
 import org.grails.commons.DefaultGrailsCodecClass
 import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.core.artefact.TagLibArtefactHandler
+import org.grails.core.artefact.UrlMappingsArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.plugins.codecs.DefaultCodecLookup
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
 import org.grails.taglib.TagLibraryLookup
 import org.grails.testing.GrailsUnitTest
+import org.grails.web.mapping.UrlMappingsHolderFactoryBean
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.GrailsApplicationAttributes
 import org.springframework.mock.web.MockHttpSession
@@ -136,6 +138,17 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         GrailsMetaClassUtils.getExpandoMetaClass(controllerClass).constructor = callable
 
         callable.call()
+    }
+
+    @CompileDynamic
+    void mockUrlMappings(Class<?> urlMappingsClass) {
+        grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, urlMappingsClass)
+
+        defineBeans {
+            grailsUrlMappingsHolder(UrlMappingsHolderFactoryBean) {
+                getDelegate().grailsApplication = grailsApplication
+            }
+        }
     }
 
     @CompileStatic

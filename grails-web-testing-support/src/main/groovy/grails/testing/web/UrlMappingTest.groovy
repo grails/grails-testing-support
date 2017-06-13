@@ -161,13 +161,7 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
 
     @CompileDynamic
     void mockArtefact(Class<?> urlMappingsClass) {
-        grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, urlMappingsClass)
-
-        defineBeans {
-            grailsUrlMappingsHolder(UrlMappingsHolderFactoryBean) {
-                getDelegate().grailsApplication = grailsApplication
-            }
-        }
+        mockUrlMappings(urlMappingsClass)
     }
 
 }
