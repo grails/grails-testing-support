@@ -7,6 +7,7 @@ grails.testing.spock
 grails.testing.spring
 grails.testing.web
 grails.testing.web.controllers
+grails.testing.web.interceptor
 grails.testing.web.taglib
 org.grails.compiler.injection.testing
 org.grails.testing
