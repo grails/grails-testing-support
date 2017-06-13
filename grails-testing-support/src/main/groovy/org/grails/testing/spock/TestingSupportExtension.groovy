@@ -21,12 +21,12 @@ class TestingSupportExtension extends AbstractGlobalExtension {
         }
         if (spec.reflection.getAnnotation(FreshRuntime) != null) {
             spec.allFeatures.each {
-                it.addInterceptor(freshRuntimeInterceptor)
+                it.featureMethod.addInterceptor(freshRuntimeInterceptor)
             }
         } else {
             spec.allFeatures.each {
                 if (it.featureMethod.getAnnotation(FreshRuntime) != null) {
-                    it.addInterceptor(freshRuntimeInterceptor)
+                    it.featureMethod.addInterceptor(freshRuntimeInterceptor)
                 }
             }
         }
