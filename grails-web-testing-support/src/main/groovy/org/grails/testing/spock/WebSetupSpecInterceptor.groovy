@@ -47,7 +47,7 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
     protected void setup(GrailsWebUnitTest test) {
 
         GrailsApplication grailsApplication = test.grailsApplication
-        Map<String, String> groovyPages = test.groovyPages
+        Map<String, String> groovyPages = test.views
 
         test.defineBeans(new MimeTypesGrailsPlugin())
         test.defineBeans(new ConvertersGrailsPlugin())
