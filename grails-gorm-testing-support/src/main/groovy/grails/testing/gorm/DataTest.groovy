@@ -22,6 +22,7 @@ import grails.core.GrailsDomainClass
 import grails.gorm.validation.PersistentEntityValidator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
 import org.grails.datastore.gorm.validation.constraints.eval.ConstraintsEvaluator
@@ -44,9 +45,12 @@ trait DataTest extends GrailsUnitTest {
 
     Class<?>[] getDomainClassesToMock() {}
 
-    void mockDomain(Class<?> domainClassToMock) {
+    void mockDomain(Class<?> domainClassToMock, List domains = []) {
         mockDomains(domainClassToMock)
-        dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
+        PersistentEntity entity = dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
+        if (domains) {
+            saveDomainList(entity, domains)
+        }
     }
 
     void mockDomains(Class<?>... domainClassesToMock) {
@@ -112,6 +116,17 @@ trait DataTest extends GrailsUnitTest {
         def context = dataStore.mappingContext
         if (context instanceof Initializable) {
             context.initialize()
+        }
+    }
+
+    @CompileStatic(TypeCheckingMode.SKIP)
+    private void saveDomainList(PersistentEntity entity, List domains) {
+        for (obj in domains) {
+            if (obj instanceof Map) {
+                entity.javaClass.newInstance(obj).save()
+            } else if (entity.isInstance(obj)) {
+                obj.save()
+            }
         }
     }
 }
