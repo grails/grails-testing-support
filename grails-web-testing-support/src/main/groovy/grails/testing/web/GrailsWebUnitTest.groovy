@@ -99,7 +99,7 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
     }
 
     @CompileDynamic
-    void mockTagLib(Class<?> tagLibClass) {
+    Object mockTagLib(Class<?> tagLibClass) {
         GrailsTagLibClass tagLib = grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLibClass)
         final tagLookup = applicationContext.getBean(TagLibraryLookup)
 
@@ -116,10 +116,11 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         if(taglibObject instanceof TagLibrary) {
             ((TagLibrary)taglibObject).setTagLibraryLookup(tagLookup)
         }
+        taglibObject
     }
 
     @CompileDynamic
-    void mockController(Class<?> controllerClass) {
+    Object mockController(Class<?> controllerClass) {
         GrailsClass controllerArtefact = createAndEnhanceController(controllerClass)
         defineBeans {
             "$controllerClass.name"(controllerClass) { bean ->
