@@ -151,7 +151,6 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         }
     }
 
-    @CompileStatic
     private GrailsClass createAndEnhanceController(Class controllerClass) {
         final GrailsControllerClass controllerArtefact = (GrailsControllerClass) grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, controllerClass)
         controllerArtefact.initialize()
