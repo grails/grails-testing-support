@@ -19,6 +19,7 @@
 package org.grails.testing
 
 import grails.async.Promises
+import grails.config.Config
 import grails.core.DefaultGrailsApplication
 import grails.core.GrailsApplication
 import grails.plugins.Plugin
@@ -71,6 +72,10 @@ trait GrailsUnitTest {
             _servletContext = builder.servletContext
         }
         _grailsApplication
+    }
+
+    Config getConfig() {
+        grailsApplication.config
     }
 
     /**

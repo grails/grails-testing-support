@@ -12,8 +12,7 @@ class AutowiredTestSpec extends Specification implements AutowiredTest {
 
     HelperService helperService
 
-    @Before
-    void init() {
+    void setup() {
         assert helperService != null
     }
 

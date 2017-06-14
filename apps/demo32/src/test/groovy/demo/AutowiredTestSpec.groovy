@@ -1,7 +1,6 @@
 package demo
 
 import grails.testing.spring.AutowiredTest
-import org.junit.Before
 import spock.lang.Specification
 
 class AutowiredTestSpec extends Specification implements AutowiredTest {
@@ -12,8 +11,7 @@ class AutowiredTestSpec extends Specification implements AutowiredTest {
 
     HelperService helperService
 
-    @Before
-    void init() {
+    void setup() {
         assert helperService != null
     }
 

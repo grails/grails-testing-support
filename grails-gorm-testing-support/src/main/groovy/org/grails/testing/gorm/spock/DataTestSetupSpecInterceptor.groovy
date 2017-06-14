@@ -5,6 +5,8 @@ import grails.validation.ConstrainedProperty
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.UniqueConstraintFactory
+import org.grails.datastore.gorm.validation.constraints.builtin.UniqueConstraint
+import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultConstraintRegistry
 import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.reflect.ClassUtils
@@ -73,7 +75,13 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
         setupDataTestBeans testInstance
         ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext)testInstance.applicationContext
         SimpleMapDatastore simpleDatastore = applicationContext.getBean(SimpleMapDatastore)
-        ConstrainedProperty.registerNewConstraint('unique', new UniqueConstraintFactory(simpleDatastore))
+
+        if (IS_OLD_SETUP) {
+            ConstrainedProperty.registerNewConstraint('unique', new UniqueConstraintFactory(simpleDatastore))
+        } else {
+            applicationContext.getBean('constraintRegistry', ConstraintRegistry).addConstraint(UniqueConstraint)
+        }
+
         if (!testInstance.domainsHaveBeenMocked) {
             def classes = testInstance.domainClassesToMock
             if (classes) {

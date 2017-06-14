@@ -150,7 +150,6 @@ class GrailsApplicationBuilder {
 
             proxyHandler(DefaultProxyHandler)
             messageSource(StaticMessageSource)
-            grailsApplicationPostProcessor(GrailsApplicationAwareBeanPostProcessor, grailsApplication)
             transactionManagerAwarePostProcessor(TransactionManagerPostProcessor)
             grailsPlaceholderConfigurer(GrailsPlaceholderConfigurer, '${', grailsApplication.config.toProperties())
             mapBasedSmartPropertyOverrideConfigurer(MapBasedSmartPropertyOverrideConfigurer) {
