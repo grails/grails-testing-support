@@ -31,7 +31,6 @@ class UniqueConstraintOnHasOneSpec extends Specification implements DataTest {
         foo2.errors['name']?.code == 'unique'
     }
 
-    @Ignore
     void "Foo's bar should be unique, but..."() {
         given:
         def foo1 = new Foo(name: "FOO1")
