@@ -80,6 +80,11 @@ publishing {
                             name 'Jeff Scott Brown'
                             email 'brownj@ociweb.com'
                         }
+                        developer {
+                            id 'jameskleeh'
+                            name 'James Kleeh'
+                            email 'james.kleeh@gmail.com'
+                        }
                     }
                 }
             }
