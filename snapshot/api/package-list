@@ -1,7 +1,6 @@
 demo
 grails.testing.gorm
 grails.testing.mixin.integration
-grails.testing.runtime
 grails.testing.services
 grails.testing.spock
 grails.testing.spring
