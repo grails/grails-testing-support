@@ -49,6 +49,12 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         for(Class c : controllersToMock) {
             final GrailsControllerClass controllerArtefact = (GrailsControllerClass)grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, c)
             controllerArtefact.initialize()
+            defineBeans {
+                "$controllerArtefact.name"(c) { bean ->
+                    bean.scope = 'prototype'
+                    bean.autowire = true
+                }
+            }
         }
         getArtefactInstance()
     }
