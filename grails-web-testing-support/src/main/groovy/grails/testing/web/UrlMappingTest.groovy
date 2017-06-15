@@ -200,16 +200,16 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         }
     }
 
-    void assertForwardUrlMapping(Map<String, String> assertions, Object url, Closure paramAssertions = null) {
+    void assertForwardUrlMapping(Map<String, Object> assertions, Object url, Closure paramAssertions = null) {
 
         UrlMappingsHolder mappingsHolder = getUrlMappingsHolder()
         if (assertions.action && !assertions.controller) {
             throw new AssertionFailedError("Cannot assert action for url mapping without asserting controller")
         }
 
-        if (assertions.controller) assertController(assertions.controller)
-        if (assertions.action) assertAction(assertions.controller, assertions.action)
-        if (assertions.view) assertView(assertions.controller, assertions.view)
+        if (assertions.controller) assertController((String)assertions.controller)
+        if (assertions.action) assertAction((String)assertions.controller, (String)assertions.action)
+        if (assertions.view) assertView((String)assertions.controller, (String)assertions.view)
 
         List<UrlMappingInfo> mappingInfos
         if (url instanceof Integer) {
@@ -223,7 +223,7 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
             if (mapping) mappingInfos << mapping
         }
         else {
-            mappingInfos = mappingsHolder.matchAll(url, request.method).toList()
+            mappingInfos = mappingsHolder.matchAll((String)url, request.method).toList()
         }
 
         if (mappingInfos.size() == 0) throw new AssertionFailedError("url '$url' did not match any mappings")
