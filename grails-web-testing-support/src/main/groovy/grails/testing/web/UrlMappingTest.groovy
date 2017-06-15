@@ -19,19 +19,27 @@
 package grails.testing.web
 
 import grails.core.GrailsControllerClass
+import grails.web.UrlConverter
+import grails.web.mapping.UrlCreator
+import grails.web.mapping.UrlMappingInfo
 import grails.web.mapping.UrlMappingsHolder
 import groovy.transform.CompileDynamic
 import junit.framework.AssertionFailedError
 import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.core.artefact.UrlMappingsArtefactHandler
+import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.testing.ParameterizedGrailsUnitTest
 import org.grails.web.mapping.UrlMappingsHolderFactoryBean
-import org.junit.Before
+import org.grails.web.mapping.mvc.GrailsControllerUrlMappingInfo
+import junit.framework.ComparisonFailure
 
 import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertNotNull
 
 trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {
+
+    public static final String KEY_EXCEPTION = 'exception'
+    private final List<String> assertionKeys = ["controller", "action", "view"]
 
     Class[] getControllersToMock() {
         []
@@ -45,29 +53,165 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
         getArtefactInstance()
     }
 
-    void assertUrlMapping(Map assertions, url) {
-        assertUrlMapping(assertions, url, null)
+    /**
+     * @return The {@link UrlMappingsHolder} bean
+     */
+    UrlMappingsHolder getUrlMappingsHolder() {
+        applicationContext.getBean("grailsUrlMappingsHolder", UrlMappingsHolder)
     }
 
-    void assertUrlMapping(Map assertions, url, Closure paramAssertions) {
+    /**
+     * Maps a URI and returns the appropriate controller instance
+     *
+     * @param uri The URI to map
+     * @return The controller instance
+     */
+    Object mapURI(String uri) {
+        UrlMappingsHolder mappingsHolder = getUrlMappingsHolder()
+
+        UrlMappingInfo[] mappingInfos = mappingsHolder.matchAll(uri, request.method)
+        for (UrlMappingInfo info in mappingInfos) {
+            def backupParams = new HashMap(webRequest.params)
+            info.configure(webRequest)
+
+            webRequest.params.putAll(backupParams)
+            if (info.viewName == null && info.URI == null) {
+                if(info instanceof GrailsControllerUrlMappingInfo) {
+                    def controller = info.controllerClass
+                    if (controller != null) {
+                        return applicationContext.getBean(controller.fullName)
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean checkController(String controller, boolean throwEx) {
+        final controllerClass = getControllerClass(controller)
+        if (!controllerClass && throwEx) {
+            throw new AssertionFailedError("Url mapping assertion failed, '$controller' is not a valid controller")
+        }
+        return controllerClass != null
+    }
+
+    /**
+     * asserts a controller exists for the specified name and url
+     *
+     * @param controller The controller name
+     * @param url The url
+     */
+    void assertController(String controller) {
+        checkController(controller, true)
+    }
+
+/*    *//**
+     * @param controller The controller name
+     * @param url The url
+     * @return true If a controller exists for the specified name and url
+     *//*
+    boolean verifyController(String controller) {
+        checkController(controller, false)
+    }*/
+
+    private boolean checkAction(String controller, String action, boolean throwEx) {
+        final controllerClass = getControllerClass(controller)
+        boolean valid = controllerClass?.mapsToURI("/$controller/$action")
+        if (!valid && throwEx) {
+            throw new AssertionFailedError("Url mapping assertion failed, '$action' is not a valid action of controller '$controller'")
+        }
+        valid
+    }
+
+    /**
+     * Asserts an action exists for the specified controller name, action name and url
+     *
+     * @param controller The controller name
+     * @param action The action name
+     */
+    void assertAction(String controller, String action) {
+        checkAction(controller, action, true)
+    }
+
+/*    *//**
+     * @param controller The controller name
+     * @param action The action name
+     * @return true If an action exists for the specified controller name and action name
+     *//*
+    boolean verifyAction(String controller, String action) {
+        checkAction(controller, action, false)
+    }*/
+
+    private boolean checkView(String controller, String view, boolean throwEx) {
+        def pathPattern =  ((controller) ? "$controller/" : "") + "${view}.gsp"
+        if (!pathPattern.startsWith('/')) {
+            pathPattern = "/$pathPattern"
+        }
+        GroovyPagesTemplateEngine templateEngine = applicationContext.getBean("groovyPagesTemplateEngine", GroovyPagesTemplateEngine)
+
+        def t = templateEngine.createTemplate(pathPattern)
+        if (!t && throwEx) {
+            throw new AssertionFailedError(
+                    (controller) ? "Url mapping assertion failed, '$view' is not a valid view of controller '$controller'" : "Url mapping assertion failed, '$view' is not a valid view")
+        }
+        t != null
+    }
+
+    /**
+     * Asserts a view exists for the specified controller name and view name
+     *
+     * @param controller The controller name
+     * @param view The view name
+     */
+    void assertView(String controller, String view) {
+        checkView(controller, view, true)
+    }
+
+/*
+
+/**
+     *
+     * @param controller The controller name
+     * @param view The view name
+     * @param url The url
+     * @return true If a view exists for the specified controller and view
+     *//*
+
+    boolean verifyView(String controller, String view) {
+        checkView(controller, view, false)
+    }
+*/
+
+    /**
+     * Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+     *
+     * <pre>
+     * <code>
+     *           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+     * </code>
+     * </pre>
+     * @param assertions The assertions as named parameters
+     * @param url The URL as a string
+     * @param paramAssertions The parameters to assert defined in the body of the closure
+     */
+    void assertUrlMapping(Map<String, String> assertions, String url, Closure paramAssertions = null) {
         assertForwardUrlMapping(assertions, url, paramAssertions)
         if (assertions.controller && !(url instanceof Integer)) {
             assertReverseUrlMapping(assertions, url, paramAssertions)
         }
     }
 
-    void assertForwardUrlMapping(assertions, url, paramAssertions) {
+    void assertForwardUrlMapping(Map<String, String> assertions, Object url, Closure paramAssertions = null) {
 
-        UrlMappingsHolder mappingsHolder = applicationContext.getBean("grailsUrlMappingsHolder", UrlMappingsHolder)
+        UrlMappingsHolder mappingsHolder = getUrlMappingsHolder()
         if (assertions.action && !assertions.controller) {
             throw new AssertionFailedError("Cannot assert action for url mapping without asserting controller")
         }
 
-        if (assertions.controller) assertController(assertions.controller, url)
-        if (assertions.action) assertAction(assertions.controller, assertions.action, url)
-        if (assertions.view) assertView(assertions.controller, assertions.view, url)
+        if (assertions.controller) assertController(assertions.controller)
+        if (assertions.action) assertAction(assertions.controller, assertions.action)
+        if (assertions.view) assertView(assertions.controller, assertions.view)
 
-        def mappingInfos
+        List<UrlMappingInfo> mappingInfos
         if (url instanceof Integer) {
             mappingInfos = []
             def mapping
@@ -79,17 +223,17 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
             if (mapping) mappingInfos << mapping
         }
         else {
-            mappingInfos = mappingsHolder.matchAll(url, request.method)
+            mappingInfos = mappingsHolder.matchAll(url, request.method).toList()
         }
 
         if (mappingInfos.size() == 0) throw new AssertionFailedError("url '$url' did not match any mappings")
 
         def mappingMatched = mappingInfos.any {mapping ->
             mapping.configure(webRequest)
-            for (key in ["controller", "action", "view"]) {
+            for (key in assertionKeys) {
                 if (assertions.containsKey(key)) {
                     def expected = assertions[key]
-                    def actual = mapping."${key}Name"
+                    String actual = mapping."${key}Name"
 
                     switch (key) {
                         case "controller":
@@ -124,44 +268,58 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
 
         if (!mappingMatched) throw new IllegalArgumentException("url '$url' did not match any mappings")
     }
-    void assertReverseUrlMapping(Map assertions, url, Closure paramAssertions) {
+
+    /**
+     * Asserts the given controller and action produce the given reverse URL mapping
+     *
+     * <pre>
+     * <code>
+     *           assertReverseUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+     * </code>
+     * </pre>
+     * @param assertions The assertions as named parameters
+     * @param url The URL as a string
+     * @param paramAssertions The parameters to assert defined in the body of the closure
+     */
+    void assertReverseUrlMapping(Map<String, String> assertions, String url, Closure paramAssertions = null) {
         UrlMappingsHolder mappingsHolder = applicationContext.getBean("grailsUrlMappingsHolder", UrlMappingsHolder)
+        UrlConverter urlConverter = applicationContext.getBean(UrlConverter.BEAN_NAME, UrlConverter)
         def controller = assertions.controller
         def action = assertions.action
         def method = assertions.method
+        def plugin = assertions.plugin
+        def namespace = assertions.namespace
+
+        String convertedControllerName = null, convertedActionName = null
+
+        if(controller) convertedControllerName = urlConverter.toUrlElement(controller) ?: controller
+        if(action) convertedActionName = urlConverter.toUrlElement(action) ?: action
+
         def params = [:]
         if (paramAssertions) {
             paramAssertions.delegate = params
             paramAssertions.resolveStrategy = Closure.DELEGATE_ONLY
             paramAssertions.call()
         }
-        def urlCreator = mappingsHolder.getReverseMapping(controller, action, null, null, method, params)
+        UrlCreator urlCreator = mappingsHolder.getReverseMapping(controller, action, namespace, plugin, method, params)
         assertNotNull("could not create reverse mapping of '$url' for {controller = $controller, action = $action, params = $params}", urlCreator)
-        def createdUrl = urlCreator.createRelativeURL(controller, action, params, "UTF-8")
+        String createdUrl = urlCreator.createRelativeURL(convertedControllerName, convertedActionName, params, "UTF-8")
         assertEquals("reverse mapping assertion for {controller = $controller, action = $action, params = $params}", url, createdUrl)
     }
 
-    void assertController(controller, url) {
-        final controllerClass = getControllerClass(controller)
-        if (!controllerClass) {
-            throw new AssertionFailedError("Url mapping assertion for '$url' failed, '$controller' is not a valid controller")
-        }
-    }
-    void assertAction(controller, action, url) {
-        final controllerClass = getControllerClass(controller)
-
-        if (!controllerClass?.mapsToURI("/$controller/$action")) {
-            throw new AssertionFailedError("Url mapping assertion for '$url' failed, '$action' is not a valid action of controller '$controller'")
-        }
-    }
-
-    GrailsControllerClass getControllerClass(controller) {
+    GrailsControllerClass getControllerClass(String controller) {
         (GrailsControllerClass)grailsApplication.getArtefactByLogicalPropertyName(ControllerArtefactHandler.TYPE, controller)
     }
 
     @CompileDynamic
     void mockArtefact(Class<?> urlMappingsClass) {
-        mockUrlMappings(urlMappingsClass)
+        grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, urlMappingsClass)
+
+        defineBeans {
+            grailsUrlMappingsHolder(UrlMappingsHolderFactoryBean) {
+                getDelegate().grailsApplication = grailsApplication
+            }
+        }
     }
 
 }

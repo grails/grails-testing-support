@@ -141,17 +141,6 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         callable.call()
     }
 
-    @CompileDynamic
-    void mockUrlMappings(Class<?> urlMappingsClass) {
-        grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, urlMappingsClass)
-
-        defineBeans {
-            grailsUrlMappingsHolder(UrlMappingsHolderFactoryBean) {
-                getDelegate().grailsApplication = grailsApplication
-            }
-        }
-    }
-
     private GrailsClass createAndEnhanceController(Class controllerClass) {
         final GrailsControllerClass controllerArtefact = (GrailsControllerClass) grailsApplication.addArtefact(ControllerArtefactHandler.TYPE, controllerClass)
         controllerArtefact.initialize()
