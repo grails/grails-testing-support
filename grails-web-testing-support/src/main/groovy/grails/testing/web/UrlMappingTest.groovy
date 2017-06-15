@@ -85,7 +85,7 @@ trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
                 if(info instanceof GrailsControllerUrlMappingInfo) {
                     def controller = info.controllerClass
                     if (controller != null) {
-                        return applicationContext.getBean(controller.fullName)
+                        return applicationContext.getBean(controller.name)
                     }
                 }
             }
