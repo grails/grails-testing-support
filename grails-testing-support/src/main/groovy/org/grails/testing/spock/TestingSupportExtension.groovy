@@ -1,6 +1,5 @@
 package org.grails.testing.spock
 
-import grails.testing.runtime.FreshRuntime
 import grails.testing.spring.AutowiredTest
 import groovy.transform.CompileStatic
 import org.grails.testing.GrailsUnitTest
