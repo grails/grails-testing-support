@@ -7,6 +7,7 @@ various traits describe those properties.  Some particular properties of interes
 - link:../api/org/grails/testing/GrailsUnitTest.html#getMessageSource()[messageSource]
 - link:../api/org/grails/testing/GrailsUnitTest.html#getGrailsApplication()[grailsApplication]
 - link:../api/org/grails/testing/GrailsUnitTest.html#getApplicationContext()[applicationContext]
+- link:../api/org/grails/testing/GrailsUnitTest.html#getConfig()[config]
 
 == Controller Unit Test Properties
 

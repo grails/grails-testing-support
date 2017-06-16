@@ -36,7 +36,7 @@ import junit.framework.ComparisonFailure
 import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertNotNull
 
-trait UrlMappingTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {
+trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnitTest {
 
     public static final String KEY_EXCEPTION = 'exception'
     private final List<String> assertionKeys = ["controller", "action", "view"]

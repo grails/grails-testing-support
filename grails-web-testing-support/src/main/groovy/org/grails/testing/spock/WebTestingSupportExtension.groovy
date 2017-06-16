@@ -1,7 +1,7 @@
 package org.grails.testing.spock
 
 import grails.testing.web.GrailsWebUnitTest
-import grails.testing.web.UrlMappingTest
+import grails.testing.web.UrlMappingsUnitTest
 import grails.testing.web.interceptor.InterceptorUnitTest
 import groovy.transform.CompileStatic
 import org.spockframework.runtime.extension.AbstractGlobalExtension
@@ -25,7 +25,7 @@ class WebTestingSupportExtension extends AbstractGlobalExtension {
             spec.addCleanupSpecInterceptor(webCleanupSpecInterceptor)
         }
 
-        if (UrlMappingTest.isAssignableFrom(spec.reflection)) {
+        if (UrlMappingsUnitTest.isAssignableFrom(spec.reflection)) {
             spec.addSetupSpecInterceptor(urlMappingSetupSpecInterceptor)
         }
 

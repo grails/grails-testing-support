@@ -4,13 +4,13 @@ trait to unit test single domain class.
 [source,groovy]
 .grails-app/domain/demo/Person.groovy
 ----
-include::{sourcedir}/apps/demo/grails-app/domain/demo/Person.groovy[indent=0]
+include::{sourcedir}/apps/demo33/grails-app/domain/demo/Person.groovy[indent=0]
 ----
 
 [source,groovy]
 .src/test/groovy/demo/PersonSpec.groovy
 ----
-include::{sourcedir}/apps/demo/src/test/groovy/demo/PersonSpec.groovy[indent=0]
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/PersonSpec.groovy[indent=0]
 ----
 
 Alternatively, the link:../api/grails/testing/gorm/DataTest.html[`grails.testing.gorm.DataTest`]
@@ -23,7 +23,7 @@ test. This is useful when mocking more than one Domain class at a time to test p
 [source,groovy]
 .src/test/groovy/demo/DataTestTraitSpec.groovy
 ----
-include::{sourcedir}/apps/demo/src/test/groovy/demo/DataTestTraitSpec.groovy[indent=0]
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/DataTestTraitSpec.groovy[indent=0]
 ----
 
 Another way to express which domain classes should be mocked for this test is
@@ -32,7 +32,7 @@ to provide a `Class[] GetDomainClassesToMockMethodSpec()` method in the test.
 [source,groovy]
 .src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy
 ----
-include::{sourcedir}/apps/demo/src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy[indent=0]
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy[indent=0]
 ----
 
 When mocking domain classes in a test for another artifact type (like a
@@ -42,5 +42,5 @@ trait in order to mock the related domain classes.
 [source,groovy]
 .src/test/groovy/demo/PersonControllerSpec.groovy
 ----
-include::{sourcedir}/apps/demo/src/test/groovy/demo/PersonControllerSpec.groovy[indent=0]
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/PersonControllerSpec.groovy[indent=0]
 ----

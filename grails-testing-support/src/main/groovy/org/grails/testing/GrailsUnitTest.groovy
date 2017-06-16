@@ -74,6 +74,10 @@ trait GrailsUnitTest {
         _grailsApplication
     }
 
+    /**
+     *
+     * @return grailsApplication.config
+     */
     Config getConfig() {
         grailsApplication.config
     }

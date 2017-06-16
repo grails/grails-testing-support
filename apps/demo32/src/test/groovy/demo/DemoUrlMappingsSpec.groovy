@@ -1,10 +1,9 @@
 package demo
 
-import grails.testing.web.UrlMappingTest
-import org.junit.Test
+import grails.testing.web.UrlMappingsUnitTest
 import spock.lang.Specification
 
-class DemoUrlMappingsSpec extends Specification implements UrlMappingTest<DemoUrlMappings> {
+class DemoUrlMappingsSpec extends Specification implements UrlMappingsUnitTest<DemoUrlMappings> {
 
     Class[] getControllersToMock() {
         DemoController

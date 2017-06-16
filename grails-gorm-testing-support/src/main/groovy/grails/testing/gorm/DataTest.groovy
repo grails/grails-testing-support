@@ -45,6 +45,17 @@ trait DataTest extends GrailsUnitTest {
 
     Class<?>[] getDomainClassesToMock() {}
 
+    boolean getFailOnError() {
+        false
+    }
+
+    /**
+     * Mocks a domain class providing the equivalent GORM behavior but against an in-memory
+     * concurrent hash map instead of a database
+     *
+     * @param domainClassToMock The domain class to mock
+     * @param domains Optional. The list of domains to save
+     */
     void mockDomain(Class<?> domainClassToMock, List domains = []) {
         mockDomains(domainClassToMock)
         PersistentEntity entity = dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
@@ -53,17 +64,22 @@ trait DataTest extends GrailsUnitTest {
         }
     }
 
+    /**
+     * Mocks domain classes providing the equivalent GORM behavior but against an in-memory
+     * concurrent hash map instead of a database
+     *
+     * @param domainClassesToMock The list of domain classes to mock
+     */
     void mockDomains(Class<?>... domainClassesToMock) {
         initialMockDomainSetup()
         Collection<PersistentEntity> entities = dataStore.mappingContext.addPersistentEntities(domainClassesToMock)
         for (PersistentEntity entity in entities) {
-            GrailsDomainClass domain = registerGrailsDomainClass(entity.javaClass)
+            registerGrailsDomainClass(entity.javaClass)
 
             Validator validator = registerDomainClassValidator(entity)
             dataStore.mappingContext.addEntityValidator(entity, validator)
         }
-        final failOnError = false //getFailOnError()
-        new GormEnhancer(dataStore, transactionManager, failOnError instanceof Boolean ? (Boolean) failOnError : false)
+        new GormEnhancer(dataStore, transactionManager, getFailOnError())
 
         initializeMappingContext()
     }
@@ -76,8 +92,8 @@ trait DataTest extends GrailsUnitTest {
         applicationContext.getBean('transactionManager', PlatformTransactionManager)
     }
 
-    private GrailsDomainClass registerGrailsDomainClass(Class<?> domainClassToMock) {
-        (GrailsDomainClass) grailsApplication.addArtefact(DomainClassArtefactHandler.TYPE, domainClassToMock)
+    private void registerGrailsDomainClass(Class<?> domainClassToMock) {
+        grailsApplication.addArtefact(DomainClassArtefactHandler.TYPE, domainClassToMock)
     }
 
     @CompileDynamic

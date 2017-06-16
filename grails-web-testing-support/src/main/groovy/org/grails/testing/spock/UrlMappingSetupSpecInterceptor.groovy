@@ -1,6 +1,6 @@
 package org.grails.testing.spock
 
-import grails.testing.web.UrlMappingTest
+import grails.testing.web.UrlMappingsUnitTest
 import groovy.transform.CompileStatic
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
@@ -10,7 +10,7 @@ class UrlMappingSetupSpecInterceptor implements IMethodInterceptor {
 
     @Override
     void intercept(IMethodInvocation invocation) throws Throwable {
-        ((UrlMappingTest)invocation.instance).configuredMockedControllers()
+        ((UrlMappingsUnitTest)invocation.instance).configuredMockedControllers()
         invocation.proceed()
     }
 }

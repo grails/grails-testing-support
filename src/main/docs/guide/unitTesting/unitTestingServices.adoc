@@ -4,13 +4,13 @@ test services.
 [source,groovy]
 .grails-app/services/demo/HelperService.groovy
 ----
-include::{sourcedir}/apps/demo/grails-app/services/demo/HelperService.groovy[tags=basic_declaration,indent=0]
+include::{sourcedir}/apps/demo33/grails-app/services/demo/HelperService.groovy[tags=basic_declaration,indent=0]
 ----
 
 [source,groovy]
 .src/test/groovy/demo/HelperServiceSpec.groovy
 ----
-include::{sourcedir}/apps/demo/src/test/groovy/demo/HelperServiceSpec.groovy[tags=basic_declaration,indent=0]
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/HelperServiceSpec.groovy[tags=basic_declaration,indent=0]
 ----
 
 Adding the `ServiceUnitTest` trait to a test causes a new `service` property to
