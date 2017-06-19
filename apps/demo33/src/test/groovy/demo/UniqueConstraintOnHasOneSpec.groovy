@@ -2,7 +2,7 @@ package demo
 
 import grails.persistence.Entity
 import grails.testing.gorm.DataTest
-import spock.lang.Ignore
+import groovy.transform.NotYetImplemented
 import spock.lang.Specification
 
 class UniqueConstraintOnHasOneSpec extends Specification implements DataTest {
@@ -31,7 +31,7 @@ class UniqueConstraintOnHasOneSpec extends Specification implements DataTest {
         foo2.errors['name']?.code == 'unique'
     }
 
-    @Ignore
+    @NotYetImplemented
     void "Foo's bar should be unique, but..."() {
         given:
         def foo1 = new Foo(name: "FOO1")
