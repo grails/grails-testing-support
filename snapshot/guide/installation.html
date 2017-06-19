@@ -35,10 +35,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/unitTesting.html"><strong>3</strong><span>Unit Testing</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/APIDocs.html"><strong>4</strong><span>API Docs</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/unitTesting.html"><strong>4</strong><span>Unit Testing</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/APIDocs.html"><strong>5</strong><span>API Docs</span></a>
                         </div>
                         
                     </div>
@@ -65,7 +68,7 @@ function addJsClass() {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/unitTesting.html"><strong>3</strong><span>Unit Testing</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span> >></a></div>
                 
 
 
@@ -94,10 +97,21 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">testCompile "org.grails:grails-testing-support:1.0.0.BUILD-SNAPSHOT"
-testCompile "org.grails:grails-gorm-testing-support:1.0.0.BUILD-SNAPSHOT"
+<pre class="CodeRay highlight"><code data-lang="groovy">testCompile "org.grails:grails-gorm-testing-support:1.0.0.BUILD-SNAPSHOT"
 testCompile "org.grails:grails-web-testing-support:1.0.0.BUILD-SNAPSHOT"</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The dependencies are optional. If you are not unit testing domain activity, you may not need the GORM testing support library.
+</td>
+</tr>
+</table>
 </div>
 
 
@@ -105,7 +119,7 @@ testCompile "org.grails:grails-web-testing-support:1.0.0.BUILD-SNAPSHOT"</code><
                 
                     <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/unitTesting.html"><strong>3</strong><span>Unit Testing</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

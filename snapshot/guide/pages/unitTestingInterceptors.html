@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.1 Unit Testing Controllers 1.0.0.BUILD-SNAPSHOT</title>
+    <title>4.5 Unit Testing Interceptors 1.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -73,7 +73,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>4.1 Unit Testing Controllers</h1>
+                    <h1>4.5 Unit Testing Interceptors</h1>
 
                     <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -82,95 +82,16 @@ function addJsClass() {
 
                 
 
-<h2 id="unitTestingControllers">4.1 Unit Testing Controllers</h2>
+<h2 id="unitTestingInterceptors">4.5 Unit Testing Interceptors</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/unitTestingControllers.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/unitTestingInterceptors.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
-<div class="paragraph">
-<p>Use the <code>grails.testing.web.controllers.ControllerUnitTest</code> trait to unit
-test controllers.</p>
-</div>
-<div class="listingblock">
-<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
 
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
-
-    <span class="comment">// ...</span>
-
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To test the simplest "Hello World"-style example you can do the following:</p>
-</div>
-<div class="listingblock">
-<div class="title">grails-app/controllers/demo/DemoController.groovy</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">DemoController</span> {
-
-    <span class="keyword">def</span> <span class="function">hello</span>() {
-        render <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
-
-    <span class="comment">// ...</span>
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which renders text</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">when</span>:
-        controller.hello()               <i class="conum" data-value="1"></i><b>(1)</b>
-
-        <span class="key">then</span>:
-        status == <span class="integer">200</span>                    <i class="conum" data-value="2"></i><b>(2)</b>
-        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span> <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>controller</code> property will be an instance of <code>DemoController</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>status</code> property will contain the value of the response status</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <code>response</code> property will be a reference to the HTTP response object</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>See the <a href="../api/grails/testing/web/controllers/ControllerUnitTest.html"><code>ControllerUnitTest</code></a>
-docs for information on all of the available properties.</p>
-</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

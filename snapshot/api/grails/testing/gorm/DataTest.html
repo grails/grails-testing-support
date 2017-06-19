@@ -173,18 +173,25 @@ if (location.href.indexOf('is-external=true') == -1) {
                         </tr>
                         
                         <tr class="altColor">
+                            <td class="colFirst"><code>boolean</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#getFailOnError()">getFailOnError</a></strong>()</code><br></td>
+                        </tr>
+                        
+                        <tr class="rowColor">
                             <td class="colFirst"><code><a href='../../../PlatformTransactionManager.html'>PlatformTransactionManager</a></strong></code></td>
                             <td class="colLast"><code><strong><a href="#getTransactionManager()">getTransactionManager</a></strong>()</code><br></td>
                         </tr>
                         
-                        <tr class="rowColor">
-                            <td class="colFirst"><code>void</strong></code></td>
-                            <td class="colLast"><code><strong><a href="#mockDomain(Class<?>, java.util.List)">mockDomain</a></strong>(java.lang.Class&lt;?&gt; domainClassToMock, java.util.List domains = [])</code><br></td>
-                        </tr>
-                        
                         <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
-                            <td class="colLast"><code><strong><a href="#mockDomains(Class<?>)">mockDomains</a></strong>(java.lang.Class&lt;?&gt;... domainClassesToMock)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#mockDomain(Class<?>, java.util.List)">mockDomain</a></strong>(java.lang.Class&lt;?&gt; domainClassToMock, java.util.List domains = [])</code><br>Mocks a domain class providing the equivalent GORM behavior but against an in-memory
+ concurrent hash map instead of a database</td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code>void</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#mockDomains(Class<?>)">mockDomains</a></strong>(java.lang.Class&lt;?&gt;... domainClassesToMock)</code><br>Mocks domain classes providing the equivalent GORM behavior but against an in-memory
+ concurrent hash map instead of a database</td>
                         </tr>
                         
                     </table>
@@ -279,6 +286,14 @@ if (location.href.indexOf('is-external=true') == -1) {
                             </li>
                         </ul>
                     
+                        <a name="getFailOnError()"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>getFailOnError</strong>()</h4>
+                                <p></p>
+                            </li>
+                        </ul>
+                    
                         <a name="getTransactionManager()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
@@ -291,7 +306,9 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>void <strong>mockDomain</strong>(java.lang.Class&lt;?&gt; domainClassToMock, java.util.List domains = [])</h4>
-                                <p></p>
+                                <p> Mocks a domain class providing the equivalent GORM behavior but against an in-memory
+ concurrent hash map instead of a database
+     <DL><DT><B>Parameters:</B></DT><DD><code>domainClassToMock</code> -  The domain class to mock</DD><DD><code>domains</code> -  Optional. The list of domains to save</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -299,7 +316,9 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>void <strong>mockDomains</strong>(java.lang.Class&lt;?&gt;... domainClassesToMock)</h4>
-                                <p></p>
+                                <p> Mocks domain classes providing the equivalent GORM behavior but against an in-memory
+ concurrent hash map instead of a database
+     <DL><DT><B>Parameters:</B></DT><DD><code>domainClassesToMock</code> -  The list of domain classes to mock</DD></DL></p>
                             </li>
                         </ul>
                     

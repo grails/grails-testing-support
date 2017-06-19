@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.6 Annotations 1.0.0.BUILD-SNAPSHOT</title>
+    <title>4.8 Annotations 1.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -35,10 +35,13 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/unitTesting.html"><strong>3</strong><span>Unit Testing</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/APIDocs.html"><strong>4</strong><span>API Docs</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/unitTesting.html"><strong>4</strong><span>Unit Testing</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span></a>
                         </div>
                         
                     </div>
@@ -59,18 +62,18 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>4</strong><span>API Docs</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>3.6 Annotations</h1>
+                    <h1>4.8 Annotations</h1>
 
                     <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -79,7 +82,7 @@ function addJsClass() {
 
                 
 
-<h2 id="annotations">3.6 Annotations</h2>
+<h2 id="annotations">4.8 Annotations</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/annotations.adoc"'>
@@ -283,7 +286,27 @@ dependency injected values during setup as shown below.</p>
 <div class="listingblock">
 <div class="title">src/integration-test/groovy/demo/DependencyInjectionSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>travis/build/grails/grails-testing-support/apps/demo/src/integration-test/groovy/demo/DependencyInjectionSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.mixin.integration.Integration</span>
+<span class="keyword">import</span> <span class="include">grails.testing.spock.OnceBefore</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="annotation">@Integration</span>
+<span class="type">class</span> <span class="class">DependencyInjectionSpec</span> <span class="directive">extends</span> Specification {
+
+    HelperService helperService
+
+    <span class="annotation">@OnceBefore</span>
+    <span class="type">void</span> init() {
+        <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some test method</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        helperService != <span class="predefined-constant">null</span>
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -291,9 +314,9 @@ dependency injected values during setup as shown below.</p>
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>4</strong><span>API Docs</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
