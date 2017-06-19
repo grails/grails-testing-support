@@ -35,6 +35,17 @@ dependencies {
     compile "org.grails:grails-async:$grailsVersion"
     compile "org.grails:grails-test:$grailsVersion"
     compile "org.springframework.boot:spring-boot-test:1.5.3.RELEASE"
+    compile("org.spockframework:spock-spring:${spockVersion}") {
+        transitive = false
+        exclude group:'junit', module: 'junit-dep'
+        exclude group:'org.codehaus.groovy', module: 'groovy-all'
+    }
+    compile("org.spockframework:spock-core:${spockVersion}") {
+        transitive = false
+        exclude group:'junit', module: 'junit-dep'
+        exclude group:'org.codehaus.groovy', module: 'groovy-all'
+    }
+
 }
 
 project.ext {
