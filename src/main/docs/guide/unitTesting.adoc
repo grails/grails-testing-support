@@ -1,1 +1,51 @@
 By implementing Grails Testing Support traits, unit tests inherit functionality that make writing tests concise and simple.
+
+Some functionality is available to all tests
+
+=== Modifying the Application Context
+
+Any modifications to the context will be specific to that test class. A new context is created for each test class.
+
+==== doWithSpring
+
+To provide or replace beans in the context, you can override the `doWithSpring` method in your test.
+
+[source,groovy]
+----
+Closure doWithSpring() {{ ->
+    someService(SomeService)
+}}
+----
+
+==== resources.groovy
+
+If you want your application's resources file to be loaded into the context, override the `loadExternalBeans` method.
+
+[source,groovy]
+----
+boolean loadExternalBeans() {
+    true
+}
+----
+
+==== Spring configuration from plugins
+
+If you would like the `doWithSpring` configuration of any loaded plugins to be invoked for your tests, override the `getIncludePlugins` method and return a list of strings representing the plugin names.
+
+[source,groovy]
+----
+Set<String> getIncludePlugins() {
+    ["springSecurityCore"].toSet()
+}
+----
+
+=== Manipulating Configuration
+
+To change configuration for the context of your test class, override the `doWithConfig` method.
+
+[source,groovy]
+----
+Closure doWithConfig() {{ config ->
+    config.foo.bar = "x"
+}}
+----
