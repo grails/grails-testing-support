@@ -27,7 +27,7 @@ apply plugin: 'project-reports'
 dependencies {
     compile "org.grails:grails-plugin-domain-class:$grailsVersion"
     compile("org.grails:grails-datastore-gorm-test:$datastoreVersion") {
-        exclude module: "grails-plugin-testing"
+        exclude group: "org.grails", module: "grails-plugin-testing"
     }
 
     compile project(':grails-testing-support')
