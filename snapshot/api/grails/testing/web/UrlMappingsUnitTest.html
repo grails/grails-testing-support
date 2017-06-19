@@ -173,62 +173,87 @@ if (location.href.indexOf('is-external=true') == -1) {
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
-                            <td class="colLast"><code><strong><a href="#assertAction(java.lang.String, java.lang.String)">assertAction</a></strong>(java.lang.String controller, java.lang.String action)</code><br>Asserts an action exists for the specified controller name, action name and url</td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#assertController(java.lang.String)">assertController</a></strong>(java.lang.String controller)</code><br>asserts a controller exists for the specified name and url</td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#assertForwardUrlMapping(Map<String, Object>, java.lang.Object, groovy.lang.Closure)">assertForwardUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; assertions, java.lang.Object url, groovy.lang.Closure paramAssertions = null)</code><br></td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#assertReverseUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">assertReverseUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts the given controller and action produce the given reverse URL mapping</td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code>void</strong></code></td>
-                            <td class="colLast"><code><strong><a href="#assertUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">assertUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>@param controller The controller name</td>
+                            <td class="colLast"><code><strong><a href="#assertUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">assertUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts a URL mapping maps to the controller and action specified by named parameters. </td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#assertView(java.lang.String, java.lang.String)">assertView</a></strong>(java.lang.String controller, java.lang.String view)</code><br>Asserts a view exists for the specified controller name and view name</td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#configuredMockedControllers()">configuredMockedControllers</a></strong>()</code><br></td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code><a href='../../../GrailsControllerClass.html'>GrailsControllerClass</a></strong></code></td>
                             <td class="colLast"><code><strong><a href="#getControllerClass(java.lang.String)">getControllerClass</a></strong>(java.lang.String controller)</code><br></td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code>java.lang.Class[]</strong></code></td>
                             <td class="colLast"><code><strong><a href="#getControllersToMock()">getControllersToMock</a></strong>()</code><br></td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code><a href='../../../UrlMappingsHolder.html'>UrlMappingsHolder</a></strong></code></td>
                             <td class="colLast"><code><strong><a href="#getUrlMappingsHolder()">getUrlMappingsHolder</a></strong>()</code><br>@return The UrlMappingsHolder bean</td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code>java.lang.Object</strong></code></td>
                             <td class="colLast"><code><strong><a href="#mapURI(java.lang.String)">mapURI</a></strong>(java.lang.String uri)</code><br>Maps a URI and returns the appropriate controller instance</td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#mockArtefact(Class<?>)">mockArtefact</a></strong>(java.lang.Class&lt;?&gt; urlMappingsClass)</code><br></td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code>boolean</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#verifyAction(java.lang.String, java.lang.String)">verifyAction</a></strong>(java.lang.String controller, java.lang.String action)</code><br>Asserts an action exists for the specified controller name, action name and url</td>
+                        </tr>
+                        
+                        <tr class="altColor">
+                            <td class="colFirst"><code>boolean</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#verifyController(java.lang.String)">verifyController</a></strong>(java.lang.String controller)</code><br>@param controller The controller name</td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code>boolean</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#verifyForwardUrlMapping(Map<String, Object>, java.lang.Object, groovy.lang.Closure)">verifyForwardUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; assertions, java.lang.Object url, groovy.lang.Closure paramAssertions = null)</code><br></td>
+                        </tr>
+                        
+                        <tr class="altColor">
+                            <td class="colFirst"><code>void</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#verifyReverseUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">verifyReverseUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts the given controller and action produce the given reverse URL mapping</td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code>boolean</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#verifyView(java.lang.String, java.lang.String)">verifyView</a></strong>(java.lang.String controller, java.lang.String view)</code><br>@param controller The controller name</td>
+                        </tr>
+                        
+                        <tr class="altColor">
+                            <td class="colFirst"><code>boolean</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#verifytUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">verifytUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts a URL mapping maps to the controller and action specified by named parameters. </td>
                         </tr>
                         
                     </table>
@@ -281,15 +306,6 @@ if (location.href.indexOf('is-external=true') == -1) {
                 </a>
                     <h3>Method Detail</h3>
                     
-                        <a name="assertAction(java.lang.String, java.lang.String)"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>void <strong>assertAction</strong>(java.lang.String controller, java.lang.String action)</h4>
-                                <p> Asserts an action exists for the specified controller name, action name and url
-     <DL><DT><B>Parameters:</B></DT><DD><code>controller</code> -  The controller name</DD><DD><code>action</code> -  The action name</DD></DL></p>
-                            </li>
-                        </ul>
-                    
                         <a name="assertController(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
@@ -326,8 +342,14 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>void <strong>assertUrlMapping</strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</h4>
-                                <p>
-     <DL><DT><B>Parameters:</B></DT><DD><code>controller</code> -  The controller name</DD><DD><code>view</code> -  The view name</DD><DD><code>url</code> -  The url</DD></DL><DL><DT><B>Returns:</B></DT><DD>true If a view exists for the specified controller and view</DD></DL></p>
+                                <p> Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+
+ <pre>
+ <code>
+           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+ </code>
+ </pre>
+     <DL><DT><B>Parameters:</B></DT><DD><code>assertions</code> -  The assertions as named parameters</DD><DD><code>url</code> -  The URL as a string</DD><DD><code>paramAssertions</code> -  The parameters to assert defined in the body of the closure</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -388,6 +410,77 @@ if (location.href.indexOf('is-external=true') == -1) {
                                 <h4>@groovy.transform.CompileDynamic
 void <strong>mockArtefact</strong>(java.lang.Class&lt;?&gt; urlMappingsClass)</h4>
                                 <p></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="verifyAction(java.lang.String, java.lang.String)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>verifyAction</strong>(java.lang.String controller, java.lang.String action)</h4>
+                                <p> Asserts an action exists for the specified controller name, action name and url
+     <DL><DT><B>Parameters:</B></DT><DD><code>controller</code> -  The controller name</DD><DD><code>action</code> -  The action name
+
+    void assertAction(String controller, String action) {
+        checkAction(controller, action, true)
+    }
+
+    /**</DD><DD><code>controller</code> -  The controller name</DD><DD><code>action</code> -  The action name</DD></DL><DL><DT><B>Returns:</B></DT><DD>true If an action exists for the specified controller name and action name</DD></DL></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="verifyController(java.lang.String)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>verifyController</strong>(java.lang.String controller)</h4>
+                                <p>
+     <DL><DT><B>Parameters:</B></DT><DD><code>controller</code> -  The controller name</DD><DD><code>url</code> -  The url</DD></DL><DL><DT><B>Returns:</B></DT><DD>true If a controller exists for the specified name and url</DD></DL></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="verifyForwardUrlMapping(Map<String, Object>, java.lang.Object, groovy.lang.Closure)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>verifyForwardUrlMapping</strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; assertions, java.lang.Object url, groovy.lang.Closure paramAssertions = null)</h4>
+                                <p></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="verifyReverseUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>void <strong>verifyReverseUrlMapping</strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</h4>
+                                <p> Asserts the given controller and action produce the given reverse URL mapping
+
+ <pre>
+ <code>
+           verifyReverseUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+ </code>
+ </pre>
+     <DL><DT><B>Parameters:</B></DT><DD><code>assertions</code> -  The assertions as named parameters</DD><DD><code>url</code> -  The URL as a string</DD><DD><code>paramAssertions</code> -  The parameters to assert defined in the body of the closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if the url matches the assertions</DD></DL></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="verifyView(java.lang.String, java.lang.String)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>verifyView</strong>(java.lang.String controller, java.lang.String view)</h4>
+                                <p>
+     <DL><DT><B>Parameters:</B></DT><DD><code>controller</code> -  The controller name</DD><DD><code>view</code> -  The view name</DD><DD><code>url</code> -  The url</DD></DL><DL><DT><B>Returns:</B></DT><DD>true If a view exists for the specified controller and view</DD></DL></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="verifytUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>verifytUrlMapping</strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</h4>
+                                <p> Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+
+ <pre>
+ <code>
+           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+ </code>
+ </pre>
+     <DL><DT><B>Parameters:</B></DT><DD><code>assertions</code> -  The assertions as named parameters</DD><DD><code>url</code> -  The URL as a string</DD><DD><code>paramAssertions</code> -  The parameters to assert defined in the body of the closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if the url matches the assertions</DD></DL></p>
                             </li>
                         </ul>
                     

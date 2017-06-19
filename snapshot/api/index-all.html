@@ -134,8 +134,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd> <div class="block">Renders a template for the given contents and model to the provided writer</div></dd>
 <dt><span class="strong"><a href="grails/testing/web/taglib/TagLibUnitTest.html#applyTemplate(java.io.StringWriter, java.lang.String, java.util.Map)" title="Method in TagLibUnitTest">applyTemplate(StringWriter, String, Map)</a></span> - Method in <a href="grails/testing/web/taglib/TagLibUnitTest.html">TagLibUnitTest</a>
 </dt><dd> <div class="block"></div></dd>
-<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#assertAction(java.lang.String, java.lang.String)" title="Method in UrlMappingsUnitTest">assertAction(String, String)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
-</dt><dd> <div class="block">Asserts an action exists for the specified controller name, action name and url</div></dd>
 <dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#assertController(java.lang.String)" title="Method in UrlMappingsUnitTest">assertController(String)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
 </dt><dd> <div class="block">asserts a controller exists for the specified name and url</div></dd>
 <dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#assertForwardUrlMapping(Map<String, Object>, java.lang.Object, groovy.lang.Closure)" title="Method in UrlMappingsUnitTest">assertForwardUrlMapping(Map&lt;String, Object&gt;, Object, Closure)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
@@ -143,7 +141,7 @@ if (location.href.indexOf('is-external=true') == -1) {
 <dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#assertReverseUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)" title="Method in UrlMappingsUnitTest">assertReverseUrlMapping(Map&lt;String, String&gt;, String, Closure)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
 </dt><dd> <div class="block">Asserts the given controller and action produce the given reverse URL mapping</div></dd>
 <dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#assertUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)" title="Method in UrlMappingsUnitTest">assertUrlMapping(Map&lt;String, String&gt;, String, Closure)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
-</dt><dd> <div class="block">@param controller The controller name</div></dd>
+</dt><dd> <div class="block">Asserts a URL mapping maps to the controller and action specified by named parameters. </div></dd>
 <dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#assertView(java.lang.String, java.lang.String)" title="Method in UrlMappingsUnitTest">assertView(String, String)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
 </dt><dd> <div class="block">Asserts a view exists for the specified controller name and view name</div></dd>
 <dt><span class="strong"><a href="grails/testing/spring/AutowiredTest.html#autowire()" title="Method in AutowiredTest">autowire()</a></span> - Method in <a href="grails/testing/spring/AutowiredTest.html">AutowiredTest</a>
@@ -598,6 +596,18 @@ if (location.href.indexOf('is-external=true') == -1) {
 <h2 class="title">V</h2>
 <dl>
 
+<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#verifyAction(java.lang.String, java.lang.String)" title="Method in UrlMappingsUnitTest">verifyAction(String, String)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
+</dt><dd> <div class="block">Asserts an action exists for the specified controller name, action name and url</div></dd>
+<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#verifyController(java.lang.String)" title="Method in UrlMappingsUnitTest">verifyController(String)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
+</dt><dd> <div class="block">@param controller The controller name</div></dd>
+<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#verifyForwardUrlMapping(Map<String, Object>, java.lang.Object, groovy.lang.Closure)" title="Method in UrlMappingsUnitTest">verifyForwardUrlMapping(Map&lt;String, Object&gt;, Object, Closure)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
+</dt><dd> <div class="block"></div></dd>
+<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#verifyReverseUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)" title="Method in UrlMappingsUnitTest">verifyReverseUrlMapping(Map&lt;String, String&gt;, String, Closure)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
+</dt><dd> <div class="block">Asserts the given controller and action produce the given reverse URL mapping</div></dd>
+<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#verifytUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)" title="Method in UrlMappingsUnitTest">verifytUrlMapping(Map&lt;String, String&gt;, String, Closure)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
+</dt><dd> <div class="block">Asserts a URL mapping maps to the controller and action specified by named parameters. </div></dd>
+<dt><span class="strong"><a href="grails/testing/web/UrlMappingsUnitTest.html#verifyView(java.lang.String, java.lang.String)" title="Method in UrlMappingsUnitTest">verifyView(String, String)</a></span> - Method in <a href="grails/testing/web/UrlMappingsUnitTest.html">UrlMappingsUnitTest</a>
+</dt><dd> <div class="block">@param controller The controller name</div></dd>
 <dt><span class="strong"><a href="org/grails/compiler/injection/testing/IntegrationTestMixinTransformation.html#visit(org.codehaus.groovy.ast.ASTNode, org.codehaus.groovy.control.SourceUnit)" title="Method in IntegrationTestMixinTransformation">visit(ASTNode, SourceUnit)</a></span> - Method in <a href="org/grails/compiler/injection/testing/IntegrationTestMixinTransformation.html">IntegrationTestMixinTransformation</a>
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/grails/testing/spock/RunOnceExtension.html#visitFixtureAnnotation(grails.testing.spock.RunOnce, MethodInfo)" title="Method in RunOnceExtension">visitFixtureAnnotation(RunOnce, MethodInfo)</a></span> - Method in <a href="org/grails/testing/spock/RunOnceExtension.html">RunOnceExtension</a>
