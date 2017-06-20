@@ -17,7 +17,7 @@ repositories {
     maven { url "https://repo.grails.org/grails/core" }
 }
 
-version "$gormTestingSupportVersion"
+version "$testingSupportVersion"
 group "org.grails"
 
 apply plugin: 'groovy'
@@ -75,6 +75,11 @@ publishing {
                             id 'jeffscottbrown'
                             name 'Jeff Scott Brown'
                             email 'brownj@ociweb.com'
+                        }
+                        developer {
+                            id 'jameskleeh'
+                            name 'James Kleeh'
+                            email 'james.kleeh@gmail.com'
                         }
                     }
                 }
