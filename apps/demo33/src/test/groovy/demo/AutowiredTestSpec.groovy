@@ -1,7 +1,7 @@
 package demo
 
+// tag::test_declaration[]
 import grails.testing.spring.AutowiredTest
-import org.junit.Before
 import spock.lang.Specification
 
 class AutowiredTestSpec extends Specification implements AutowiredTest {
@@ -26,3 +26,4 @@ class AutowiredTestSpec extends Specification implements AutowiredTest {
         helperService != null
     }
 }
+// end::test_declaration[]

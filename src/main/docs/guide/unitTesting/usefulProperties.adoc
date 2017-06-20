@@ -9,11 +9,26 @@ various traits describe those properties.  Some particular properties of interes
 - link:../api/org/grails/testing/GrailsUnitTest.html#getApplicationContext()[applicationContext]
 - link:../api/org/grails/testing/GrailsUnitTest.html#getConfig()[config]
 
+== Properties Available In All Web Unit Tests (Controller, Interceptor, Taglib, UrlMappings)
+
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getRequest()[request]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getResponse()[response]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getServletContext()[servletContext]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getViews()[views]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getSession()[session]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getStatus()[status]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getParams()[params]
+- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getFlash()[flash]
+
 == Controller Unit Test Properties
 
 - link:../api/grails/testing/web/controllers/ControllerUnitTest.html#getController()[controller]
 - link:../api/grails/testing/web/controllers/ControllerUnitTest.html#getView()[view]
 - link:../api/grails/testing/web/controllers/ControllerUnitTest.html#getModel()[model]
+
+== Interceptor Unit Test Properties
+
+- link:../api/grails/testing/web/interceptor/InterceptorUnitTest.html#getInterceptor()[interceptor]
 
 == Service Unit Test Properties
 

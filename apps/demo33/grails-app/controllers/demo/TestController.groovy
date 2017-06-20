@@ -140,6 +140,12 @@ class TestController {
             render "Bad"
         }
     }
+
+    // tag::render_attribute[]
+    def renderAttribute() {
+        render request.getAttribute('foo')
+    }
+    // end::render_attribute[]
 }
 
 class TestCommand {

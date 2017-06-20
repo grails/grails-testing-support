@@ -9,7 +9,6 @@ unitTesting:
   unitTestingTagLibraries: Unit Testing Tag Libraries
   unitTestingInterceptors: Unit Testing Interceptors
   unitTestingUrlMappings: Unit Testing Url Mappings
-  dependencyInjection: Dependency Injection
   annotations: Annotations
   usefulProperties: Useful Properties
 APIDocs: API Docs

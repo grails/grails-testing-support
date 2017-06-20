@@ -12,6 +12,18 @@ class DefineBeansSpec extends Specification implements ServiceUnitTest<Reporting
         }
 
         expect:
-        getService().retrieveSomeNumber() == 2112
+        service.retrieveSomeNumber() == 2112
     }
+
+    // tag::test_declaration[]
+    void "test the bean is available to the context"() {
+        given:
+        defineBeans {
+            someInteger(Integer, 2)
+        }
+
+        expect:
+        applicationContext.getBean('someInteger') == 2
+    }
+    // end::test_declaration[]
 }

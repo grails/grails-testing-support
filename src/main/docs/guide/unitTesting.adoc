@@ -1,10 +1,10 @@
 By implementing Grails Testing Support traits, unit tests inherit functionality that make writing tests concise and simple.
 
-Some functionality is available to all tests
+The following functionality is available to all tests
 
 === Modifying the Application Context
 
-Any modifications to the context will be specific to that test class. A new context is created for each test class.
+Any modifications to the context will be specific to that test class. A new context is created for each test class. Artifacts under test are subjected to dependency injection just like they are in the running application. The unit testing environment does not spin up the entire Spring application context with all of the beans that would normally be configured in the running application. Unit tests may register any beans necessary to carry out the test in a number of different ways.
 
 ==== doWithSpring
 
@@ -16,6 +16,8 @@ Closure doWithSpring() {{ ->
     someService(SomeService)
 }}
 ----
+
+NOTE: The syntax available in this closure is the same syntax that may be used in `grails-app/conf/spring/resources.groovy` for defining bean definitions.
 
 ==== resources.groovy
 
@@ -39,6 +41,41 @@ Set<String> getIncludePlugins() {
 }
 ----
 
+WARNING: If you override this method, the default plugins will not be included. The default plugins are `core` and `eventBus`. If you want to add a plugin in addition to the defaults, add the defaults to your list.
+
+==== Other Spring configuration
+
+At any time during your tests, you can also directly call the `defineBeans` method. The `defineBeans` method can either take a closure, or an instance of a plugin.
+
+[source,groovy]
+----
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/DefineBeansSpec.groovy[tags=test_declaration,indent=0]
+----
+
+If you pass a plugin instance to the method, the `doWithSpring` will be executed.
+
+[source,groovy]
+----
+void testSomething() {
+    given:
+    defineBeans(new MyCustomPlugin())
+
+    expect:
+    applicationContext.containsBean('someBeanAddedByDoWithSpring')
+}
+----
+
+==== Autowiring The Test
+
+It is possible to set up the test class itself for autowiring. Simply implement the link:../api/grails/testing/spring/AutowiredTest.html[`AutowiredTest`] trait, and beans will be injected into the test class.
+
+For Example:
+
+[source,groovy]
+----
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/AutowiredTestSpec.groovy[tags=test_declaration,indent=0]
+----
+
 === Manipulating Configuration
 
 To change configuration for the context of your test class, override the `doWithConfig` method.
@@ -49,3 +86,5 @@ Closure doWithConfig() {{ config ->
     config.foo.bar = "x"
 }}
 ----
+
+NOTE: A test only needs to implement the link:../api/org/grails/testing/GrailsUnitTest.html[`GrailsUnitTest`] trait to get the above functionality. All of the other testing traits extend `GrailsUnitTest`, so implementing it directly is uncommon.

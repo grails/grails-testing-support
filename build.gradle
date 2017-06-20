@@ -4,8 +4,12 @@ repositories {
 }
 version project.projectVersion
 
-ext {
+/*ext {
     commonBuild = "https://raw.githubusercontent.com/grails/grails-common-build/1a6b9e24fd2ec49e321ab983994f850663adcc6d/"
+}*/
+
+ext {
+    commonBuild = "https://raw.githubusercontent.com/grails/grails-common-build/master"
 }
 
 apply from:"${commonBuild}/common-docs.gradle"

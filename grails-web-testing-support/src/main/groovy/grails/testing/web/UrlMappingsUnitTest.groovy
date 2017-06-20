@@ -133,7 +133,7 @@ trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
      *
      * @param controller The controller name
      * @param action The action name
-
+     */
     void assertAction(String controller, String action) {
         checkAction(controller, action, true)
     }
@@ -217,7 +217,7 @@ trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
      *
      * @return True if the url matches the assertions
      */
-    boolean verifytUrlMapping(Map<String, String> assertions, String url, Closure paramAssertions = null) {
+    boolean verifyUrlMapping(Map<String, String> assertions, String url, Closure paramAssertions = null) {
         boolean returnValue = verifyForwardUrlMapping(assertions, url, paramAssertions)
         if (assertions.controller && !(url instanceof Integer)) {
             returnValue = returnValue && verifyReverseUrlMapping(assertions, url, paramAssertions)
@@ -411,7 +411,7 @@ trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
      *
      * @return True if the url matches the assertions
      */
-    void verifyReverseUrlMapping(Map<String, String> assertions, String url, Closure paramAssertions = null) {
+    boolean verifyReverseUrlMapping(Map<String, String> assertions, String url, Closure paramAssertions = null) {
         checkReverseUrlMapping(assertions, url, paramAssertions, false)
     }
 
