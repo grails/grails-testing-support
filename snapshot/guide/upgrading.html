@@ -91,7 +91,68 @@ function addJsClass() {
 </div>
 
 
+<div class="paragraph">
+<p>This library was designed to be compatible with the old mixin approach. There are some slight differences that you may encounter, however any required changes should be minimal.</p>
+</div>
+<div class="sect2">
+<h3 id="_freshruntime_removed">FreshRuntime Removed</h3>
+<div class="paragraph">
+<p>The <code>@FreshRuntime</code> annotation was removed due to the design of the new framework. The annotation allowed any metaclass changes to be sandboxed either at the method or class level. Spock provides a similar annotation to do the same thing, <a href="http://spockframework.org/spock/docs/1.1/all_in_one.html#_confinemetaclasschanges">@ConfineMetaClassChanges</a>.</p>
+</div>
+<div class="paragraph">
+<p>In addition, the annotation caused the application context to be refreshed. Because the application context is refreshed between test classes automatically, the annotation is no longer necessary.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_tests">Integration Tests</h3>
+<div class="paragraph">
+<p>The <code>@Integration</code> annotation was copied to this library so a dependency on the old framework is no longer necessary. The package has changed from <code>grails.test.mixin.integration.Integration</code> to <code>grails.testing.mixin.integration.Integration</code>. Everything about integration tests should work the same as before.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_converted_test">Example Converted Test</h3>
+<div class="paragraph">
+<p>Here is an example test that may look like something in your project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="annotation">@TestFor</span>(AuthorController)
+<span class="annotation">@Mock</span>(Author)
+<span class="type">class</span> <span class="class">AuthorControllerTests</span> {
 
+    <span class="annotation">@Test</span>
+    <span class="type">void</span> testIndex() {
+        controller.index()
+        <span class="keyword">assert</span> response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To convert this test to the new framework, we must update it to use Spock as well as change the annotation usages to trait usages.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+<span class="keyword">import</span> <span class="include">grails.testing.gorm.DomainUnitTest</span>
+<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
+
+<span class="type">class</span> <span class="class">AuthorControllerTests</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;AuthorController&gt;, DomainUnitTest&lt;Author&gt; {
+
+    <span class="type">void</span> testIndex() {
+        <span class="key">when</span>:
+        controller.index()
+
+        <span class="key">then</span>:
+        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously there are many use cases you may want to convert and it would be impossible to cover them all in this documentation. As a part of the testing of this new framework, all of the usages of the old framework were replaced in Grails core. You can view those changes by looking at <a href="https://github.com/grails/grails-core/commit/8c4f07743108bf1e4e5f69dbb57695cce0b2518d">this commit</a> to see the vast majority of examples you will need.</p>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

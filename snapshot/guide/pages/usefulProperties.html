@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.9 Useful Properties 1.0.0.BUILD-SNAPSHOT</title>
+    <title>4.8 Useful Properties 1.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -73,7 +73,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>4.9 Useful Properties</h1>
+                    <h1>4.8 Useful Properties</h1>
 
                     <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -82,7 +82,7 @@ function addJsClass() {
 
                 
 
-<h2 id="usefulProperties">4.9 Useful Properties</h2>
+<h2 id="usefulProperties">4.8 Useful Properties</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/usefulProperties.adoc"'>
@@ -118,6 +118,39 @@ various traits describe those properties.  Some particular properties of interes
 </div>
 </div>
 <div class="sect1">
+<h2 id="_properties_available_in_all_web_unit_tests_controller_interceptor_taglib_urlmappings">Properties Available In All Web Unit Tests (Controller, Interceptor, Taglib, UrlMappings)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getRequest()">request</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getResponse()">response</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getServletContext()">servletContext</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getViews()">views</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getSession()">session</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getStatus()">status</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getParams()">params</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getFlash()">flash</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_controller_unit_test_properties">Controller Unit Test Properties</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -130,6 +163,18 @@ various traits describe those properties.  Some particular properties of interes
 </li>
 <li>
 <p><a href="../api/grails/testing/web/controllers/ControllerUnitTest.html#getModel()">model</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interceptor_unit_test_properties">Interceptor Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/web/interceptor/InterceptorUnitTest.html#getInterceptor()">interceptor</a></p>
 </li>
 </ul>
 </div>

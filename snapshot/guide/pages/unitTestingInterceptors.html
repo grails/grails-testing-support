@@ -91,7 +91,90 @@ function addJsClass() {
 </div>
 
 
+<div class="paragraph">
+<p>Use the <a href="../api/grails/testing/web/interceptor/InterceptorUnitTest.html"><code>InterceptorUnitTest</code></a> trait to unit test interceptors.</p>
+</div>
+<div class="paragraph">
+<p>The interceptor unit test trait provides methods to make testing interceptors easy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">TestInterceptor</span> {
 
+    TestInterceptor() {
+        match(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+    }
+
+    <span class="type">boolean</span> before() {
+        request.setAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Foo is Bar</span><span class="delimiter">'</span></span>)
+        <span class="predefined-constant">true</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_withrequest">withRequest</h4>
+<div class="paragraph">
+<p>You can use the <code>withRequest</code> method in combination with <code>interceptor.doesMatch()</code> to verify whether or not your interceptor matches the request.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test test interceptor matching</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">when</span>:
+    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    interceptor.doesMatch()
+
+    <span class="key">when</span>:
+    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">person</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    !interceptor.doesMatch()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_withinterceptors">withInterceptors</h4>
+<div class="paragraph">
+<p>You can use the <code>withInterceptors</code> method to execute code within the context of interceptor execution. This is typically done to call controller actions that rely on behavior from interceptors.</p>
+</div>
+<div class="paragraph">
+<p>Given this controller action:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/demo/TestController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> <span class="function">renderAttribute</span>() {
+    render request.getAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is how the action might be tested with <code>withInterceptors</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test controller execution with interceptors</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">given</span>:
+    <span class="keyword">def</span> controller = (TestController)mockController(TestController)
+
+    <span class="key">when</span>:
+    withInterceptors([<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>]) {
+        controller.renderAttribute()
+    }
+
+    <span class="key">then</span>:
+    response.text == <span class="string"><span class="delimiter">&quot;</span><span class="content">Foo is Bar</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding the <code>InterceptorUnitTest</code> trait to a test causes a new <code>interceptor</code> property to
+be automatically created for the Interceptor class under test.</p>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>

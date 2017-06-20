@@ -100,13 +100,10 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#unitTestingUrlMappings"><strong>4.6</strong><span>Unit Testing Url Mappings</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#dependencyInjection"><strong>4.7</strong><span>Dependency Injection</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#annotations"><strong>4.7</strong><span>Annotations</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#annotations"><strong>4.8</strong><span>Annotations</span></a>
-                    </div>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#usefulProperties"><strong>4.9</strong><span>Useful Properties</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#usefulProperties"><strong>4.8</strong><span>Useful Properties</span></a>
                     </div>
                     
                 </div>
@@ -127,12 +124,12 @@ function addJsClass() {
 <p>By implementing Grails Testing Support traits, unit tests inherit functionality that make writing tests concise and simple.</p>
 </div>
 <div class="paragraph">
-<p>Some functionality is available to all tests</p>
+<p>The following functionality is available to all tests</p>
 </div>
 <div class="sect2">
 <h3 id="_modifying_the_application_context">Modifying the Application Context</h3>
 <div class="paragraph">
-<p>Any modifications to the context will be specific to that test class. A new context is created for each test class.</p>
+<p>Any modifications to the context will be specific to that test class. A new context is created for each test class. Artifacts under test are subjected to dependency injection just like they are in the running application. The unit testing environment does not spin up the entire Spring application context with all of the beans that would normally be configured in the running application. Unit tests may register any beans necessary to carry out the test in a number of different ways.</p>
 </div>
 <div class="sect3">
 <h4 id="_dowithspring">doWithSpring</h4>
@@ -145,6 +142,18 @@ function addJsClass() {
     someService(SomeService)
 }}</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The syntax available in this closure is the same syntax that may be used in <code>grails-app/conf/spring/resources.groovy</code> for defining bean definitions.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -172,6 +181,89 @@ function addJsClass() {
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If you override this method, the default plugins will not be included. The default plugins are <code>core</code> and <code>eventBus</code>. If you want to add a plugin in addition to the defaults, add the defaults to your list.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_spring_configuration">Other Spring configuration</h4>
+<div class="paragraph">
+<p>At any time during your tests, you can also directly call the <code>defineBeans</code> method. The <code>defineBeans</code> method can either take a closure, or an instance of a plugin.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test the bean is available to the context</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">given</span>:
+    defineBeans {
+        someInteger(<span class="predefined-type">Integer</span>, <span class="integer">2</span>)
+    }
+
+    <span class="key">expect</span>:
+    applicationContext.getBean(<span class="string"><span class="delimiter">'</span><span class="content">someInteger</span><span class="delimiter">'</span></span>) == <span class="integer">2</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you pass a plugin instance to the method, the <code>doWithSpring</code> will be executed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> testSomething() {
+    <span class="key">given</span>:
+    defineBeans(<span class="keyword">new</span> MyCustomPlugin())
+
+    <span class="key">expect</span>:
+    applicationContext.containsBean(<span class="string"><span class="delimiter">'</span><span class="content">someBeanAddedByDoWithSpring</span><span class="delimiter">'</span></span>)
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_autowiring_the_test">Autowiring The Test</h4>
+<div class="paragraph">
+<p>It is possible to set up the test class itself for autowiring. Simply implement the <a href="../api/grails/testing/spring/AutowiredTest.html"><code>AutowiredTest</code></a> trait, and beans will be injected into the test class.</p>
+</div>
+<div class="paragraph">
+<p>For Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.spring.AutowiredTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">AutowiredTestSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> AutowiredTest {
+
+    Closure doWithSpring() {{ -&gt;
+        helperService HelperService
+    }}
+
+    HelperService helperService
+
+    <span class="type">void</span> setup() {
+        <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some test method</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        helperService != <span class="predefined-constant">null</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some other test method</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        helperService != <span class="predefined-constant">null</span>
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -185,6 +277,18 @@ function addJsClass() {
     config.foo.bar = <span class="string"><span class="delimiter">&quot;</span><span class="content">x</span><span class="delimiter">&quot;</span></span>
 }}</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A test only needs to implement the <a href="../api/org/grails/testing/GrailsUnitTest.html"><code>GrailsUnitTest</code></a> trait to get the above functionality. All of the other testing traits extend <code>GrailsUnitTest</code>, so implementing it directly is uncommon.
+</td>
+</tr>
+</table>
 </div>
 </div>
 
@@ -728,7 +832,90 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 
 
+<div class="paragraph">
+<p>Use the <a href="../api/grails/testing/web/interceptor/InterceptorUnitTest.html"><code>InterceptorUnitTest</code></a> trait to unit test interceptors.</p>
+</div>
+<div class="paragraph">
+<p>The interceptor unit test trait provides methods to make testing interceptors easy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">TestInterceptor</span> {
 
+    TestInterceptor() {
+        match(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+    }
+
+    <span class="type">boolean</span> before() {
+        request.setAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Foo is Bar</span><span class="delimiter">'</span></span>)
+        <span class="predefined-constant">true</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_withrequest">withRequest</h4>
+<div class="paragraph">
+<p>You can use the <code>withRequest</code> method in combination with <code>interceptor.doesMatch()</code> to verify whether or not your interceptor matches the request.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test test interceptor matching</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">when</span>:
+    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    interceptor.doesMatch()
+
+    <span class="key">when</span>:
+    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">person</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    !interceptor.doesMatch()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_withinterceptors">withInterceptors</h4>
+<div class="paragraph">
+<p>You can use the <code>withInterceptors</code> method to execute code within the context of interceptor execution. This is typically done to call controller actions that rely on behavior from interceptors.</p>
+</div>
+<div class="paragraph">
+<p>Given this controller action:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/controllers/demo/TestController.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> <span class="function">renderAttribute</span>() {
+    render request.getAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is how the action might be tested with <code>withInterceptors</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test controller execution with interceptors</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">given</span>:
+    <span class="keyword">def</span> controller = (TestController)mockController(TestController)
+
+    <span class="key">when</span>:
+    withInterceptors([<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>]) {
+        controller.renderAttribute()
+    }
+
+    <span class="key">then</span>:
+    response.text == <span class="string"><span class="delimiter">&quot;</span><span class="content">Foo is Bar</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding the <code>InterceptorUnitTest</code> trait to a test causes a new <code>interceptor</code> property to
+be automatically created for the Interceptor class under test.</p>
+</div>
+</div>
 
 
 <h2 id="unitTestingUrlMappings">4.6 Unit Testing Url Mappings</h2>
@@ -740,85 +927,234 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 
 
-
-
-
-<h2 id="dependencyInjection">4.7 Dependency Injection</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/dependencyInjection.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
 <div class="paragraph">
-<p>Artifacts under test are subjected to dependency injection just like they are
-in the running application.  The unit testing environment does not spin up the
-entire Spring application context with all of the beans that would normally be
-configured in the running application.  Unit tests may register any beans
-necessary to carry out the test by defining a static method in the test named
-<code>doWithSpring</code>.  The syntax available in this closure is the same syntax that
-may be used in <code>grails-app/conf/spring/resources.groovy</code> for defining bean
-definitions.</p>
+<p>Use the <a href="../api/grails/testing/web/UrlMappingsUnitTest.html"><code>UrlMappingsUnitTest</code></a> trait to unit test url mappings. Testing url mappings also requires controllers to be mocked to match the mappings to.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Controllers can not be mocked in <code>setupSpec</code> due to the nature of the request being created and reset for each test. The request is not available until the <code>setup</code> method, therefore controllers can not be mocked until then.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>All of the methods that check the url mappings come in 2 forms, <code>assert</code> and <code>verify</code>. The <code>assert</code> versions will throw AssertionFailed exceptions, similar to the <code>assert</code> keyword in Groovy. The <code>verify</code> methods will simply return true or false depending on whether the url mapping was found and is valid for the expectations.</p>
+</div>
+<div class="paragraph">
+<p>The examples assume the following mappings are being used.</p>
 </div>
 <div class="listingblock">
-<div class="title">grails-app/services/demo/ReportingService.groovy</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
 
-<span class="type">class</span> <span class="class">ReportingService</span> {
+<span class="type">class</span> <span class="class">UrlMappings</span> {
 
-    MathHelper someHelper
+    <span class="directive">static</span> mappings = {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>controller</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>action</span><span class="content">?/</span><span class="inline"><span class="inline-delimiter">$</span>id</span><span class="content">?(.</span><span class="inline"><span class="inline-delimiter">$</span>format</span><span class="content">)?</span><span class="delimiter">&quot;</span></span>{
+            constraints {
+                <span class="comment">// apply constraints here</span>
+            }
+        }
 
-    <span class="type">int</span> retrieveSomeNumber() {
-        someHelper.someNumber
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">/index</span><span class="delimiter">&quot;</span></span>)
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">500</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/error</span><span class="delimiter">'</span></span>)
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">404</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/notFound</span><span class="delimiter">'</span></span>)
     }
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="title">src/main/groovy/demo/MathHelper.groovy</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">interface</span> MathHelper {
-    <span class="type">int</span> getSomeNumber()
-}</code></pre>
-</div>
+<div class="sect2">
+<h3 id="_getting_started">Getting Started</h3>
+<div class="paragraph">
+<p>To get started, implement the <code>UrlMappingsUnitTest</code> in your test class and mock controllers you would like to test against.</p>
 </div>
 <div class="listingblock">
-<div class="title">src/test/groovy/demo/ReportingServiceSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.UrlMappingsUnitTest</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
-<span class="type">class</span> <span class="class">ReportingServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;ReportingService&gt; {
+<span class="type">class</span> <span class="class">UrlMappingsSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> UrlMappingsUnitTest&lt;UrlMappings&gt; {
 
-    Closure doWithSpring() {{ -&gt;
-        someHelper RushHelper
-    }}
+    <span class="type">void</span> setup() {
+        mockController(TestController)
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible call the <code>mockController</code> method in the given blocks of your feature methods if different controllers need to be tested in different test methods.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_forward_url_mapping_test">Forward Url Mapping Test</h3>
+<div class="paragraph">
+<p>Tests whether a URL mapping is forwarded for the given controller class</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
 
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test dependency injection</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        service.retrieveSomeNumber() == <span class="integer">2112</span>
-    }
-}
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
 
-<span class="type">class</span> <span class="class">RushHelper</span> <span class="directive">implements</span> MathHelper {
-
-    <span class="annotation">@Override</span>
-    <span class="type">int</span> getSomeNumber() {
-        <span class="integer">2112</span>
-    }
+    <span class="key">then</span>:
+    noExceptionThrown()
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_reverse_url_mapping_test">Reverse Url Mapping Test</h3>
+<div class="paragraph">
+<p>Test whether the given URL is produced when reverse mapping a link to a given controller and action</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Url mappings for HTTP status codes can not be reversed because it doesn&#8217;t make sense to "link" to a status code.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_combined">Combined</h3>
+<div class="paragraph">
+<p>Tests whether a URL mapping is valid for the given URL. This combines the forward and reverse methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When calling <code>verifyUrlMapping</code>, then reverse mapping will only be checked if a controller is supplied and the first parameter is not an HTTP status code.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_helpful_methods">Other Helpful Methods</h3>
+<div class="sect3">
+<h4 id="_controller_check">Controller Check</h4>
+<div class="paragraph">
+<p>Use the <code>verifyController</code> method to check whether or not the given controller name exists.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test controller</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_action_check">Action Check</h4>
+<div class="paragraph">
+<p>Use the <code>verifyAction</code> method to verify if an action exists for a controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_view_check">View Check</h4>
+<div class="paragraph">
+<p>User the <code>verifyView</code> method to check if a GSP exists for a controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test view</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 
 
-<h2 id="annotations">4.8 Annotations</h2>
+<h2 id="annotations">4.7 Annotations</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/annotations.adoc"'>
@@ -1048,7 +1384,7 @@ dependency injected values during setup as shown below.</p>
 </div>
 
 
-<h2 id="usefulProperties">4.9 Useful Properties</h2>
+<h2 id="usefulProperties">4.8 Useful Properties</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/usefulProperties.adoc"'>
@@ -1084,6 +1420,39 @@ various traits describe those properties.  Some particular properties of interes
 </div>
 </div>
 <div class="sect1">
+<h2 id="_properties_available_in_all_web_unit_tests_controller_interceptor_taglib_urlmappings">Properties Available In All Web Unit Tests (Controller, Interceptor, Taglib, UrlMappings)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getRequest()">request</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getResponse()">response</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getServletContext()">servletContext</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getViews()">views</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getSession()">session</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getStatus()">status</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getParams()">params</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/web/GrailsWebUnitTest.html#getFlash()">flash</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_controller_unit_test_properties">Controller Unit Test Properties</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -1096,6 +1465,18 @@ various traits describe those properties.  Some particular properties of interes
 </li>
 <li>
 <p><a href="../api/grails/testing/web/controllers/ControllerUnitTest.html#getModel()">model</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interceptor_unit_test_properties">Interceptor Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/web/interceptor/InterceptorUnitTest.html#getInterceptor()">interceptor</a></p>
 </li>
 </ul>
 </div>
