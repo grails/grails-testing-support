@@ -12,9 +12,11 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH =~ ^master$ && $TRAVIS_PULL_REQUEST
       ./gradlew bintrayUpload || EXIT_STATUS=$?
   else
       ./gradlew publish || EXIT_STATUS=$?
+      echo "Publish status: $EXIT_STATUS"
   fi
 
   ./gradlew docs || EXIT_STATUS=$?
+  echo "Docs status: $EXIT_STATUS"
 
   git config --global user.name "$GIT_NAME"
   git config --global user.email "$GIT_EMAIL"
@@ -58,5 +60,5 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH =~ ^master$ && $TRAVIS_PULL_REQUEST
   cd ..
   rm -rf gh-pages
 fi
-
+echo "Finished build with status: $EXIT_STATUS"
 exit $EXIT_STATUS
