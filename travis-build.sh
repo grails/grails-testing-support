@@ -1,18 +1,17 @@
 #!/bin/bash
 set -e
-rm -rf *.zip
-./gradlew clean check :grails-testing-support:assemble
+./gradlew clean check assemble
 
 EXIT_STATUS=0
-
 echo "Publishing archives for branch $TRAVIS_BRANCH"
-if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
+if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH =~ ^master$ && $TRAVIS_PULL_REQUEST == 'false' ]]; then
+
+  echo "Publishing archives"
 
   if [[ -n $TRAVIS_TAG ]]; then
-      # ./gradlew bintrayUpload || EXIT_STATUS=$?
-      echo "Bintray Upload Not yet Configured"
+      ./gradlew bintrayUpload || EXIT_STATUS=$?
   else
-      ./gradlew artifactoryPublish || EXIT_STATUS=$?
+      ./gradlew publish || EXIT_STATUS=$?
   fi
 
   ./gradlew docs || EXIT_STATUS=$?
@@ -26,7 +25,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST
   cd gh-pages
 
   # If this is the master branch then update the snapshot
-  if [[ $TRAVIS_BRANCH == 'master' ]]; then
+  if [[ $TRAVIS_BRANCH =~ ^master|[12]\..\.x$ ]]; then
      mkdir -p snapshot
      cp -r ../build/docs/. ./snapshot/
 

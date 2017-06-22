@@ -15,15 +15,18 @@ class UniqueConstraintOnHasOneSpec extends Specification implements DataTest {
         given:
         def foo1 = new Foo(name: "FOO1")
         def bar = new Bar(name: "BAR1")
+        bar.foo = foo1
         foo1.bar = bar
-        foo1.save()
+        foo1.save(flush:true)
 
         expect:
+        !foo1.errors.hasErrors()
         Foo.count() == 1
 
         when:
         def foo2 = new Foo(name: "FOO1")
         foo2.bar = new Bar(name: "BAR2")
+        foo2.bar.foo = foo2
         foo2.save()
 
         then:
@@ -41,7 +44,7 @@ class UniqueConstraintOnHasOneSpec extends Specification implements DataTest {
 
         expect:
         Foo.count() == 1
-        Foo.findByBar(bar)
+//        Foo.findByBar(bar)
 
         when:
         def foo2 = new Foo(name: "FOO2")

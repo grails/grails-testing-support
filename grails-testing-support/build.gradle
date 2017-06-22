@@ -1,122 +1,24 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1"
-    }
-}
-
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'project-reports'
-
-repositories {
-    mavenLocal()
-    maven { url "https://repo.grails.org/grails/core" }
-}
-
-version "$testingSupportVersion"
-group "org.grails"
-
-apply plugin: 'groovy'
-apply plugin: "com.jfrog.artifactory"
-apply plugin: 'project-reports'
-
 dependencies {
-    compile "junit:junit:4.12"
-    compile "org.springframework:spring-test:4.3.3.RELEASE"
-    compile ("org.grails:grails-plugin-codecs:$grailsVersion") {
+    compile "junit:junit:$junitVersion"
+    compile "org.springframework:spring-test:$springVersion"
+    compile("org.grails:grails-plugin-codecs:$grailsVersion") {
         exclude module: 'grails-plugin-mimetypes'
         exclude module: 'grails-plugin-converters'
         exclude module: 'grails-web'
     }
     compile "org.grails:grails-async:$grailsVersion"
     compile "org.grails:grails-test:$grailsVersion"
-    compile "org.springframework.boot:spring-boot-test:1.5.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-test:${springBootVersion}"
     compile("org.spockframework:spock-spring:${spockVersion}") {
         transitive = false
-        exclude group:'junit', module: 'junit-dep'
-        exclude group:'org.codehaus.groovy', module: 'groovy-all'
+        exclude group: 'junit', module: 'junit-dep'
+        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
     compile("org.spockframework:spock-core:${spockVersion}") {
         transitive = false
-        exclude group:'junit', module: 'junit-dep'
-        exclude group:'org.codehaus.groovy', module: 'groovy-all'
+        exclude group: 'junit', module: 'junit-dep'
+        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
 
 }
 
-project.ext {
-    githubUrl = 'https://github.com/grails/grails-testing-support'
-    artifactId = 'grails-testing-support'
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type:Jar) {
-    classifier = 'javadoc'
-    from groovydoc.outputs
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId project.artifactId
-            pom.withXml {
-                asNode().children().last() + {
-                    resolveStrategy = Closure.DELEGATE_FIRST
-                    name project.artifactId
-                    description project.description
-                    url project.githubUrl
-                    scm {
-                        url project.githubUrl
-                        connection "scm:${project.githubUrl}.git"
-                        developerConnection "scm:${project.githubUrl}.git"
-                    }
-                    licenses {
-                        license {
-                            name 'Apache License, Version 2.0'
-                            url 'https://www.apache.org/licenses/LICENSE-2.0'
-                            distribution 'repo'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'jeffscottbrown'
-                            name 'Jeff Scott Brown'
-                            email 'brownj@ociweb.com'
-                        }
-                        developer {
-                            id 'jameskleeh'
-                            name 'James Kleeh'
-                            email 'james.kleeh@gmail.com'
-                        }
-                    }
-                }
-            }
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-        }
-    }
-}
-
-artifactory {
-    contextUrl = 'http://repo.grails.org/grails'
-    publish {
-        repository {
-            repoKey = 'libs-snapshots-local'
-
-            username = System.getenv('GRAILS_CENTRAL_USERNAME') ?: project.properties.get('grailsPluginsUsername')
-            password = System.getenv("GRAILS_CENTRAL_PASSWORD") ?: project.properties.get('grailsPluginsPassword')
-        }
-        defaults {
-            publications('maven')
-        }
-    }
-}
