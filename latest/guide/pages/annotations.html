@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.7 Annotations 1.0.0.RC1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Grails Testing Support
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/unitTesting.html"><strong>4</strong><span>Unit Testing</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.7 Annotations</h1>
+
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
+                </div>
+
+                
+
+                
+
+<h2 id="annotations">4.7 Annotations</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/annotations.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="__runonce">@RunOnce</h3>
+<div class="paragraph">
+<p>The <code>grails.testing.spock.RunOnce</code> annotation may be applied to any Spock test
+fixture method that you wish to be executed only once.  This is useful when
+applied in conjunction with a fixture annnotation like <code>@Before</code> as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/grails/testing/spock/RunOnceSpec.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> grails.testing.spock
+
+<span class="keyword">import</span> <span class="include">org.junit.Before</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Shared</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Stepwise</span>
+
+<span class="annotation">@Stepwise</span>
+<span class="type">class</span> <span class="class">RunOnceSpec</span> <span class="directive">extends</span> Specification {
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> setupSpecCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> setupCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> onceBeforeCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
+
+    <span class="type">void</span> setupSpec() {
+        setupSpecCounter++
+    }
+
+    <span class="type">void</span> setup() {
+        setupCounter++
+    }
+
+    <span class="annotation">@Before</span>
+    <span class="type">void</span> someBeforeMethod() {
+        beforeCounter++
+    }
+
+    <span class="annotation">@Before</span>
+    <span class="annotation">@RunOnce</span>
+    <span class="type">void</span> someOnceBeforeMethod() {
+        onceBeforeCounter++
+    }
+
+    <span class="annotation">@Before</span>
+    <span class="annotation">@RunOnce</span>
+    <span class="type">void</span> someOtherOnceBeforeMethod() {
+        anotherOnceBeforeCounter++
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">first test</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        setupSpecCounter == <span class="integer">1</span>
+        setupCounter == <span class="integer">1</span>
+        beforeCounter == <span class="integer">1</span>
+        onceBeforeCounter == <span class="integer">1</span>
+        anotherOnceBeforeCounter == <span class="integer">1</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">second test</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        setupSpecCounter == <span class="integer">1</span>
+        setupCounter == <span class="integer">2</span>
+        beforeCounter == <span class="integer">2</span>
+        onceBeforeCounter == <span class="integer">1</span>
+        anotherOnceBeforeCounter == <span class="integer">1</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">third test</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        setupSpecCounter == <span class="integer">1</span>
+        setupCounter == <span class="integer">3</span>
+        beforeCounter == <span class="integer">3</span>
+        onceBeforeCounter == <span class="integer">1</span>
+        anotherOnceBeforeCounter == <span class="integer">1</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Applying both the <code>@RunOnce</code> and <code>@Before</code> annotations to a method will yield
+behavior similar to the behavior associated with Spock&#8217;s <code>setupSpec</code> method but
+an important difference is that <code>setupSpec</code> is run before the test instance is
+subjected to dependency injection while <code>@Before</code> methods are run after the
+test instance is subjected to dependency injection.  This means that the
+<code>setupSpec</code> method will not have access to injected variables but methods marked
+with <code>@Before</code> will have access to injected variables.  If a test has some one
+time setup logic that needs to be executed after dependency injection happens,
+the <code>RunOnce</code> annotation can help accomplish that.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__oncebefore">@OnceBefore</h3>
+<div class="paragraph">
+<p>The <code>grails.testing.spock.OnceBefore</code> annotation is a shorthand way of
+accomplishing the same behavior that would be accomplished by applying both the
+<code>@RunOnce</code> and <code>@Before</code> annotations to a fixture method.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/test/groovy/grails/testing/spock/OnceBeforeSpec.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> grails.testing.spock
+
+<span class="keyword">import</span> <span class="include">org.junit.Before</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Shared</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Stepwise</span>
+
+<span class="annotation">@Stepwise</span>
+<span class="type">class</span> <span class="class">OnceBeforeSpec</span> <span class="directive">extends</span> Specification {
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> setupSpecCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> setupCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> onceBeforeCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
+
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
+
+    <span class="type">void</span> setupSpec() {
+        setupSpecCounter++
+    }
+
+    <span class="type">void</span> setup() {
+        setupCounter++
+    }
+
+    <span class="annotation">@Before</span>
+    <span class="type">void</span> someBeforeMethod() {
+        beforeCounter++
+    }
+
+    <span class="annotation">@OnceBefore</span>
+    <span class="type">void</span> someOnceBeforeMethod() {
+        onceBeforeCounter++
+    }
+
+    <span class="annotation">@OnceBefore</span>
+    <span class="type">void</span> someOtherOnceBeforeMethod() {
+        anotherOnceBeforeCounter++
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">first test</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        setupSpecCounter == <span class="integer">1</span>
+        setupCounter == <span class="integer">1</span>
+        beforeCounter == <span class="integer">1</span>
+        onceBeforeCounter == <span class="integer">1</span>
+        anotherOnceBeforeCounter == <span class="integer">1</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">second test</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        setupSpecCounter == <span class="integer">1</span>
+        setupCounter == <span class="integer">2</span>
+        beforeCounter == <span class="integer">2</span>
+        onceBeforeCounter == <span class="integer">1</span>
+        anotherOnceBeforeCounter == <span class="integer">1</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">third test</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        setupSpecCounter == <span class="integer">1</span>
+        setupCounter == <span class="integer">3</span>
+        beforeCounter == <span class="integer">3</span>
+        onceBeforeCounter == <span class="integer">1</span>
+        anotherOnceBeforeCounter == <span class="integer">1</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is useful in the context of an integration test which wants to reference
+dependency injected values during setup as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/integration-test/groovy/demo/DependencyInjectionSpec.groovy</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.mixin.integration.Integration</span>
+<span class="keyword">import</span> <span class="include">grails.testing.spock.OnceBefore</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="annotation">@Integration</span>
+<span class="type">class</span> <span class="class">DependencyInjectionSpec</span> <span class="directive">extends</span> Specification {
+
+    HelperService helperService
+
+    <span class="annotation">@OnceBefore</span>
+    <span class="type">void</span> init() {
+        <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some test method</span><span class="delimiter">'</span></span>() {
+        <span class="key">expect</span>:
+        helperService != <span class="predefined-constant">null</span>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

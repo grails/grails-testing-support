@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.6 Unit Testing Url Mappings 1.0.0.RC1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Grails Testing Support
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/unitTesting.html"><strong>4</strong><span>Unit Testing</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.6 Unit Testing Url Mappings</h1>
+
+                    <p><strong>Version:</strong> 1.0.0.RC1</p>
+                </div>
+
+                
+
+                
+
+<h2 id="unitTestingUrlMappings">4.6 Unit Testing Url Mappings</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/master/src/main/docs/guide/unitTesting/unitTestingUrlMappings.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Use the <a href="../api/grails/testing/web/UrlMappingsUnitTest.html"><code>UrlMappingsUnitTest</code></a> trait to unit test url mappings. Testing url mappings also requires controllers to be mocked to match the mappings to.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Controllers can not be mocked in <code>setupSpec</code> due to the nature of the request being created and reset for each test. The request is not available until the <code>setup</code> method, therefore controllers can not be mocked until then.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>All of the methods that check the url mappings come in 2 forms, <code>assert</code> and <code>verify</code>. The <code>assert</code> versions will throw AssertionFailed exceptions, similar to the <code>assert</code> keyword in Groovy. The <code>verify</code> methods will simply return true or false depending on whether the url mapping was found and is valid for the expectations.</p>
+</div>
+<div class="paragraph">
+<p>The examples assume the following mappings are being used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">UrlMappings</span> {
+
+    <span class="directive">static</span> mappings = {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>controller</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>action</span><span class="content">?/</span><span class="inline"><span class="inline-delimiter">$</span>id</span><span class="content">?(.</span><span class="inline"><span class="inline-delimiter">$</span>format</span><span class="content">)?</span><span class="delimiter">&quot;</span></span>{
+            constraints {
+                <span class="comment">// apply constraints here</span>
+            }
+        }
+
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">/index</span><span class="delimiter">&quot;</span></span>)
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">500</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/error</span><span class="delimiter">'</span></span>)
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">404</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/notFound</span><span class="delimiter">'</span></span>)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">Getting Started</h3>
+<div class="paragraph">
+<p>To get started, implement the <code>UrlMappingsUnitTest</code> in your test class and mock controllers you would like to test against.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.UrlMappingsUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">UrlMappingsSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> UrlMappingsUnitTest&lt;UrlMappings&gt; {
+
+    <span class="type">void</span> setup() {
+        mockController(TestController)
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible call the <code>mockController</code> method in the given blocks of your feature methods if different controllers need to be tested in different test methods.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_forward_url_mapping_test">Forward Url Mapping Test</h3>
+<div class="paragraph">
+<p>Tests whether a URL mapping is forwarded for the given controller class</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
+    verifyForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
+    assertForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reverse_url_mapping_test">Reverse Url Mapping Test</h3>
+<div class="paragraph">
+<p>Test whether the given URL is produced when reverse mapping a link to a given controller and action</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Url mappings for HTTP status codes can not be reversed because it doesn&#8217;t make sense to "link" to a status code.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_combined">Combined</h3>
+<div class="paragraph">
+<p>Tests whether a URL mapping is valid for the given URL. This combines the forward and reverse methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
+    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
+    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When calling <code>verifyUrlMapping</code>, then reverse mapping will only be checked if a controller is supplied and the first parameter is not an HTTP status code.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_helpful_methods">Other Helpful Methods</h3>
+<div class="sect3">
+<h4 id="_controller_check">Controller Check</h4>
+<div class="paragraph">
+<p>Use the <code>verifyController</code> method to check whether or not the given controller name exists.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test controller</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_action_check">Action Check</h4>
+<div class="paragraph">
+<p>Use the <code>verifyAction</code> method to verify if an action exists for a controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_view_check">View Check</h4>
+<div class="paragraph">
+<p>User the <code>verifyView</code> method to check if a GSP exists for a controller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test view</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">expect</span>:
+    verifyView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
+    assertView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
