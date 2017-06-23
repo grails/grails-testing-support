@@ -6,7 +6,7 @@ dependencies {
         exclude module: 'grails-plugin-converters'
         exclude module: 'grails-web'
     }
-    compile "org.grails:grails-async:$grailsVersion"
+    compile "org.grails.plugins:async:$asyncVersion"
     compile "org.grails:grails-test:$grailsVersion"
     compile "org.springframework.boot:spring-boot-test:${springBootVersion}"
     compile("org.spockframework:spock-spring:${spockVersion}") {
