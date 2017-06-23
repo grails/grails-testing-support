@@ -1,3 +1,3 @@
 # Grails Testing Support
 
-Documentation is available at link:https://grails.github.io/grails-testing-support/[grails.github.io/grails-testing-support/]
+Documentation is available at link:https://testing.grails.org[https://testing.grails.org/]
