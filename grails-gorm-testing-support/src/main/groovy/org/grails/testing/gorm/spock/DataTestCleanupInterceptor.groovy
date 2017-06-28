@@ -1,14 +1,13 @@
 package org.grails.testing.gorm.spock
 
 import grails.testing.gorm.DataTest
+import groovy.transform.CompileStatic
 import org.grails.datastore.mapping.core.DatastoreUtils
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
 
-/**
- * Created by jameskleeh on 6/2/17.
- */
+@CompileStatic
 class DataTestCleanupInterceptor implements IMethodInterceptor {
 
     @Override

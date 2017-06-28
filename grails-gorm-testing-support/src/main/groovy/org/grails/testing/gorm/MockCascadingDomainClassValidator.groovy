@@ -18,9 +18,11 @@
  */
 package org.grails.testing.gorm
 
+import groovy.transform.CompileStatic
 import org.grails.validation.GrailsDomainClassValidator
 import org.grails.datastore.gorm.validation.CascadingValidator
 
+@CompileStatic
 class MockCascadingDomainClassValidator extends GrailsDomainClassValidator
         implements CascadingValidator {
 }

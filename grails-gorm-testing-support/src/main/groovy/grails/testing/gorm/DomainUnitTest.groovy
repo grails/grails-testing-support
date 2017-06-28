@@ -26,17 +26,33 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 trait DomainUnitTest<T> implements DataTest {
 
+    private T domainInstance
+    private static Class<T> domainClass
+
     Class<?>[] getDomainClassesToMock() {
         [getDomainUnderTest()].toArray(Class)
     }
 
-    private Class<T> getDomainUnderTest() {
-        ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
-            genericInterface instanceof ParameterizedType &&
-                    DomainUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
+    /**
+     * @return An instance of the domain class
+     */
+    T getDomain() {
+        if (domainInstance == null) {
+            domainInstance = getDomainUnderTest().newInstance()
         }
+        domainInstance
+    }
 
-        parameterizedType?.actualTypeArguments[0]
+    private Class<T> getDomainUnderTest() {
+        if (domainClass == null) {
+            ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
+                genericInterface instanceof ParameterizedType &&
+                        DomainUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
+            }
+
+            domainClass = (Class<T>)parameterizedType?.actualTypeArguments[0]
+        }
+        domainClass
     }
 
 }
