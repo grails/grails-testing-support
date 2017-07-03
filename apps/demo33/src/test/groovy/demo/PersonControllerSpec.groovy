@@ -20,5 +20,6 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
 
         then:
         model.people.size() == 2
+        model.keySet().contains('people')
     }
 }

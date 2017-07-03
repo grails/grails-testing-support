@@ -121,24 +121,14 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
 
     @CompileDynamic
     Object mockController(Class<?> controllerClass) {
-        GrailsClass controllerArtefact = createAndEnhanceController(controllerClass)
+        createAndEnhanceController(controllerClass)
         defineBeans {
             "$controllerClass.name"(controllerClass) { bean ->
                 bean.scope = 'prototype'
                 bean.autowire = true
             }
         }
-
-        def callable = { ->
-            final controller = applicationContext.getBean(controllerClass.name)
-            webRequest.controllerName = controllerArtefact.logicalPropertyName
-            request.setAttribute(GrailsApplicationAttributes.CONTROLLER, controller)
-            controller
-        }
-
-        GrailsMetaClassUtils.getExpandoMetaClass(controllerClass).constructor = callable
-
-        callable.call()
+        applicationContext.getBean(controllerClass.name)
     }
 
     private GrailsClass createAndEnhanceController(Class controllerClass) {

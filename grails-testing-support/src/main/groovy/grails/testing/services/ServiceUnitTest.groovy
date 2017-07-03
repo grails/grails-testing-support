@@ -18,11 +18,13 @@
  */
 package grails.testing.services
 
+import grails.util.GrailsNameUtils
+import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.ServiceArtefactHandler
-import org.grails.spring.BeanConfiguration
 import org.grails.testing.ParameterizedGrailsUnitTest
 
+@CompileStatic
 trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
     /**
      * Mocks a service class, registering it with the application context
@@ -30,14 +32,19 @@ trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
      * @param serviceClass The service class
      * @return An instance of the service
      */
+    @CompileDynamic
     void mockArtefact(Class<?> serviceClass) {
         final serviceArtefact = grailsApplication.addArtefact(ServiceArtefactHandler.TYPE, serviceClass)
 
         defineBeans {
-            "${serviceArtefact.propertyName}"(serviceClass) { BeanConfiguration bean ->
-                bean.setAutowire("byName")
+            "${serviceArtefact.propertyName}"(serviceClass) { bean ->
+                bean.autowire = true
             }
         }
+    }
+
+    String getBeanName(Class<?> serviceClass) {
+        GrailsNameUtils.getPropertyName(serviceClass)
     }
 
     T getService() {

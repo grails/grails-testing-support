@@ -430,4 +430,7 @@ trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
         }
     }
 
+    String getBeanName(Class<?> urlMappingsClass) {
+        null
+    }
 }

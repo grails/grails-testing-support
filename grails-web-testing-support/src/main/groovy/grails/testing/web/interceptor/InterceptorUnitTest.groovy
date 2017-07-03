@@ -3,6 +3,7 @@ package grails.testing.web.interceptor
 import grails.artefact.Interceptor
 import grails.core.GrailsClass
 import grails.testing.web.GrailsWebUnitTest
+import grails.util.GrailsNameUtils
 import grails.web.mapping.UrlMappingInfo
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
@@ -32,7 +33,9 @@ trait InterceptorUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
     Interceptor mockInterceptor(Class<?> interceptorClass) {
         GrailsClass artefact = grailsApplication.addArtefact(InterceptorArtefactHandler.TYPE, interceptorClass)
         defineBeans {
-            "${artefact.propertyName}"(artefact.clazz)
+            "${artefact.propertyName}"(artefact.clazz) { bean ->
+                bean.autowire = true
+            }
         }
         getHandlerInterceptor()
                 .setInterceptors( applicationContext.getBeansOfType(Interceptor).values() as Interceptor[] )
@@ -105,6 +108,10 @@ trait InterceptorUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
 
     void mockArtefact(Class<?> interceptorClass) {
         mockInterceptor((Class<? extends Interceptor>)interceptorClass)
+    }
+
+    String getBeanName(Class<?> interceptorClass) {
+        GrailsNameUtils.getPropertyName(interceptorClass)
     }
 
     private Class<T> getInterceptorTypeUnderTest() {

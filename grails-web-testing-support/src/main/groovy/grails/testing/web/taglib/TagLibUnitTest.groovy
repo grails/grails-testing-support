@@ -56,9 +56,12 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
      * @param tagLibClass The tag library class
      * @return The tag library instance
      */
-
     void mockArtefact(Class<?> tagLibClass) {
         mockTagLib tagLibClass
+    }
+
+    String getBeanName(Class<?> tagLibClass) {
+        tagLibClass.name
     }
 
     private Class<T> getTagLibTypeUnderTest() {

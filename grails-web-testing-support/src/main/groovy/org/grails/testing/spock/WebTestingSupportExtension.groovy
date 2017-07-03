@@ -2,6 +2,7 @@ package org.grails.testing.spock
 
 import grails.testing.web.GrailsWebUnitTest
 import grails.testing.web.UrlMappingsUnitTest
+import grails.testing.web.controllers.ControllerUnitTest
 import grails.testing.web.interceptor.InterceptorUnitTest
 import groovy.transform.CompileStatic
 import org.spockframework.runtime.extension.AbstractGlobalExtension
@@ -16,6 +17,7 @@ class WebTestingSupportExtension extends AbstractGlobalExtension {
     WebCleanupSpecInterceptor webCleanupSpecInterceptor = new WebCleanupSpecInterceptor()
     UrlMappingSetupSpecInterceptor urlMappingSetupSpecInterceptor = new UrlMappingSetupSpecInterceptor()
     InterceptorSetupSpecInterceptor interceptorSetupSpecInterceptor = new InterceptorSetupSpecInterceptor()
+    ControllerSetupInterceptor controllerSetupInterceptor = new ControllerSetupInterceptor()
 
     void visitSpec(SpecInfo spec) {
         if (GrailsWebUnitTest.isAssignableFrom(spec.reflection)) {
@@ -23,6 +25,10 @@ class WebTestingSupportExtension extends AbstractGlobalExtension {
             spec.addSetupInterceptor(webSetupInterceptor)
             spec.addCleanupInterceptor(webCleanupInterceptor)
             spec.addCleanupSpecInterceptor(webCleanupSpecInterceptor)
+        }
+
+        if (ControllerUnitTest.isAssignableFrom(spec.reflection)) {
+            spec.addSetupInterceptor(controllerSetupInterceptor)
         }
 
         if (UrlMappingsUnitTest.isAssignableFrom(spec.reflection)) {

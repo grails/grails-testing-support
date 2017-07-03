@@ -79,6 +79,10 @@ trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWeb
         mockController(controllerClass)
     }
 
+    String getBeanName(Class<?> controllerClass) {
+        controllerClass.name
+    }
+
     T getController() {
         getArtefactInstance()
     }

@@ -26,9 +26,6 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
 
-    private T artefactInstance
-
-
     private Class<T> getTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
             genericInterface instanceof ParameterizedType &&
@@ -39,20 +36,24 @@ trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
     }
 
     T getArtefactInstance() {
-        if (artefactInstance == null && applicationContext != null) {
+        T _artefactInstance = null
+        if (applicationContext != null) {
             def cutType = getTypeUnderTest()
-            mockArtefact(cutType)
-            if (this.getApplicationContext().containsBean(cutType.name)) {
-                artefactInstance = applicationContext.getBean(cutType.name) as T
-            } else {
-                artefactInstance = cutType.newInstance()
+            final String beanName = getBeanName(cutType)
+            if (beanName == null || !applicationContext.containsBean(beanName)) {
+                mockArtefact(cutType)
             }
-
-            applicationContext.autowireCapableBeanFactory.autowireBeanProperties artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+            if (beanName != null && applicationContext.containsBean(beanName)) {
+                _artefactInstance = applicationContext.getBean(beanName, T)
+            } else {
+                _artefactInstance = cutType.newInstance()
+                applicationContext.autowireCapableBeanFactory.autowireBeanProperties _artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+            }
         }
-        artefactInstance
+        _artefactInstance
     }
 
-
     abstract void mockArtefact(Class<?> artefactClass)
+
+    abstract String getBeanName(Class<?> artefactClass)
 }
