@@ -17,7 +17,6 @@ class WebTestingSupportExtension extends AbstractGlobalExtension {
     WebCleanupSpecInterceptor webCleanupSpecInterceptor = new WebCleanupSpecInterceptor()
     UrlMappingSetupSpecInterceptor urlMappingSetupSpecInterceptor = new UrlMappingSetupSpecInterceptor()
     InterceptorSetupSpecInterceptor interceptorSetupSpecInterceptor = new InterceptorSetupSpecInterceptor()
-    ControllerSetupInterceptor controllerSetupInterceptor = new ControllerSetupInterceptor()
 
     void visitSpec(SpecInfo spec) {
         if (GrailsWebUnitTest.isAssignableFrom(spec.reflection)) {
@@ -25,10 +24,6 @@ class WebTestingSupportExtension extends AbstractGlobalExtension {
             spec.addSetupInterceptor(webSetupInterceptor)
             spec.addCleanupInterceptor(webCleanupInterceptor)
             spec.addCleanupSpecInterceptor(webCleanupSpecInterceptor)
-        }
-
-        if (ControllerUnitTest.isAssignableFrom(spec.reflection)) {
-            spec.addSetupInterceptor(controllerSetupInterceptor)
         }
 
         if (UrlMappingsUnitTest.isAssignableFrom(spec.reflection)) {

@@ -32,22 +32,26 @@ trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
               ParameterizedGrailsUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)
         }
 
-        parameterizedType?.actualTypeArguments[0]
+        if (parameterizedType?.actualTypeArguments != null) {
+            parameterizedType.actualTypeArguments[0]
+        } else {
+            null
+        }
     }
 
     T getArtefactInstance() {
         T _artefactInstance = null
         if (applicationContext != null) {
             def cutType = getTypeUnderTest()
-            final String beanName = getBeanName(cutType)
-            if (beanName == null || !applicationContext.containsBean(beanName)) {
+            if (cutType != null) {
                 mockArtefact(cutType)
-            }
-            if (beanName != null && applicationContext.containsBean(beanName)) {
-                _artefactInstance = applicationContext.getBean(beanName, T)
-            } else {
-                _artefactInstance = cutType.newInstance()
-                applicationContext.autowireCapableBeanFactory.autowireBeanProperties _artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+                final String beanName = getBeanName(cutType)
+                if (beanName != null && applicationContext.containsBean(beanName)) {
+                    _artefactInstance = applicationContext.getBean(beanName, T)
+                } else {
+                    _artefactInstance = cutType.newInstance()
+                    applicationContext.autowireCapableBeanFactory.autowireBeanProperties _artefactInstance, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false
+                }
             }
         }
         _artefactInstance

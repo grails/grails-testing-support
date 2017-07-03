@@ -23,6 +23,7 @@ import grails.core.GrailsClass
 import grails.core.GrailsControllerClass
 import grails.core.GrailsTagLibClass
 import grails.util.GrailsMetaClassUtils
+import grails.util.GrailsNameUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.text.Template
@@ -128,7 +129,13 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
                 bean.autowire = true
             }
         }
-        applicationContext.getBean(controllerClass.name)
+
+        def controller = applicationContext.getBean(controllerClass.name)
+
+        webRequest.request.setAttribute(GrailsApplicationAttributes.CONTROLLER, controller)
+        webRequest.controllerName = GrailsNameUtils.getLogicalPropertyName(controller.class.name, ControllerArtefactHandler.TYPE)
+
+        controller
     }
 
     private GrailsClass createAndEnhanceController(Class controllerClass) {
