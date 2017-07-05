@@ -26,6 +26,8 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
 
+    private T _artefactInstance
+
     private Class<T> getTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
             genericInterface instanceof ParameterizedType &&
@@ -40,8 +42,7 @@ trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
     }
 
     T getArtefactInstance() {
-        T _artefactInstance = null
-        if (applicationContext != null) {
+        if (_artefactInstance == null && applicationContext != null) {
             def cutType = getTypeUnderTest()
             if (cutType != null) {
                 mockArtefact(cutType)
