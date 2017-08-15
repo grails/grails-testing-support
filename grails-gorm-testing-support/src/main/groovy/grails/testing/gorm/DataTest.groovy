@@ -30,12 +30,16 @@ import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.lifecycle.Initializable
+import org.grails.datastore.mapping.services.Service
 import org.grails.testing.GrailsUnitTest
 import org.grails.testing.gorm.MockCascadingDomainClassValidator
 import org.grails.testing.gorm.spock.DataTestSetupSpecInterceptor
 import org.grails.validation.ConstraintEvalUtils
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
+
+import java.beans.Introspector
 
 @CompileStatic
 trait DataTest extends GrailsUnitTest {
@@ -82,6 +86,14 @@ trait DataTest extends GrailsUnitTest {
         new GormEnhancer(dataStore, transactionManager, getFailOnError())
 
         initializeMappingContext()
+    }
+
+    void mockDataService(Class<?> serviceClass) {
+        Service service = (Service)dataStore.getService(serviceClass)
+        String serviceName = Introspector.decapitalize(serviceClass.simpleName)
+        applicationContext.beanFactory.autowireBean(service)
+        service.setDatastore(dataStore)
+        applicationContext.beanFactory.registerSingleton(serviceName, service)
     }
 
     AbstractDatastore getDataStore() {

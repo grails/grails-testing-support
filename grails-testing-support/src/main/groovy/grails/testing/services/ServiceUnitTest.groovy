@@ -18,14 +18,25 @@
  */
 package grails.testing.services
 
+import grails.gorm.services.Service
 import grails.util.GrailsNameUtils
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.core.artefact.ServiceArtefactHandler
+import org.grails.core.exceptions.GrailsConfigurationException
 import org.grails.testing.ParameterizedGrailsUnitTest
+import org.springframework.util.ClassUtils
 
 @CompileStatic
 trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
+
+    private static Class dataTest
+    static {
+        try {
+            dataTest = ClassUtils.forName('grails.testing.gorm.DataTest')
+        } catch (ClassNotFoundException e) {}
+    }
+
     /**
      * Mocks a service class, registering it with the application context
      *
@@ -34,11 +45,26 @@ trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
      */
     @CompileDynamic
     void mockArtefact(Class<?> serviceClass) {
-        final serviceArtefact = grailsApplication.addArtefact(ServiceArtefactHandler.TYPE, serviceClass)
+        try {
+            final serviceArtefact = grailsApplication.addArtefact(ServiceArtefactHandler.TYPE, serviceClass)
 
-        defineBeans {
-            "${serviceArtefact.propertyName}"(serviceClass) { bean ->
-                bean.autowire = true
+            defineBeans {
+                "${serviceArtefact.propertyName}"(serviceClass) { bean ->
+                    bean.autowire = true
+                }
+            }
+        }
+        catch (GrailsConfigurationException e) {
+            if (serviceClass.getAnnotation(Service) != null) {
+                if (dataTest != null && dataTest.isAssignableFrom(this.class)) {
+                    dataTest.getMethod('mockDataService', Class).invoke(this, serviceClass)
+                }
+                else {
+                    throw new GrailsConfigurationException("Error attempting to test ${serviceClass.name}. Data services require gorm-testing-support to be on the classpath and the test to implement grails.testing.gorm.DataTest")
+                }
+            }
+            else {
+                throw e
             }
         }
     }

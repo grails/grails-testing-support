@@ -22,7 +22,6 @@ import grails.async.Promises
 import grails.config.Config
 import grails.core.DefaultGrailsApplication
 import grails.core.GrailsApplication
-import grails.plugins.Plugin
 import grails.spring.BeanBuilder
 import grails.util.Holders
 import grails.validation.DeferredBindingActions
@@ -33,6 +32,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.MessageSource
+
 import java.lang.reflect.Method
 
 @CompileStatic
