@@ -184,11 +184,16 @@ if (location.href.indexOf('is-external=true') == -1) {
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
+                            <td class="colLast"><code><strong><a href="#mockDataService(Class<?>)">mockDataService</a></strong>(java.lang.Class&lt;?&gt; serviceClass)</code><br>Called by the ServiceUnitTest class (via reflection) to create a data service</td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#mockDomain(Class<?>, java.util.List)">mockDomain</a></strong>(java.lang.Class&lt;?&gt; domainClassToMock, java.util.List domains = [])</code><br>Mocks a domain class providing the equivalent GORM behavior but against an in-memory
  concurrent hash map instead of a database</td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code>void</strong></code></td>
                             <td class="colLast"><code><strong><a href="#mockDomains(Class<?>)">mockDomains</a></strong>(java.lang.Class&lt;?&gt;... domainClassesToMock)</code><br>Mocks domain classes providing the equivalent GORM behavior but against an in-memory
  concurrent hash map instead of a database</td>
@@ -299,6 +304,15 @@ if (location.href.indexOf('is-external=true') == -1) {
                             <li class="blockList">
                                 <h4><a href='../../../PlatformTransactionManager.html'>PlatformTransactionManager</a> <strong>getTransactionManager</strong>()</h4>
                                 <p></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="mockDataService(Class<?>)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>void <strong>mockDataService</strong>(java.lang.Class&lt;?&gt; serviceClass)</h4>
+                                <p> Called by the ServiceUnitTest class (via reflection) to create a data service
+     <DL><DT><B>Parameters:</B></DT><DD><code>serviceClass</code> -  The data service abstract class or interface</DD></DL></p>
                             </li>
                         </ul>
                     
