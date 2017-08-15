@@ -133,7 +133,16 @@ class IntegrationTestMixinTransformation implements ASTTransformation {
 
         // now add integration test annotations
         // @SpringBootTest
-        if (ClassUtils.isPresent("javax.servlet.ServletContext", Thread.currentThread().contextClassLoader)) {
+        def servletApi = null
+        try {
+            servletApi = Class.forName("javax.servlet.ServletContext", false, getClass().classLoader)    
+        }
+        catch(Exception e) {
+            // ignore
+        }
+        
+        
+        if (servletApi != null) {
 
             if( GrailsASTUtils.findAnnotation(classNode, SpringBootTest) == null) {
                 AnnotationNode webIntegrationTestAnnotation = GrailsASTUtils.addAnnotationOrGetExisting(classNode, SpringBootTest)
