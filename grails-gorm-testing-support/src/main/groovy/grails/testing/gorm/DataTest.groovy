@@ -88,6 +88,11 @@ trait DataTest extends GrailsUnitTest {
         initializeMappingContext()
     }
 
+    /**
+     * Called by the ServiceUnitTest class (via reflection) to create a data service
+     *
+     * @param serviceClass The data service abstract class or interface
+     */
     void mockDataService(Class<?> serviceClass) {
         Service service = (Service)dataStore.getService(serviceClass)
         String serviceName = Introspector.decapitalize(serviceClass.simpleName)

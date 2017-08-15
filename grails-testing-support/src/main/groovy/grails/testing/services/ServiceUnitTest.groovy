@@ -31,10 +31,15 @@ import org.springframework.util.ClassUtils
 trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
 
     private static Class dataTest
-    static {
-        try {
-            dataTest = ClassUtils.forName('grails.testing.gorm.DataTest')
-        } catch (ClassNotFoundException e) {}
+    private static boolean dataTestLoaded
+
+    private void loadDataTestClass() {
+        if (!dataTestLoaded) {
+            try {
+                dataTest = ClassUtils.forName('grails.testing.gorm.DataTest')
+            } catch (ClassNotFoundException e) {}
+        }
+        dataTestLoaded = true
     }
 
     /**
@@ -56,6 +61,7 @@ trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
         }
         catch (GrailsConfigurationException e) {
             if (serviceClass.getAnnotation(Service) != null) {
+                loadDataTestClass()
                 if (dataTest != null && dataTest.isAssignableFrom(this.class)) {
                     dataTest.getMethod('mockDataService', Class).invoke(this, serviceClass)
                 }
