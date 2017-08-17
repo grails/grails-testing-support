@@ -9,6 +9,7 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
+        classpath "org.grails.plugins:views-gradle:$jsonViewsVersion"
     }
 }
 
@@ -44,6 +45,7 @@ subprojects {
     }
     if(it.name.startsWith("demo")) {
         apply plugin:"org.grails.grails-web"
+        apply plugin:"org.grails.plugins.views-json"
     }
     else if(isGrailsPlugin) {
         apply plugin:"org.grails.grails-plugin"

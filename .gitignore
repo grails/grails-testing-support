@@ -4,3 +4,4 @@ classes
 .gradle
 *.iml
 *.db
+**/out

@@ -28,7 +28,7 @@ trait ParameterizedGrailsUnitTest<T> extends GrailsUnitTest {
 
     private T _artefactInstance
 
-    private Class<T> getTypeUnderTest() {
+    Class<T> getTypeUnderTest() {
         ParameterizedType parameterizedType = (ParameterizedType)getClass().genericInterfaces.find { genericInterface ->
             genericInterface instanceof ParameterizedType &&
               ParameterizedGrailsUnitTest.isAssignableFrom((Class)((ParameterizedType)genericInterface).rawType)

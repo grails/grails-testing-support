@@ -1,4 +1,4 @@
-package demo32
+package demo
 
 class UrlMappings {
 
