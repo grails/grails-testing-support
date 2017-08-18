@@ -55,6 +55,9 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         expect:
         verifyForwardUrlMapping("/test/renderText", controller: 'test', action: 'renderText')
         verifyForwardUrlMapping("/test/renderView", controller: 'test', action: 'renderView')
+        verifyForwardUrlMapping("/test/renderState/123", controller: 'test', action: 'renderState') {
+            id = '123'
+        }
         verifyForwardUrlMapping("/", view: 'index')
         verifyForwardUrlMapping(500, view: 'error')
         verifyForwardUrlMapping(404, view: 'notFound')
@@ -62,6 +65,9 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         when: "Using the assert syntax"
         assertForwardUrlMapping("/test/renderText", controller: 'test', action: 'renderText')
         assertForwardUrlMapping("/test/renderView", controller: 'test', action: 'renderView')
+        assertForwardUrlMapping("/test/renderState/123", controller: 'test', action: 'renderState') {
+            id = 123
+        }
         assertForwardUrlMapping("/", view: 'index')
         assertForwardUrlMapping(500, view: 'error')
         assertForwardUrlMapping(404, view: 'notFound')
@@ -76,11 +82,19 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         expect:
         verifyReverseUrlMapping("/test/renderText", controller: 'test', action: 'renderText')
         verifyReverseUrlMapping("/test/renderView", controller: 'test', action: 'renderView')
+        verifyReverseUrlMapping("/test/renderState/123?foo=bar", controller: 'test', action: 'renderState') {
+            id = 123
+            foo = 'bar'
+        }
         verifyReverseUrlMapping("/", view: 'index')
         
         when: "Using the assert syntax"
         assertReverseUrlMapping("/test/renderText", controller: 'test', action: 'renderText')
         assertReverseUrlMapping("/test/renderView", controller: 'test', action: 'renderView')
+        assertReverseUrlMapping("/test/renderState/123?foo=bar", controller: 'test', action: 'renderState') {
+            id = 123
+            foo = 'bar'
+        }
         assertReverseUrlMapping("/", view: 'index')
         
         then:
@@ -93,11 +107,17 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         expect:
         verifyUrlMapping("/test/renderText", controller: 'test', action: 'renderText')
         verifyUrlMapping("/test/renderView", controller: 'test', action: 'renderView')
+        verifyUrlMapping("/test/renderState/123", controller: 'test', action: 'renderState') {
+            id = 123
+        }
         verifyUrlMapping("/", view: 'index')
 
         when: "Using the assert syntax"
         assertUrlMapping("/test/renderText", controller: 'test', action: 'renderText')
         assertUrlMapping("/test/renderView", controller: 'test', action: 'renderView')
+        assertUrlMapping("/test/renderState/123", controller: 'test', action: 'renderState') {
+            id = 123
+        }
         assertUrlMapping("/", view: 'index')
         
         then:
