@@ -72,6 +72,11 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
                 grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, classLoader.loadClass(urlMappingsClass))
             }
 
+            try {
+                Class viewResolver = classLoader.loadClass('grails.plugin.json.view.mvc.JsonViewResolver')
+                jsonSmartViewResolver(viewResolver)
+            } catch (ClassNotFoundException e) { }
+
             localeResolver(SessionLocaleResolver)
             multipartResolver(StandardServletMultipartResolver)
             grailsUrlMappingsHolder(UrlMappingsHolderFactoryBean) {
