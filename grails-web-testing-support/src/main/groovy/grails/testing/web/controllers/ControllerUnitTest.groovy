@@ -87,13 +87,22 @@ trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWeb
         controllerClass.name
     }
 
+    boolean disableControllerProxy() {
+        false
+    }
+
     T getController() {
-        if (_proxyInstance == null) {
-            T artefact = getArtefactInstance()
-            ProxyFactory factory = new ProxyFactory()
-            factory.setSuperclass(getTypeUnderTest())
-            _proxyInstance = (T)factory.create(new Class<?>[0], new Object[0], new ActionSettingMethodHandler(artefact, webRequest))
+        if (disableControllerProxy()) {
+            getArtefactInstance()
         }
-        _proxyInstance
+        else {
+            if (_proxyInstance == null) {
+                T artefact = getArtefactInstance()
+                ProxyFactory factory = new ProxyFactory()
+                factory.setSuperclass(getTypeUnderTest())
+                _proxyInstance = (T)factory.create(new Class<?>[0], new Object[0], new ActionSettingMethodHandler(artefact, webRequest))
+            }
+            _proxyInstance
+        }
     }
 }
