@@ -1,0 +1,17 @@
+demo
+grails.testing.gorm
+grails.testing.mixin.integration
+grails.testing.services
+grails.testing.spock
+grails.testing.spring
+grails.testing.web
+grails.testing.web.controllers
+grails.testing.web.interceptor
+grails.testing.web.taglib
+org.grails.compiler.injection.testing
+org.grails.testing
+org.grails.testing.context.junit4
+org.grails.testing.gorm
+org.grails.testing.gorm.spock
+org.grails.testing.runtime.support
+org.grails.testing.spock
