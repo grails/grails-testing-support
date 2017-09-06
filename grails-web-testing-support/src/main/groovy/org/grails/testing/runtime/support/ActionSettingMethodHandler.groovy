@@ -5,6 +5,7 @@ import groovy.transform.CompileStatic
 import javassist.util.proxy.MethodHandler
 import org.grails.web.servlet.mvc.GrailsWebRequest
 
+import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
 @CompileStatic
@@ -23,6 +24,10 @@ class ActionSettingMethodHandler implements MethodHandler {
         if (thisMethod.getAnnotation(Action) != null) {
             request.setActionName(thisMethod.name)
         }
-        thisMethod.invoke(controller, args)
+        try {
+            thisMethod.invoke(controller, args)
+        } catch (InvocationTargetException e) {
+            throw e.cause ?: e
+        }
     }
 }
