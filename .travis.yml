@@ -1,9 +1,9 @@
 language: groovy
 sudo: false
 dist: precise
-cache:
-  directories:
-  - "$HOME/.gradle"
+#cache:
+#  directories:
+#  - "$HOME/.gradle"
 jdk:
 - openjdk7
 script: "./travis-build.sh"
