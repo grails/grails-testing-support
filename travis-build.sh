@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-./gradlew clean check assemble
+./gradlew clean classes --no-daemon
+./gradlew check assemble --no-daemon
 
 EXIT_STATUS=0
 echo "Publishing archives for branch $TRAVIS_BRANCH"
