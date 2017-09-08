@@ -23,6 +23,8 @@ ext {
     commonBuild = "https://raw.githubusercontent.com/grails/grails-common-build/cfd3bca16661cbb6fead6006715ea5ee26fb737a/"
 }
 
+
+
 subprojects {
 
     version project.projectVersion
@@ -39,21 +41,28 @@ subprojects {
     else {
         group "org.grails"
     }
+
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
     }
+
     if(it.name.startsWith("demo")) {
         apply plugin:"org.grails.grails-web"
         apply plugin:"org.grails.plugins.views-json"
     }
-    else if(isGrailsPlugin) {
-        apply plugin:"org.grails.grails-plugin"
-        apply from:"${commonBuild}/common-publishing.gradle"
-    }
     else {
-        apply from:"${commonBuild}/common-project.gradle"
-        apply from:"${commonBuild}/common-publishing.gradle"
+        if(isGrailsPlugin) {
+            apply plugin:"org.grails.grails-plugin"
+            apply from:"${commonBuild}/common-publishing.gradle"
+        }
+        else {
+            apply from:"${commonBuild}/common-project.gradle"
+            apply from:"${commonBuild}/common-publishing.gradle"
+        }
+
+        sourceCompatibility = 1.7
+        targetCompatibility = 1.7
     }
 
     dependencies {
