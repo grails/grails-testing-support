@@ -27,7 +27,7 @@ include::{sourcedir}/apps/demo33/src/test/groovy/demo/DataTestTraitSpec.groovy[i
 ----
 
 Another way to express which domain classes should be mocked for this test is
-to provide a `Class[] GetDomainClassesToMockMethodSpec()` method in the test.
+to provide a `Class[] getDomainClassesToMock()` method in the test.
 
 [source,groovy]
 .src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy
