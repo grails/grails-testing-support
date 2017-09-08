@@ -5,7 +5,7 @@ dist: precise
 #  directories:
 #  - "$HOME/.gradle"
 jdk:
-- openjdk8
+- oraclejdk8
 script: "./travis-build.sh"
 env:
   global:
