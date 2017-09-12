@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-./gradlew clean classes --no-daemon
+./gradlew clean classes --no-daemon --stacktrace
 ./gradlew check assemble --no-daemon
 
 EXIT_STATUS=0
