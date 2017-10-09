@@ -26,6 +26,7 @@ import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
 import org.grails.datastore.gorm.validation.constraints.eval.ConstraintsEvaluator
+import org.grails.datastore.mapping.config.Settings
 import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.model.PersistentEntity
@@ -50,7 +51,7 @@ trait DataTest extends GrailsUnitTest {
     Class<?>[] getDomainClassesToMock() {}
 
     boolean getFailOnError() {
-        false
+        config.getProperty(Settings.SETTING_FAIL_ON_ERROR, Boolean, false)
     }
 
     /**
