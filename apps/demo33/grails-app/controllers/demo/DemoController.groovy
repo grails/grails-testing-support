@@ -24,6 +24,15 @@ class DemoController {
         // test invoke core tag
         response.writer << link(controller:'demo',action:'clearDatabase')
     }
+
+    private String privateMethod() {
+        'From Private'
+    }
+
+    protected String protectedMethod() {
+        'From Protected'
+    }
+
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]

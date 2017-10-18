@@ -39,6 +39,16 @@ class DemoControllerSpec extends Specification implements ControllerUnitTest<Dem
         status == 200
         response.text == 'Success'
     }
+
+    void 'test private methods can be executed'() {
+        expect:
+        controller.privateMethod() == 'From Private'
+    }
+
+    void 'test protected methods can be executed'() {
+        expect:
+        controller.protectedMethod() == 'From Protected'
+    }
 // tag::basic_declaration[]
 }
 // end::basic_declaration[]
