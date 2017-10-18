@@ -25,6 +25,7 @@ class ActionSettingMethodHandler implements MethodHandler {
             request.setActionName(thisMethod.name)
         }
         try {
+            thisMethod.accessible = true
             thisMethod.invoke(controller, args)
         } catch (InvocationTargetException e) {
             throw e.cause ?: e
