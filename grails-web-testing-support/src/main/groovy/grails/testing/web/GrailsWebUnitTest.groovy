@@ -22,32 +22,31 @@ import grails.artefact.TagLibrary
 import grails.core.GrailsClass
 import grails.core.GrailsControllerClass
 import grails.core.GrailsTagLibClass
-import grails.util.GrailsMetaClassUtils
 import grails.util.GrailsNameUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovy.text.Template
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.grails.buffer.GrailsPrintWriter
 import org.grails.commons.CodecArtefactHandler
 import org.grails.commons.DefaultGrailsCodecClass
 import org.grails.core.artefact.ControllerArtefactHandler
 import org.grails.core.artefact.TagLibArtefactHandler
-import org.grails.core.artefact.UrlMappingsArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.plugins.codecs.DefaultCodecLookup
 import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
 import org.grails.taglib.TagLibraryLookup
 import org.grails.testing.GrailsUnitTest
-import org.grails.web.mapping.UrlMappingsHolderFactoryBean
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.GrailsApplicationAttributes
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.mock.web.MockServletContext
 
 @CompileStatic
+@Slf4j
 trait GrailsWebUnitTest implements GrailsUnitTest {
 
     private Set<Class> loadedCodecs = new HashSet<Class>()
@@ -131,6 +130,10 @@ trait GrailsWebUnitTest implements GrailsUnitTest {
         }
 
         def controller = applicationContext.getBean(controllerClass.name)
+
+        if (webRequest == null) {
+            throw new IllegalAccessException("Cannot access the controller outside of a request. Is the controller referenced in a where: block?")
+        }
 
         webRequest.request.setAttribute(GrailsApplicationAttributes.CONTROLLER, controller)
         webRequest.controllerName = GrailsNameUtils.getLogicalPropertyName(controller.class.name, ControllerArtefactHandler.TYPE)
