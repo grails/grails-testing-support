@@ -382,6 +382,50 @@ test controllers.</p>
 <p>See the <a href="../api/grails/testing/web/controllers/ControllerUnitTest.html"><code>ControllerUnitTest</code></a>
 docs for information on all of the available properties.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In an effort to make testing controllers that render JSON views easy, a change was made that required the controller variable used in the test code to be a proxy that delegates to the real controller instance. If for some reason that causes an issue with your test, it is possible to disable the creation of a proxy by overriding a method.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
+
+    <span class="type">boolean</span> disableControllerProxy() {
+        <span class="predefined-constant">true</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By doing so, JSON views will not be rendered by default. To enable JSON views to render automatically as before, it is necessary to inform the <code>webRequest</code> object which action you are invoking.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test index</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">when</span>:
+        webRequest.actionName = <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>
+        controller.index()
+
+        <span class="key">then</span>:
+        ...
+    }
+
+    <span class="type">boolean</span> disableControllerProxy() {
+        <span class="predefined-constant">true</span>
+    }
+}</code></pre>
+</div>
+</div>
 
 
 <h2 id="unitTestingDomainClasses">4.2 Unit Testing Domain Classes</h2>
