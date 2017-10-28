@@ -25,7 +25,6 @@ import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.DomainClassArtefactHandler
 import org.grails.datastore.gorm.GormEnhancer
-import org.grails.datastore.gorm.validation.constraints.eval.ConstraintsEvaluator
 import org.grails.datastore.mapping.config.Settings
 import org.grails.datastore.mapping.core.AbstractDatastore
 import org.grails.datastore.mapping.core.Session
@@ -36,8 +35,6 @@ import org.grails.testing.GrailsUnitTest
 import org.grails.testing.gorm.MockCascadingDomainClassValidator
 import org.grails.testing.gorm.spock.DataTestSetupSpecInterceptor
 import org.grails.validation.ConstraintEvalUtils
-import org.springframework.beans.factory.support.BeanDefinitionRegistry
-import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
 
