@@ -36,6 +36,7 @@ import org.grails.testing.GrailsUnitTest
 import org.grails.testing.gorm.MockCascadingDomainClassValidator
 import org.grails.testing.gorm.spock.DataTestSetupSpecInterceptor
 import org.grails.validation.ConstraintEvalUtils
+import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.validation.Validator
@@ -97,9 +98,11 @@ trait DataTest extends GrailsUnitTest {
     void mockDataService(Class<?> serviceClass) {
         Service service = (Service)dataStore.getService(serviceClass)
         String serviceName = Introspector.decapitalize(serviceClass.simpleName)
-        applicationContext.beanFactory.autowireBean(service)
-        service.setDatastore(dataStore)
-        applicationContext.beanFactory.registerSingleton(serviceName, service)
+        if(!applicationContext.containsBean(serviceName)) {
+            applicationContext.beanFactory.autowireBean(service)
+            service.setDatastore(dataStore)
+            applicationContext.beanFactory.registerSingleton(serviceName, service)
+        }
     }
 
     AbstractDatastore getDataStore() {
