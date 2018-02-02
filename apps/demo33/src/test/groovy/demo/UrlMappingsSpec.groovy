@@ -124,4 +124,23 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         noExceptionThrown()
     }
     // end::combined[]
+
+    // tag::httpMethods[]
+    void "test http methods"() {
+        expect:
+        !verifyReverseUrlMapping('/foo', controller: 'test', action: 'fooGet')
+        verifyReverseUrlMapping('/foo', controller: 'test', action: 'fooGet', method: 'GET')
+        verifyReverseUrlMapping('/foo', controller: 'test', action: 'fooPost', method: 'POST')
+        verifyReverseUrlMapping('/bar', controller: 'test', action: 'bar')
+
+        when: "Using the assert syntax"
+        assertReverseUrlMapping('/foo', controller: 'test', action: 'fooGet', method: 'GET')
+        assertReverseUrlMapping('/foo', controller: 'test', action: 'fooPost', method: 'POST')
+        assertReverseUrlMapping('/bar', controller: 'test', action: 'bar')
+
+        then:
+        noExceptionThrown()
+    }
+    // end::httpMethods[]
 }
+
