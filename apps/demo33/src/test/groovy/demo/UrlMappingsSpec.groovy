@@ -124,4 +124,20 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         noExceptionThrown()
     }
     // end::combined[]
+    
+    // tag::httpmethods[]
+    void "test url mappings for different http methods"() {
+        when: "the http method is GET, /api/route should map to ApiController.index()"
+        request.method = "GET"
+        assertUrlMapping("/api/route", controller: "api", action: "index", method: "GET")
+        then: "expect no exception"
+        noExceptionThrown()
+        
+        when: "the http method is POST, /api/route should map to ApiController.save()"
+        request.method = "POST"
+        assertUrlMapping("/api/route", controller: "api", action: "save", method: "POST")
+        then: "expect no exception"
+        noExceptionThrown()
+    }
+    // end::httpmethods[]
 }
