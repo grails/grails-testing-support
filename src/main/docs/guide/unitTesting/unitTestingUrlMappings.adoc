@@ -53,6 +53,15 @@ include::{sourcedir}/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tag
 
 NOTE: When calling `verifyUrlMapping`, then reverse mapping will only be checked if a controller is supplied and the first parameter is not an HTTP status code.
 
+=== Using HTTP Methods
+
+In order to test a URL mapping using different HTTP methods (GET, POST, PUT etc.) it is necessary to specify the HTTP method in the request and also in the `assert` or `verify` method call.
+
+[source,groovy]
+----
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpmethods,indent=0]
+----
+
 === Other Helpful Methods
 
 ==== Controller Check
