@@ -124,4 +124,20 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         noExceptionThrown()
     }
     // end::combined[]
+    
+    // tag::httpmethods[]
+    void "test url mappings for different http methods"() {
+        when: "the http method is GET, /api/render should map to TestController.renderText()"
+        request.method = "GET"
+        assertUrlMapping("/api/render", controller: "test", action: "renderText", method: "GET")
+        then: "expect no exception"
+        noExceptionThrown()
+        
+        when: "the http method is POST, /api/render should map to TestController.renderView()"
+        request.method = "POST"
+        assertUrlMapping("/api/render", controller: "test", action: "renderView", method: "POST")
+        then: "expect no exception"
+        noExceptionThrown()
+    }
+    // end::httpmethods[]
 }
