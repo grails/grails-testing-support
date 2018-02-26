@@ -16,6 +16,8 @@ import org.grails.validation.ConstraintEvalUtils
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.core.convert.converter.Converter
+import org.springframework.core.convert.support.ConfigurableConversionService
 
 @CompileStatic
 class DataTestSetupSpecInterceptor implements IMethodInterceptor {
@@ -46,6 +48,14 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
     void setupDataTestBeans(DataTest testInstance) {
 
         testInstance.defineBeans {
+            ConfigurableConversionService conversionService = application.mainContext.getEnvironment().getConversionService()
+            conversionService.addConverter(new Converter<String, Class>() {
+                @Override
+                Class convert(String source) {
+                    Class.forName(source)
+                }
+            })
+
             grailsDatastore SimpleMapDatastore, application.mainContext
 
             if (IS_OLD_SETUP) {
