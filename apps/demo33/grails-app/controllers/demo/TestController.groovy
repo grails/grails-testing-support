@@ -146,6 +146,18 @@ class TestController {
         render request.getAttribute('foo')
     }
     // end::render_attribute[]
+
+    def fooGet() {
+        render 'foo - GET'
+    }
+
+    def fooPost() {
+        render 'foo - POST'
+    }
+
+    def bar() {
+        render 'bar'
+    }
 }
 
 class TestCommand {
