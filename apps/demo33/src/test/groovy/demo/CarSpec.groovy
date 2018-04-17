@@ -13,8 +13,8 @@ class CarSpec extends Specification implements DomainUnitTest<Car> {
 
     void "test basic persistence mocking"() {
         setup:
-        new Car(name: 'grails', color: 'green').save()
-        new Car(name: 'gorm').save()
+        new Car(name: 'grails car', color: 'green').save()
+        new Car(name: 'gorm car').save()
 
         expect:
         Car.count() == 1
