@@ -8,6 +8,7 @@ import org.grails.datastore.gorm.validation.constraints.UniqueConstraintFactory
 import org.grails.datastore.gorm.validation.constraints.builtin.UniqueConstraint
 import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultConstraintRegistry
+import org.grails.datastore.mapping.core.DatastoreUtils
 import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.reflect.ClassUtils
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
@@ -56,7 +57,9 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
                 }
             })
 
-            grailsDatastore SimpleMapDatastore, application.mainContext
+            grailsDatastore SimpleMapDatastore, DatastoreUtils.createPropertyResolver(application.config), application.config.dataSources.collect {
+                it.key
+            }, getClass().getPackage()
 
             if (IS_OLD_SETUP) {
                 "${BEAN_NAME}"(constraintsEvaluator) {
