@@ -56,10 +56,9 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
                     Class.forName(source)
                 }
             })
-
             grailsDatastore SimpleMapDatastore, DatastoreUtils.createPropertyResolver(application.config), application.config.dataSources.collect {
                 it.key
-            }, getClass().getPackage()
+            }, testInstance.domainClassesToMock?: []
 
             if (IS_OLD_SETUP) {
                 "${BEAN_NAME}"(constraintsEvaluator) {
