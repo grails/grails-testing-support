@@ -11,14 +11,14 @@ various traits describe those properties.  Some particular properties of interes
 
 == Properties Available In All Web Unit Tests (Controller, Interceptor, Taglib, UrlMappings)
 
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getRequest()[request]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getResponse()[response]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getServletContext()[servletContext]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getViews()[views]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getSession()[session]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getStatus()[status]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getParams()[params]
-- link:../api/org/grails/testing/web/GrailsWebUnitTest.html#getFlash()[flash]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getRequest()[request]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getResponse()[response]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getServletContext()[servletContext]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getViews()[views]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getSession()[session]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getStatus()[status]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getParams()[params]
+- link:../api/grails/testing/web/GrailsWebUnitTest.html#getFlash()[flash]
 
 == Controller Unit Test Properties
 
