@@ -37,3 +37,7 @@ various traits describe those properties.  Some particular properties of interes
 == Tag Library Unit Test Properties
 
 - link:../api/grails/testing/web/taglib/TagLibUnitTest.html#getTagLib()[tagLib]
+
+== Domain Class Unit Test Properties  
+
+- link:../api/grails/testing/gorm/DomainUnitTest.html#getDomain()[domain] 
