@@ -1,3 +1,5 @@
 # Grails Testing Support
 
+image:https://travis-ci.org/grails/grails-testing-support.svg?branch=master["Build Status", link="https://travis-ci.org/grails/grails-testing-support"]
+
 Documentation is available at link:https://testing.grails.org[https://testing.grails.org/]
