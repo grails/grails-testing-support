@@ -41,12 +41,12 @@ trait TagLibUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWebUnit
      */
     String applyTemplate(String contents, Map model = [:]) {
         ensureTaglibHasBeenMocked()
-        GrailsWebUnitTest.super.applyTemplate(contents, model)
+        super.applyTemplate(contents, model)
     }
 
     void applyTemplate(StringWriter sw, String template, Map params = [:]) {
         ensureTaglibHasBeenMocked()
-        GrailsWebUnitTest.super.applyTemplate(sw, template, params)
+        super.applyTemplate(sw, template, params)
     }
 
     /**
