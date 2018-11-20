@@ -21,7 +21,7 @@ package grails.testing.web
 import grails.artefact.TagLibrary
 import grails.core.GrailsClass
 import grails.core.GrailsControllerClass
-import grails.core.GrailsTagLibClass
+import grails.core.gsp.GrailsTagLibClass
 import grails.util.GrailsNameUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
@@ -33,7 +33,7 @@ import org.grails.buffer.GrailsPrintWriter
 import org.grails.commons.CodecArtefactHandler
 import org.grails.commons.DefaultGrailsCodecClass
 import org.grails.core.artefact.ControllerArtefactHandler
-import org.grails.core.artefact.TagLibArtefactHandler
+import org.grails.core.artefact.gsp.TagLibArtefactHandler
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.plugins.codecs.DefaultCodecLookup
 import org.grails.plugins.testing.GrailsMockHttpServletRequest

@@ -19,10 +19,7 @@
 package grails.testing.web.taglib
 
 import grails.testing.web.GrailsWebUnitTest
-import groovy.text.Template
 import groovy.transform.CompileStatic
-import org.grails.buffer.GrailsPrintWriter
-import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.testing.ParameterizedGrailsUnitTest
 
 import java.lang.reflect.ParameterizedType
