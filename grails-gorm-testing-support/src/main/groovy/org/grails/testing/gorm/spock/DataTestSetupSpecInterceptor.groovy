@@ -4,6 +4,7 @@ import grails.testing.gorm.DataTest
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.builtin.UniqueConstraint
+import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator
 import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultConstraintRegistry
 import org.grails.datastore.mapping.core.DatastoreUtils
@@ -23,19 +24,7 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
 
     public static Boolean IS_OLD_SETUP = false
     public static final BEAN_NAME = "org.grails.beans.ConstraintsEvaluator"
-    private static Class constraintsEvaluator
-
-    static {
-        if (ClassUtils.isPresent("org.grails.validation.ConstraintsEvaluatorFactoryBean")) {
-            constraintsEvaluator = ClassUtils.forName("org.grails.validation.ConstraintsEvaluatorFactoryBean")
-            if (constraintsEvaluator.getAnnotation(Deprecated) == null) {
-                IS_OLD_SETUP = true
-            }
-        }
-        if (!IS_OLD_SETUP) {
-            constraintsEvaluator = ClassUtils.forName("org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator")
-        }
-    }
+    private static Class constraintsEvaluator = DefaultConstraintEvaluator
 
     @Override
     void intercept(IMethodInvocation invocation) throws Throwable {
@@ -56,16 +45,10 @@ class DataTestSetupSpecInterceptor implements IMethodInterceptor {
             })
             grailsDatastore SimpleMapDatastore, DatastoreUtils.createPropertyResolver(application.config), application.config.dataSources.keySet(), testInstance.domainClassesToMock?: [] as Class<?>[]
 
-            if (IS_OLD_SETUP) {
-                "${BEAN_NAME}"(constraintsEvaluator) {
-                    defaultConstraints = ConstraintEvalUtils.getDefaultConstraints(application.config)
-                }
-            } else {
                 constraintRegistry(DefaultConstraintRegistry, ref("messageSource"))
                 grailsDomainClassMappingContext(grailsDatastore: "getMappingContext")
 
                 "${BEAN_NAME}"(constraintsEvaluator, constraintRegistry, grailsDomainClassMappingContext, ConstraintEvalUtils.getDefaultConstraints(application.config))
-            }
 
             transactionManager(DatastoreTransactionManager) {
                 datastore = ref('grailsDatastore')
