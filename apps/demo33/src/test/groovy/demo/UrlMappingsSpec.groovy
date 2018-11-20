@@ -125,8 +125,8 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
     }
     // end::combined[]
 
-    // tag::httpMethods[]
-    void "test http methods"() {
+    // tag::httpMethodsReverse[]
+    void "test reverse mappings with http methods"() {
         expect:
         !verifyReverseUrlMapping('/foo', controller: 'test', action: 'fooGet')
         verifyReverseUrlMapping('/foo', controller: 'test', action: 'fooGet', method: 'GET')
@@ -141,6 +141,42 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
         then:
         noExceptionThrown()
     }
-    // end::httpMethods[]
+    // end::httpMethodsReverse[]
+
+    // tag::httpMethodsForward[]
+    void "test forward mappings with http methods"() {
+        when: "the http method is GET, /foo should map to TestController.fooGet()"
+        request.method = "GET"
+        assertForwardUrlMapping('/foo', controller: 'test', action: 'fooGet')
+
+        then:
+        noExceptionThrown()
+
+        when: "the http method is POST, /foo should map to TestController.fooPost()"
+        request.method = "POST"
+        assertForwardUrlMapping('/foo', controller: 'test', action: 'fooPost')
+
+        then:
+        noExceptionThrown()
+    }
+    // end::httpMethodsForward[]
+
+    // tag::httpMethodsCombined[]
+    void "test forward and reverse mappings with http methods"() {
+        when: "the http method is GET, /foo should map to TestController.fooGet()"
+        request.method = "GET"
+        assertUrlMapping('/foo', controller: 'test', action: 'fooGet', method: 'GET')
+
+        then:
+        noExceptionThrown()
+
+        when: "the http method is POST, /foo should map to TestController.fooPost()"
+        request.method = "POST"
+        assertUrlMapping('/foo', controller: 'test', action: 'fooPost', method: 'POST')
+
+        then:
+        noExceptionThrown()
+    }
+    // end::httpMethodsCombined[]
 }
 

@@ -55,11 +55,25 @@ NOTE: When calling `verifyUrlMapping`, then reverse mapping will only be checked
 
 === HTTP Methods
 
-When testing HTTP methods on URL it is necessary to also define the HTTP method in the test.
+When testing HTTP methods on reverse URL mapping it is necessary to specify the HTTP method in the test.
 
 [source,groovy]
 ----
-include::{sourcedir}/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethods,indent=0]
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsReverse,indent=0]
+----
+
+When testing HTTP methods on forward URL mapping it is necessary to specify the HTTP method in the request.
+
+[source,groovy]
+----
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsForward,indent=0]
+----
+
+When testing HTTP methods on both forward and reverse URL mapping combined it is necessary to specify the HTTP method in both the request and in the test.
+
+[source,groovy]
+----
+include::{sourcedir}/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsCombined,indent=0]
 ----
 
 === Other Helpful Methods
