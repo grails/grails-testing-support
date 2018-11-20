@@ -102,7 +102,14 @@ dataSource:
     driverClassName: org.h2.Driver
     username: sa
     password:
-
+dataSources:
+  secondDb:
+      pooled: true
+      jmxExport: true
+      driverClassName: org.h2.Driver
+      username: sa
+      password:
+      dialect: org.hibernate.dialect.H2Dialect
 environments:
     development:
         dataSource:
