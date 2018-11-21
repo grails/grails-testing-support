@@ -182,7 +182,7 @@ class IntegrationTestMixinTransformation implements ASTTransformation {
         if (GrailsASTUtils.isSubclassOf(classNode, "geb.spock.GebSpec")) {
             def contextPathParameter = new Parameter(ClassHelper.make(String), 'serverContextPath')
             def cpValueAnnotation = new AnnotationNode(ClassHelper.make(Value))
-            cpValueAnnotation.setMember('value', new ConstantExpression('${server.contextPath:/}'))
+            cpValueAnnotation.setMember('value', new ConstantExpression('${server.servlet.context-path:/}'))
             contextPathParameter.addAnnotation(cpValueAnnotation)
 
             def serverPortParameter = new Parameter(ClassHelper.make(Integer.TYPE), 'serverPort')
