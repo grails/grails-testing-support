@@ -27,7 +27,7 @@ import grails.util.Holders
 import grails.validation.DeferredBindingActions
 import groovy.transform.CompileStatic
 import org.grails.core.lifecycle.ShutdownOperations
-import org.grails.core.util.ClassPropertyFetcher
+import org.grails.datastore.mapping.reflect.ClassPropertyFetcher
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
@@ -134,8 +134,7 @@ trait GrailsUnitTest {
     }
 
     void cleanupGrailsApplication() {
-        if (_grailsApplication != null) {
-            ClassPropertyFetcher.clearClassPropertyFetcherCache()
+        if (_grailsApplication != null) {        
             if (_grailsApplication instanceof DefaultGrailsApplication) {
                 ((DefaultGrailsApplication)_grailsApplication).clear()
             }
