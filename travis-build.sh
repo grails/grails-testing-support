@@ -16,7 +16,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH =~ ^master$ && $TRAVIS_PULL_REQUEST
       echo "Publish status: $EXIT_STATUS"
   fi
 
-  ./gradlew docs || EXIT_STATUS=$?
+  ./gradlew docs -x groovydoc || EXIT_STATUS=$?
   echo "Docs status: $EXIT_STATUS"
 
   git config --global user.name "$GIT_NAME"
