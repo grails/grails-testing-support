@@ -16,13 +16,19 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+
 package org.grails.testing.gorm
 
+import grails.gorm.validation.CascadingValidator
+import grails.gorm.validation.PersistentEntityValidator
 import groovy.transform.CompileStatic
-import org.grails.validation.GrailsDomainClassValidator
-import org.grails.datastore.gorm.validation.CascadingValidator
+import org.grails.datastore.gorm.validation.constraints.eval.ConstraintsEvaluator
+import org.grails.datastore.mapping.model.PersistentEntity
+import org.springframework.context.MessageSource
 
 @CompileStatic
-class MockCascadingDomainClassValidator extends GrailsDomainClassValidator
-        implements CascadingValidator {
+class MockCascadingDomainClassValidator extends PersistentEntityValidator implements CascadingValidator {
+    MockCascadingDomainClassValidator(PersistentEntity entity, MessageSource messageSource, ConstraintsEvaluator constraintsEvaluator) {
+        super(entity, messageSource, constraintsEvaluator)
+    }
 }
