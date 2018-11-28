@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 ./gradlew clean classes --no-daemon --stacktrace
-./gradlew check assemble --no-daemon
+./gradlew check assemble --no-daemon -x groovydoc
 
 EXIT_STATUS=0
 echo "Publishing archives for branch $TRAVIS_BRANCH"
