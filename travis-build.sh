@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 ./gradlew clean classes --no-daemon --stacktrace
-./gradlew check assemble --no-daemon -x groovydoc
+./gradlew check assemble --no-daemon
 
 EXIT_STATUS=0
 echo "Publishing archives for branch $TRAVIS_BRANCH"
@@ -12,11 +12,11 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH =~ ^master$ && $TRAVIS_PULL_REQUEST
   if [[ -n $TRAVIS_TAG ]]; then
       ./gradlew bintrayUpload || EXIT_STATUS=$?
   else
-      ./gradlew publish -x groovydoc || EXIT_STATUS=$?
+      ./gradlew publish || EXIT_STATUS=$?
       echo "Publish status: $EXIT_STATUS"
   fi
 
-  ./gradlew docs -x groovydoc || EXIT_STATUS=$?
+  ./gradlew docs || EXIT_STATUS=$?
   echo "Docs status: $EXIT_STATUS"
 
   git config --global user.name "$GIT_NAME"
