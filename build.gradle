@@ -20,7 +20,7 @@ repositories {
 version project.projectVersion
 
 ext {
-     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/9f91df50e5f5d7dab6750c8b520e96389926ccdc'
+     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/6bc593ad5a1ebab6e2e123d371cd5ea7e820ee8a'
 }
 
 
