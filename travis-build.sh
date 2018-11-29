@@ -1,10 +1,39 @@
 #!/bin/bash
 set -e
-./gradlew clean classes --no-daemon --stacktrace
-./gradlew check assemble --no-daemon
 
 EXIT_STATUS=0
-echo "Publishing archives for branch $TRAVIS_BRANCH"
+
+echo "Gradle Task classes for branch $TRAVIS_BRANCH JDK: $TRAVIS_JDK_VERSION"
+
+./gradlew classes --no-daemon --stacktrace || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+echo "Gradle Task Check for branch $TRAVIS_BRANCH JDK: $TRAVIS_JDK_VERSION"
+
+./gradlew check --no-daemon || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+echo "Gradle Task Assemble for branch $TRAVIS_BRANCH JDK: $TRAVIS_JDK_VERSION"
+
+./gradlew assemble --no-daemon || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+if [ "${TRAVIS_JDK_VERSION}" == "openjdk11" ] ; then
+  echo "Do not publish archives for JDK 11"
+  exit $EXIT_STATUS
+fi
+
+echo "Publishing archives for branch $TRAVIS_BRANCH JDK: $TRAVIS_JDK_VERSION"
+
 if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH =~ ^master$ && $TRAVIS_PULL_REQUEST == 'false' ]]; then
 
   echo "Publishing archives"
