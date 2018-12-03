@@ -18,7 +18,7 @@
  */
 package grails.testing.gorm
 
-import grails.core.GrailsDomainClass
+import grails.core.GrailsClass
 import grails.gorm.validation.PersistentEntityValidator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
@@ -124,7 +124,7 @@ trait DataTest extends GrailsUnitTest {
             }
 
             if (DataTestSetupSpecInterceptor.IS_OLD_SETUP) {
-                GrailsDomainClass grailsDomain = grailsApplication.getArtefact(DomainClassArtefactHandler.TYPE, domain.javaClass.name)
+                GrailsClass grailsDomain = grailsApplication.getArtefact(DomainClassArtefactHandler.TYPE, domain.javaClass.name)
 
                 "$validationBeanName"(MockCascadingDomainClassValidator) { bean ->
                     getDelegate().messageSource = ref("messageSource")
