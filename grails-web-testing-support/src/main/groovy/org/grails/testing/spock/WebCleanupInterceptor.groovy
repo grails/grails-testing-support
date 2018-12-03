@@ -12,6 +12,9 @@ import org.springframework.web.context.request.RequestContextHolder
 @CompileStatic
 class WebCleanupInterceptor implements IMethodInterceptor {
 
+    public static final String GROOVY_PAGES_TEMPLATE_ENGINE = "groovyPagesTemplateEngine"
+    public static final String GROOVY_PAGES_TEMPLATE_RENDERER = "groovyPagesTemplateRenderer"
+
     @Override
     void intercept(IMethodInvocation invocation) throws Throwable {
         GrailsWebUnitTest test = (GrailsWebUnitTest)invocation.instance
@@ -24,11 +27,11 @@ class WebCleanupInterceptor implements IMethodInterceptor {
         RequestContextHolder.resetRequestAttributes()
         GrailsWebRequest webRequest = test.webRequest
         def ctx = webRequest?.applicationContext
-        if (ctx?.containsBean("groovyPagesTemplateEngine")) {
-            ctx.getBean("groovyPagesTemplateEngine", GroovyPagesTemplateEngine).clearPageCache()
+        if (ctx?.containsBean(GROOVY_PAGES_TEMPLATE_ENGINE)) {
+            ctx.getBean(GROOVY_PAGES_TEMPLATE_ENGINE, GroovyPagesTemplateEngine).clearPageCache()
         }
-        if (ctx?.containsBean("groovyPagesTemplateRenderer")) {
-            ctx.getBean("groovyPagesTemplateRenderer", GroovyPagesTemplateRenderer).clearCache()
+        if (ctx?.containsBean(GROOVY_PAGES_TEMPLATE_RENDERER)) {
+            ctx.getBean(GROOVY_PAGES_TEMPLATE_RENDERER, GroovyPagesTemplateRenderer).clearCache()
         }
         test.webRequest = null
     }
