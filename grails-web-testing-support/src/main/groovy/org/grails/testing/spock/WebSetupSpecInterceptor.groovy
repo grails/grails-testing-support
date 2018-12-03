@@ -32,7 +32,6 @@ import org.springframework.util.ClassUtils
 import org.springframework.web.multipart.support.StandardServletMultipartResolver
 import org.springframework.web.servlet.i18n.SessionLocaleResolver
 
-
 @CompileStatic
 class WebSetupSpecInterceptor implements IMethodInterceptor {
 
