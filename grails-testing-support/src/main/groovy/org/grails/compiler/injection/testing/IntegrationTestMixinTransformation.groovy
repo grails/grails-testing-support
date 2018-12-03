@@ -53,7 +53,7 @@ import java.lang.reflect.Modifier
 @GroovyASTTransformation(phase = CompilePhase.CANONICALIZATION)
 class IntegrationTestMixinTransformation implements ASTTransformation {
 
-    static final ClassNode MY_TYPE = new ClassNode(Integration.class);
+    static final ClassNode MY_TYPE = new ClassNode(Integration.class)
     public static final ClassNode CONTEXT_CONFIG_ANNOTATION = ClassHelper.make(ContextConfiguration)
     public static final ClassNode GRAILS_APPLICATION_CONTEXT_LOADER = ClassHelper.make(GrailsApplicationContextLoader)
     public static final ClassNode WEB_APP_CONFIGURATION = ClassHelper.make(WebAppConfiguration)
