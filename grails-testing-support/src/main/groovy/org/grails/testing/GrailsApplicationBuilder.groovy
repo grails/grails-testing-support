@@ -11,7 +11,6 @@ import grails.util.Holders
 import grails.util.Metadata
 import groovy.transform.CompileDynamic
 import org.grails.plugins.IncludingPluginFilter
-import org.grails.spring.beans.GrailsApplicationAwareBeanPostProcessor
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
 import org.grails.transaction.TransactionManagerPostProcessor
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.beans.factory.config.ConstructorArgumentValues
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.RootBeanDefinition
-import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor
 import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessorRegistrar
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
