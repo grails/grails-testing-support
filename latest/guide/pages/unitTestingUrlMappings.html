@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4.6 Unit Testing Url Mappings 1.1.4</title>
+    <title>4.6 Unit Testing Url Mappings 1.1.5</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -75,7 +75,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.6 Unit Testing Url Mappings</h1>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.1.5</p>
                 </div>
 
                 
@@ -280,11 +280,11 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 <div class="sect2">
 <h3 id="_http_methods">HTTP Methods</h3>
 <div class="paragraph">
-<p>When testing HTTP methods on URL it is necessary to also define the HTTP method in the test.</p>
+<p>When testing HTTP methods on reverse URL mapping it is necessary to specify the HTTP method in the test.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test http methods</span><span class="delimiter">&quot;</span></span>() {
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
     <span class="key">expect</span>:
     !verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>)
     verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
@@ -295,6 +295,50 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
     assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
     assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
     assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/bar</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When testing HTTP methods on forward URL mapping it is necessary to specify the HTTP method in the request.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is GET, /foo should map to TestController.fooGet()</span><span class="delimiter">&quot;</span></span>
+    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is POST, /foo should map to TestController.fooPost()</span><span class="delimiter">&quot;</span></span>
+    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>
+    assertForwardUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When testing HTTP methods on both forward and reverse URL mapping combined it is necessary to specify the HTTP method in both the request and in the test.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is GET, /foo should map to TestController.fooGet()</span><span class="delimiter">&quot;</span></span>
+    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>
+    assertUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
+
+    <span class="key">then</span>:
+    noExceptionThrown()
+
+    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is POST, /foo should map to TestController.fooPost()</span><span class="delimiter">&quot;</span></span>
+    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>
+    assertUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
 
     <span class="key">then</span>:
     noExceptionThrown()
