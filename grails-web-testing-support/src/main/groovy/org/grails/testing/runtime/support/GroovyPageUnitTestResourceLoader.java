@@ -24,6 +24,7 @@ import grails.config.Settings;
 import grails.core.GrailsApplication;
 import grails.core.support.GrailsApplicationAware;
 import grails.util.BuildSettings;
+import groovy.transform.CompileStatic;
 import org.grails.io.support.GrailsResourceUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.ByteArrayResource;
@@ -33,7 +34,7 @@ import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,6 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * that loads GSP views relative to the project base directory for unit tests.
  *
  */
+@CompileStatic
 public class GroovyPageUnitTestResourceLoader extends DefaultResourceLoader implements GrailsApplicationAware, InitializingBean {
 
     public static final String WEB_INF_PREFIX = "/WEB-INF/grails-app/views";
@@ -60,11 +62,7 @@ public class GroovyPageUnitTestResourceLoader extends DefaultResourceLoader impl
             location = location.substring(WEB_INF_PREFIX.length());
         }
         if (groovyPages.containsKey(location)) {
-            try {
-                return new ByteArrayResource(groovyPages.get(location).getBytes("UTF-8"), location);
-            } catch (UnsupportedEncodingException e) {
-                // continue
-            }
+            return new ByteArrayResource(groovyPages.get(location).getBytes(StandardCharsets.UTF_8), location);
         }
         
         if(basePath == null) {
