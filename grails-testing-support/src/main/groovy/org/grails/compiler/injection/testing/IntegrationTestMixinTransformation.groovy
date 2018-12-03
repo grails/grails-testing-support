@@ -63,7 +63,6 @@ class IntegrationTestMixinTransformation implements ASTTransformation {
     public static final ClassNode SPRING_JUNIT4_CLASS_RUNNER = ClassHelper.make(GrailsJunit4ClassRunner)
     public static final String SPEC_CLASS = "spock.lang.Specification"
 
-
     @Override
     void visit(ASTNode[] astNodes, SourceUnit source) {
         if (!(astNodes[0] instanceof AnnotationNode) || !(astNodes[1] instanceof AnnotatedNode)) {

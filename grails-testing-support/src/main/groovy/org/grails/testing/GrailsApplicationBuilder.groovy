@@ -39,7 +39,6 @@ class GrailsApplicationBuilder {
 
     static final Set DEFAULT_INCLUDED_PLUGINS = ['core', 'eventBus'] as Set
 
-
     Closure doWithSpring
     Closure doWithConfig
     Set<String> includePlugins
