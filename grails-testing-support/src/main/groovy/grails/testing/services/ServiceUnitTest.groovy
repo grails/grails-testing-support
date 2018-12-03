@@ -30,13 +30,15 @@ import org.springframework.util.ClassUtils
 @CompileStatic
 trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
 
+    public static final String DATATEST_CLASS = 'grails.testing.gorm.DataTest'
+
     private static Class dataTest
     private static boolean dataTestLoaded
 
     private void loadDataTestClass() {
         if (!dataTestLoaded) {
             try {
-                dataTest = ClassUtils.forName('grails.testing.gorm.DataTest')
+                dataTest = ClassUtils.forName(DATATEST_CLASS)
             } catch (ClassNotFoundException e) {}
         }
         dataTestLoaded = true
@@ -66,7 +68,7 @@ trait ServiceUnitTest<T> extends ParameterizedGrailsUnitTest<T> {
                     dataTest.getMethod('mockDataService', Class).invoke(this, serviceClass)
                 }
                 else {
-                    throw new GrailsConfigurationException("Error attempting to test ${serviceClass.name}. Data services require gorm-testing-support to be on the classpath and the test to implement grails.testing.gorm.DataTest")
+                    throw new GrailsConfigurationException("Error attempting to test ${serviceClass.name}. Data services require gorm-testing-support to be on the classpath and the test to implement ${DATATEST_CLASS}")
                 }
             }
             else {
