@@ -46,7 +46,9 @@ trait DataTest extends GrailsUnitTest {
     boolean domainsHaveBeenMocked = false
     Session currentSession
 
-    Class<?>[] getDomainClassesToMock() {}
+    Class<?>[] getDomainClassesToMock() {
+        [] as Class<?>[]
+    }
 
     boolean getFailOnError() {
         config.getProperty(Settings.SETTING_FAIL_ON_ERROR, Boolean, false)
