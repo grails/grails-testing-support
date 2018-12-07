@@ -23,7 +23,7 @@ import org.springframework.core.convert.support.ConfigurableConversionService
 class DataTestSetupSpecInterceptor implements IMethodInterceptor {
 
     public static Boolean IS_OLD_SETUP = false
-    public static final BEAN_NAME = "org.grails.beans.ConstraintsEvaluator"
+    public static final BEAN_NAME = "validateableConstraintsEvaluator"
     private static Class constraintsEvaluator = DefaultConstraintEvaluator
 
     @Override
