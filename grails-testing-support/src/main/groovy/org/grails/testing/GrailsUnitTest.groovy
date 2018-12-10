@@ -18,7 +18,7 @@
  */
 package org.grails.testing
 
-//TODO import grails.async.Promises
+import grails.async.Promises
 import grails.config.Config
 import grails.core.DefaultGrailsApplication
 import grails.core.GrailsApplication
@@ -156,7 +156,7 @@ trait GrailsUnitTest {
 
             this._grailsApplication = null
 
-            //TODO Promises.promiseFactory = null
+            Promises.promiseFactory = null
 
             Holders.clear()
         }
