@@ -9,6 +9,9 @@ import grails.web.HyphenatedUrlConverter
 import groovy.transform.CompileStatic
 import groovy.transform.TypeCheckingMode
 import org.grails.core.artefact.UrlMappingsArtefactHandler
+import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator
+import org.grails.datastore.gorm.validation.constraints.registry.DefaultConstraintRegistry
+import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingContext
 import org.grails.gsp.GroovyPagesTemplateEngine
 import org.grails.gsp.jsp.TagLibraryResolverImpl
 import org.grails.plugins.CodecsGrailsPlugin
@@ -18,6 +21,7 @@ import org.grails.plugins.web.mime.MimeTypesGrailsPlugin
 import org.grails.plugins.web.rest.render.DefaultRendererRegistry
 import org.grails.testing.runtime.support.GroovyPageUnitTestResourceLoader
 import org.grails.testing.runtime.support.LazyTagLibraryLookup
+import org.grails.validation.ConstraintEvalUtils
 import org.grails.web.gsp.GroovyPagesTemplateRenderer
 import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.grails.web.mapping.DefaultLinkGenerator
@@ -54,6 +58,23 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
 
         def config = grailsApplication.config
         test.defineBeans {
+
+            final classLoader = ControllerUnitTest.class.getClassLoader()
+
+            boolean registerConstraintEvaluator
+            if (ClassUtils.isPresent("grails.testing.gorm.DataTest", classLoader)) {
+                Class clazz = classLoader.loadClass("grails.testing.gorm.DataTest")
+                registerConstraintEvaluator = !clazz.isAssignableFrom(test.class)
+            } else {
+                registerConstraintEvaluator = true
+            }
+
+            if (registerConstraintEvaluator) {
+                constraintRegistry(DefaultConstraintRegistry, ref("messageSource"))
+
+                "org.grails.beans.ConstraintsEvaluator"(DefaultConstraintEvaluator, constraintRegistry, new KeyValueMappingContext("test"), ConstraintEvalUtils.getDefaultConstraints(grailsApplication.config))
+            }
+
             rendererRegistry(DefaultRendererRegistry) {
                 modelSuffix = config.getProperty('grails.scaffolding.templates.domainSuffix', '')
             }
@@ -62,7 +83,6 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
 
             grailsLinkGenerator(DefaultLinkGenerator, config?.grails?.serverURL ?: "http://localhost:8080")
 
-            final classLoader = ControllerUnitTest.class.getClassLoader()
             if (ClassUtils.isPresent("UrlMappings", classLoader)) {
                 grailsApplication.addArtefact(UrlMappingsArtefactHandler.TYPE, classLoader.loadClass("UrlMappings"))
             }
