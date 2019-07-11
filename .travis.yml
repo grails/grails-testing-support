@@ -1,6 +1,6 @@
 language: groovy
 jdk:
-- oraclejdk8
+- openjdk8
 - openjdk11
 script: "./travis-build.sh"
 install: true
