@@ -18,7 +18,6 @@
  */
 package org.grails.testing
 
-import grails.async.Promises
 import grails.config.Config
 import grails.core.DefaultGrailsApplication
 import grails.core.GrailsApplication
@@ -31,7 +30,9 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.MessageSource
+import org.springframework.util.ClassUtils
 
+import java.lang.reflect.Field
 import java.lang.reflect.Method
 
 @CompileStatic
@@ -155,10 +156,20 @@ trait GrailsUnitTest {
             DeferredBindingActions.clear()
 
             this._grailsApplication = null
-
-            Promises.promiseFactory = null
-
+            cleanupPromiseFactory()
             Holders.clear()
+        }
+    }
+
+    private void cleanupPromiseFactory() {
+        ClassLoader classLoader = getClass().classLoader
+        if (ClassUtils.isPresent("grails.async.Promises", classLoader)) {
+            final String className = "grails.async.Promises"
+            final Field field = ClassUtils.forName(className, classLoader)
+                    .getDeclaredField("promiseFactory")
+            field.setAccessible(true)
+            final Object oldValue = field.get(Class.forName(className))
+            field.set(oldValue, null)
         }
     }
 }
