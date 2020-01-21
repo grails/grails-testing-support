@@ -1,5 +1,6 @@
 package org.grails.testing
 
+import grails.boot.GrailsApp
 import grails.boot.config.GrailsApplicationPostProcessor
 import grails.core.GrailsApplication
 import grails.core.GrailsApplicationLifeCycle
@@ -95,7 +96,25 @@ class GrailsApplicationBuilder {
         }
 
         ConfigurableBeanFactory beanFactory = context.getBeanFactory()
-
+        List beanExcludes = []
+        beanExcludes.add(ConversionService.class)
+        beanExcludes.add(org.springframework.core.env.Environment.class)
+        beanExcludes.add(PropertyResolver.class)
+        beanExcludes.add(ConfigurableEnvironment.class)
+        def objectMapper = io.micronaut.core.reflect.ClassUtils.forName("com.fasterxml.jackson.databind.ObjectMapper", context.getClassLoader()).orElse(null)
+        if (objectMapper != null) {
+            beanExcludes.add(objectMapper)
+        }
+        def micronautContext = new io.micronaut.context.DefaultApplicationContext();
+        micronautContext
+                .environment
+                .addPropertySource("grails-config", [(MicronautBeanFactoryConfiguration.PREFIX + ".bean-excludes"): (Object)beanExcludes])
+        micronautContext.start()
+        ConfigurableApplicationContext parentContext = micronautContext.getBean(ConfigurableApplicationContext)
+        context.setParent(
+                parentContext
+        )
+        context.addApplicationListener(new GrailsApp.MicronautShutdownListener(micronautContext))
         prepareContext(context, beanFactory)
         context.refresh()
         context.registerShutdownHook()
