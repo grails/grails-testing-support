@@ -5,7 +5,6 @@ import grails.core.GrailsApplication
 import grails.core.GrailsApplicationLifeCycle
 import grails.core.support.proxy.DefaultProxyHandler
 import grails.plugins.GrailsPluginManager
-import grails.plugins.Plugin
 import grails.spring.BeanBuilder
 import grails.util.Holders
 import grails.util.Metadata
@@ -132,13 +131,6 @@ class GrailsApplicationBuilder {
     }
 
     void registerBeans(GrailsApplication grailsApplication) {
-
-        if (ClassUtils.isPresent("org.grails.plugins.databinding.DataBindingGrailsPlugin", GrailsApplicationBuilder.classLoader)) {
-            Plugin plugin = (Plugin)ClassUtils.forName("org.grails.plugins.databinding.DataBindingGrailsPlugin").newInstance()
-            plugin.grailsApplication = grailsApplication
-            plugin.applicationContext = grailsApplication.mainContext
-            defineBeans(grailsApplication, plugin.doWithSpring())
-        }
 
         defineBeans(grailsApplication) { ->
             conversionService(ConversionServiceFactoryBean)
