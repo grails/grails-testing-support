@@ -10,6 +10,8 @@ import grails.spring.BeanBuilder
 import grails.util.Holders
 import grails.util.Metadata
 import groovy.transform.CompileDynamic
+import io.micronaut.context.DefaultApplicationContext
+import io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration
 import org.grails.plugins.IncludingPluginFilter
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
@@ -26,6 +28,10 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.AnnotationConfigUtils
 import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.context.support.StaticMessageSource
+import org.springframework.core.convert.ConversionService
+import org.springframework.core.env.ConfigurableEnvironment
+import org.springframework.core.env.Environment
+import org.springframework.core.env.PropertyResolver
 import org.springframework.util.ClassUtils
 
 /**
@@ -98,14 +104,14 @@ class GrailsApplicationBuilder {
         ConfigurableBeanFactory beanFactory = context.getBeanFactory()
         List beanExcludes = []
         beanExcludes.add(ConversionService.class)
-        beanExcludes.add(org.springframework.core.env.Environment.class)
+        beanExcludes.add(Environment.class)
         beanExcludes.add(PropertyResolver.class)
         beanExcludes.add(ConfigurableEnvironment.class)
         def objectMapper = io.micronaut.core.reflect.ClassUtils.forName("com.fasterxml.jackson.databind.ObjectMapper", context.getClassLoader()).orElse(null)
         if (objectMapper != null) {
             beanExcludes.add(objectMapper)
         }
-        def micronautContext = new io.micronaut.context.DefaultApplicationContext();
+        def micronautContext = new DefaultApplicationContext();
         micronautContext
                 .environment
                 .addPropertySource("grails-config", [(MicronautBeanFactoryConfiguration.PREFIX + ".bean-excludes"): (Object)beanExcludes])
