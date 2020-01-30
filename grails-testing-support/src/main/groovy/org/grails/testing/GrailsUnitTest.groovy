@@ -32,7 +32,6 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.MessageSource
 import org.springframework.util.ClassUtils
 
-import java.lang.reflect.Field
 import java.lang.reflect.Method
 
 @CompileStatic
@@ -164,12 +163,7 @@ trait GrailsUnitTest {
     private void cleanupPromiseFactory() {
         ClassLoader classLoader = getClass().classLoader
         if (ClassUtils.isPresent("grails.async.Promises", classLoader)) {
-            final String className = "grails.async.Promises"
-            final Field field = ClassUtils.forName(className, classLoader)
-                    .getDeclaredField("promiseFactory")
-            field.setAccessible(true)
-            final Object oldValue = field.get(Class.forName(className))
-            field.set(oldValue, null)
+            grails.async.Promises.promiseFactory = null
         }
     }
 }
