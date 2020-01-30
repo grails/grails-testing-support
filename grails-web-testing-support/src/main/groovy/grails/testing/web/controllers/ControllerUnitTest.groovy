@@ -51,7 +51,11 @@ trait ControllerUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWeb
      */
     @CompileStatic(TypeCheckingMode.SKIP)
     Map getModel() {
-        request.getAttribute(GrailsApplicationAttributes.CONTROLLER)?.modelAndView?.model ?: [:]
+        Map model = request.getAttribute(GrailsApplicationAttributes.CONTROLLER)?.modelAndView?.model
+        if (model == null) {
+            model = request.getAttribute(GrailsApplicationAttributes.TEMPLATE_MODEL)
+        }
+        return model ?: [:]
     }
 
     /**
