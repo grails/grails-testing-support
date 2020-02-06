@@ -63,7 +63,7 @@ trait DataTest extends GrailsUnitTest {
      */
     void mockDomain(Class<?> domainClassToMock, List domains = []) {
         mockDomains(domainClassToMock)
-        PersistentEntity entity = dataStore.mappingContext.getPersistentEntity(domainClassToMock.name)
+        PersistentEntity entity = datastore.mappingContext.getPersistentEntity(domainClassToMock.name)
         if (domains) {
             saveDomainList(entity, domains)
         }
@@ -77,14 +77,14 @@ trait DataTest extends GrailsUnitTest {
      */
     void mockDomains(Class<?>... domainClassesToMock) {
         initialMockDomainSetup()
-        Collection<PersistentEntity> entities = dataStore.mappingContext.addPersistentEntities(domainClassesToMock)
+        Collection<PersistentEntity> entities = datastore.mappingContext.addPersistentEntities(domainClassesToMock)
         for (PersistentEntity entity in entities) {
             registerGrailsDomainClass(entity.javaClass)
 
             Validator validator = registerDomainClassValidator(entity)
-            dataStore.mappingContext.addEntityValidator(entity, validator)
+            datastore.mappingContext.addEntityValidator(entity, validator)
         }
-        new GormEnhancer(dataStore, transactionManager, getFailOnError())
+        new GormEnhancer(datastore, transactionManager, getFailOnError())
 
         initializeMappingContext()
     }
@@ -95,16 +95,27 @@ trait DataTest extends GrailsUnitTest {
      * @param serviceClass The data service abstract class or interface
      */
     void mockDataService(Class<?> serviceClass) {
-        Service service = (Service)dataStore.getService(serviceClass)
+        Service service = (Service) datastore.getService(serviceClass)
         String serviceName = Introspector.decapitalize(serviceClass.simpleName)
-        if(!applicationContext.containsBean(serviceName)) {
+        if (!applicationContext.containsBean(serviceName)) {
             applicationContext.beanFactory.autowireBean(service)
-            service.setDatastore(dataStore)
+            service.setDatastore(datastore)
             applicationContext.beanFactory.registerSingleton(serviceName, service)
         }
     }
 
+    /**
+     * @deprecated as of v2.1.0 because of of consistency in the method name with
+     * other GORM projects. It is recommended to use {@link #getDatastore()} instead.
+     *
+     * @return The{@link AbstractDatastore}
+     */
+    @Deprecated
     AbstractDatastore getDataStore() {
+        getDatastore()
+    }
+
+    AbstractDatastore getDatastore() {
         applicationContext.getBean(AbstractDatastore)
     }
 
@@ -149,7 +160,7 @@ trait DataTest extends GrailsUnitTest {
     }
 
     private void initializeMappingContext() {
-        def context = dataStore.mappingContext
+        def context = datastore.mappingContext
         if (context instanceof Initializable) {
             context.initialize()
         }
