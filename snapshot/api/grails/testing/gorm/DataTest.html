@@ -166,41 +166,48 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code><a href='../../../AbstractDatastore.html'>AbstractDatastore</a></code></td>
-                            <td class="colLast"><code><strong><a href="#getDataStore()">getDataStore</a></strong>()</code><br></td>
+                            <td class="colLast"><code><strong><a href="#getDataStore()">getDataStore</a></strong>()</code><br><DL><DT><B>deprecated:</B></DT><DD>as of v2.1.0 because of of consistency in the method name with
+ other GORM projects.</DD></DL> </td>
                         </tr>
                         
                         <tr class="rowColor">
+                            <td class="colFirst"><code></code></td>
+                            <td class="colLast"><code><a href='../../../AbstractDatastore.html'>AbstractDatastore</a></code></td>
+                            <td class="colLast"><code><strong><a href="#getDatastore()">getDatastore</a></strong>()</code><br></td>
+                        </tr>
+                        
+                        <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>java.lang.Class&lt;?&gt;[]</code></td>
                             <td class="colLast"><code><strong><a href="#getDomainClassesToMock()">getDomainClassesToMock</a></strong>()</code><br></td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>boolean</code></td>
                             <td class="colLast"><code><strong><a href="#getFailOnError()">getFailOnError</a></strong>()</code><br></td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code><a href='../../../PlatformTransactionManager.html'>PlatformTransactionManager</a></code></td>
                             <td class="colLast"><code><strong><a href="#getTransactionManager()">getTransactionManager</a></strong>()</code><br></td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
                             <td class="colLast"><code><strong><a href="#mockDataService(Class<?>)">mockDataService</a></strong>(java.lang.Class&lt;?&gt; serviceClass)</code><br>Called by the ServiceUnitTest class (via reflection) to create a data service</td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
                             <td class="colLast"><code><strong><a href="#mockDomain(Class<?>, java.util.List)">mockDomain</a></strong>(java.lang.Class&lt;?&gt; domainClassToMock, java.util.List domains = [])</code><br>Mocks a domain class providing the equivalent GORM behavior but against an in-memory
  concurrent hash map instead of a database</td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
                             <td class="colLast"><code><strong><a href="#mockDomains(Class<?>)">mockDomains</a></strong>(java.lang.Class&lt;?&gt;... domainClassesToMock)</code><br>Mocks domain classes providing the equivalent GORM behavior but against an in-memory
@@ -286,7 +293,18 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <a name="getDataStore()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4><a href='../../../AbstractDatastore.html'>AbstractDatastore</a> <strong>getDataStore</strong>()</h4>
+                                <h4>@java.lang.Deprecated
+<a href='../../../AbstractDatastore.html'>AbstractDatastore</a> <strong>getDataStore</strong>()</h4>
+                                <p><DL><DT><B>deprecated:</B></DT><DD>as of v2.1.0 because of of consistency in the method name with
+ other GORM projects. It is recommended to use <a href='#getDatastore()'>getDatastore()</a> instead.</DD></DL>
+     <DL><DT><B>Returns:</B></DT><DD>TheAbstractDatastore</DD></DL></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="getDatastore()"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4><a href='../../../AbstractDatastore.html'>AbstractDatastore</a> <strong>getDatastore</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
