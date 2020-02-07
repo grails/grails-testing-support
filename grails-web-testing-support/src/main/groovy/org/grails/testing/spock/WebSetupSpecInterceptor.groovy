@@ -17,7 +17,6 @@ import org.grails.gsp.jsp.TagLibraryResolverImpl
 import org.grails.plugins.CodecsGrailsPlugin
 import org.grails.plugins.codecs.DefaultCodecLookup
 import org.grails.plugins.converters.ConvertersGrailsPlugin
-import org.grails.plugins.web.mime.MimeTypesGrailsPlugin
 import org.grails.plugins.web.rest.render.DefaultRendererRegistry
 import org.grails.testing.runtime.support.GroovyPageUnitTestResourceLoader
 import org.grails.testing.runtime.support.LazyTagLibraryLookup
@@ -52,7 +51,9 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
         GrailsApplication grailsApplication = test.grailsApplication
         Map<String, String> groovyPages = test.views
 
-        test.defineBeans(new MimeTypesGrailsPlugin())
+        //To register MimeTypes
+        grailsApplication.mainContext.getBean("mimeTypesHolder")
+
         test.defineBeans(new ConvertersGrailsPlugin())
 
         def config = grailsApplication.config
@@ -136,7 +137,6 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
                 }
             }
             filteringCodecsByContentTypeSettings(FilteringCodecsByContentTypeSettings, grailsApplication)
-
             localeResolver(SessionLocaleResolver)
         }
 
