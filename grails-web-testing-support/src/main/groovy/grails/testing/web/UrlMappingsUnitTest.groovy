@@ -185,11 +185,14 @@ trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
 
 
     /**
-     * Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+     * Asserts a URL mapping maps to the specified controller, action, and optionally also parameters. Example:
      *
      * <pre>
      * <code>
-     *           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+     *           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1") {
+     *              param1 = "value1"
+     *              param2 = "value2"
+     *           }
      * </code>
      * </pre>
      * @param assertions The assertions as named parameters
@@ -204,11 +207,14 @@ trait UrlMappingsUnitTest<T> implements ParameterizedGrailsUnitTest<T>, GrailsWe
     }
 
     /**
-     * Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+     * Verifies a URL mapping maps to the specified controller, action, and optionally also parameters. Example:
      *
      * <pre>
      * <code>
-     *           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+     *           verifyUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1") {
+     *              param1 = "value1"
+     *              param2 = "value2"
+     *           }
      * </code>
      * </pre>
      * @param assertions The assertions as named parameters
