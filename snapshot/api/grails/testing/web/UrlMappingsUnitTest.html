@@ -199,7 +199,7 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
-                            <td class="colLast"><code><strong><a href="#assertUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">assertUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts a URL mapping maps to the controller and action specified by named parameters. </td>
+                            <td class="colLast"><code><strong><a href="#assertUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">assertUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts a URL mapping maps to the specified controller, action, and optionally also parameters. </td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -277,7 +277,7 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#verifyUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">verifyUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Asserts a URL mapping maps to the controller and action specified by named parameters. </td>
+                            <td class="colLast"><code><strong><a href="#verifyUrlMapping(Map<String, String>, java.lang.String, groovy.lang.Closure)">verifyUrlMapping</a></strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</code><br>Verifies a URL mapping maps to the specified controller, action, and optionally also parameters. </td>
                         </tr>
                         
                         <tr class="altColor">
@@ -381,11 +381,14 @@ if (location.href.indexOf('is-external=true') == -1) {
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>void <strong>assertUrlMapping</strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</h4>
-                                <p> Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+                                <p> Asserts a URL mapping maps to the specified controller, action, and optionally also parameters. Example:
 
  <pre>
  <code>
-           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1") {
+              param1 = "value1"
+              param2 = "value2"
+           }
  </code>
  </pre>
      <DL><DT><B>Parameters:</B></DT><DD><code>assertions</code> -  The assertions as named parameters</DD><DD><code>url</code> -  The URL as a string</DD><DD><code>paramAssertions</code> -  The parameters to assert defined in the body of the closure</DD></DL></p>
@@ -505,11 +508,14 @@ void <strong>mockArtefact</strong>(java.lang.Class&lt;?&gt; urlMappingsClass)</h
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>boolean <strong>verifyUrlMapping</strong>(java.util.Map&lt;java.lang.String, java.lang.String&gt; assertions, java.lang.String url, groovy.lang.Closure paramAssertions = null)</h4>
-                                <p> Asserts a URL mapping maps to the controller and action specified by named parameters. Example:
+                                <p> Verifies a URL mapping maps to the specified controller, action, and optionally also parameters. Example:
 
  <pre>
  <code>
-           assertUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1")
+           verifyUrlMapping("/action1", controller: "grailsUrlMappingsTestCaseFake", action: "action1") {
+              param1 = "value1"
+              param2 = "value2"
+           }
  </code>
  </pre>
      <DL><DT><B>Parameters:</B></DT><DD><code>assertions</code> -  The assertions as named parameters</DD><DD><code>url</code> -  The URL as a string</DD><DD><code>paramAssertions</code> -  The parameters to assert defined in the body of the closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if the url matches the assertions</DD></DL></p>
