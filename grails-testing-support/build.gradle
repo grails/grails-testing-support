@@ -1,5 +1,5 @@
 dependencies {
-    compile "junit:junit:$junitVersion"
+    compile "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
     compile "org.springframework:spring-test:$springVersion"
     compile("org.grails:grails-plugin-codecs:$grailsVersion") {
         exclude module: 'grails-plugin-mimetypes'
@@ -22,6 +22,9 @@ dependencies {
         exclude group: 'junit', module: 'junit-dep'
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
+    compile "org.junit.jupiter:junit-jupiter-api:5.6.0"
+    compile "org.junit.platform:junit-platform-runner:1.6.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
 
 }
 

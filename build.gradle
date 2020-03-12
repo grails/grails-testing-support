@@ -45,6 +45,12 @@ subprojects {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        if(groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
+            maven {
+                name 'JFrog OSS snapshot repo'
+                url 'https://oss.jfrog.org/oss-snapshot-local/'
+            }
+        }
     }
 
     if(it.name.startsWith("demo")) {
@@ -66,10 +72,18 @@ subprojects {
     }
 
     dependencies {
+        implementation "com.github.javaparser:javaparser-core:$javaParserVersion"
         compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
 
         testCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
-        testCompile "org.codehaus.groovy:groovy-test:$groovyVersion"
+        testCompile "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+        testCompile "org.junit.jupiter:junit-jupiter-api:5.6.0"
+        testCompile "org.junit.platform:junit-platform-runner:1.6.0"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
