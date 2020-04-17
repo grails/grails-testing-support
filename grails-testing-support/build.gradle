@@ -10,21 +10,10 @@ dependencies {
         exclude module: 'grails-plugin-controllers'
     }
     compile "org.grails:grails-datastore-gorm:$gormVersion"
-    compile "org.grails:grails-test:$grailsVersion"
+    compile("org.grails:grails-test:$grailsVersion")
     compile "org.springframework.boot:spring-boot-test:${springBootVersion}"
-    compile("org.spockframework:spock-spring:${spockVersion}") {
-        transitive = false
-        exclude group: 'junit', module: 'junit-dep'
-        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
-    }
-    compile("org.spockframework:spock-core:${spockVersion}") {
-        transitive = false
-        exclude group: 'junit', module: 'junit-dep'
-        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
-    }
+    compile("org.spockframework:spock-spring:${spockVersion}") { transitive = false }
+    compile("org.spockframework:spock-core:${spockVersion}") { transitive = false }
     compile "org.junit.jupiter:junit-jupiter-api:5.6.0"
-    compile "org.junit.platform:junit-platform-runner:1.6.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
-
 }
 
