@@ -1,8 +1,8 @@
 dependencies {
-    compile "org.grails.plugins:gsp:$gspVersion"
-    compile "org.grails:grails-plugin-rest:$grailsVersion"
-    compile "org.grails:grails-plugin-interceptors:$grailsVersion"
-    compile "javax.servlet:javax.servlet-api:$servletApiVersion"
+    api "org.grails.plugins:gsp:$gspVersion"
+    api "org.grails:grails-plugin-rest:$grailsVersion"
+    api "org.grails:grails-plugin-interceptors:$grailsVersion"
+    api "javax.servlet:javax.servlet-api:$servletApiVersion"
 
-    compile project(':grails-testing-support')
+    api project(':grails-testing-support')
 }
