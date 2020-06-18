@@ -1,21 +1,21 @@
 dependencies {
-    compile "org.springframework:spring-test:$springVersion"
-    compile("org.grails:grails-plugin-codecs:$grailsVersion") {
+    api "org.springframework:spring-test:$springVersion"
+    api("org.grails:grails-plugin-codecs:$grailsVersion") {
         exclude module: 'grails-plugin-mimetypes'
         exclude module: 'grails-plugin-converters'
         exclude module: 'grails-web'
     }
-    compile("org.grails.plugins:async:$asyncVersion") {
+    api("org.grails.plugins:async:$asyncVersion") {
         exclude module: 'grails-plugin-controllers'
     }
-    compile "org.grails:grails-datastore-gorm:$gormVersion"
-    compile("org.grails:grails-test:$grailsVersion")
-    compile "org.springframework.boot:spring-boot-test:${springBootVersion}"
-    compile("org.spockframework:spock-spring:${spockVersion}") { transitive = false }
-    compile("org.spockframework:spock-core:${spockVersion}") { transitive = false }
-    compile "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
-    compile "org.junit.jupiter:junit-jupiter-api:5.6.0"
-    compile "org.junit.platform:junit-platform-runner:1.6.0"
+    api "org.grails:grails-datastore-gorm:$gormVersion"
+    api("org.grails:grails-test:$grailsVersion")
+    api "org.springframework.boot:spring-boot-test:${springBootVersion}"
+    api("org.spockframework:spock-spring:${spockVersion}") { transitive = false }
+    api("org.spockframework:spock-core:${spockVersion}") { transitive = false }
+    api "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+    api "org.junit.jupiter:junit-jupiter-api:5.6.0"
+    api "org.junit.platform:junit-platform-runner:1.6.0"
     runtimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
 }
 
