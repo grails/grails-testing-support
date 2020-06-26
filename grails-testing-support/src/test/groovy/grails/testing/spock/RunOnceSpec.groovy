@@ -1,6 +1,6 @@
 package grails.testing.spock
 
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Stepwise
@@ -20,9 +20,6 @@ class RunOnceSpec extends Specification {
     @Shared
     int anotherOnceBeforeCounter = 0
 
-    @Shared
-    int beforeCounter = 0
-
     void setupSpec() {
         setupSpecCounter++
     }
@@ -31,18 +28,13 @@ class RunOnceSpec extends Specification {
         setupCounter++
     }
 
-    @Before
-    void someBeforeMethod() {
-        beforeCounter++
-    }
-
-    @Before
+    @BeforeEach
     @RunOnce
     void someOnceBeforeMethod() {
         onceBeforeCounter++
     }
 
-    @Before
+    @BeforeEach
     @RunOnce
     void someOtherOnceBeforeMethod() {
         anotherOnceBeforeCounter++
@@ -52,7 +44,6 @@ class RunOnceSpec extends Specification {
         expect:
         setupSpecCounter == 1
         setupCounter == 1
-        beforeCounter == 1
         onceBeforeCounter == 1
         anotherOnceBeforeCounter == 1
     }
@@ -61,7 +52,6 @@ class RunOnceSpec extends Specification {
         expect:
         setupSpecCounter == 1
         setupCounter == 2
-        beforeCounter == 2
         onceBeforeCounter == 1
         anotherOnceBeforeCounter == 1
     }
@@ -70,7 +60,6 @@ class RunOnceSpec extends Specification {
         expect:
         setupSpecCounter == 1
         setupCounter == 3
-        beforeCounter == 3
         onceBeforeCounter == 1
         anotherOnceBeforeCounter == 1
     }
