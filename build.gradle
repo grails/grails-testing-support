@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
@@ -13,7 +14,7 @@ buildscript {
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
-}
+}   
 
 version project.projectVersion
 
@@ -39,7 +40,6 @@ subprojects {
     }
 
     repositories {
-        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         if(groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
@@ -49,18 +49,17 @@ subprojects {
         }
     }
 
-    apply plugin: "java-library"
     apply plugin: "groovy"
     if(it.name.startsWith("demo")) {
         apply plugin:"org.grails.grails-web"
         apply plugin:"org.grails.plugins.views-json"
     }
     else {
+        apply plugin: "java-library"
         if(isGrailsPlugin) {
             apply plugin:"org.grails.grails-plugin"
             apply from:"${commonBuild}/common-publishing.gradle"
-        }
-        else {
+        } else {
             apply from:"${commonBuild}/common-project.gradle"
             apply from:"${commonBuild}/common-publishing.gradle"
         }
