@@ -52,7 +52,9 @@ class WebSetupSpecInterceptor implements IMethodInterceptor {
         Map<String, String> groovyPages = test.views
 
         //To register MimeTypes
-        grailsApplication.mainContext.getBean("mimeTypesHolder")
+        if (grailsApplication.mainContext.parent) {
+            grailsApplication.mainContext.getBean("mimeTypesHolder")
+        }
 
         test.defineBeans(new ConvertersGrailsPlugin())
 
