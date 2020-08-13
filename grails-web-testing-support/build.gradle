@@ -5,4 +5,5 @@ dependencies {
     api "javax.servlet:javax.servlet-api:$servletApiVersion"
 
     api project(':grails-testing-support')
+    implementation "org.javassist:javassist:$javassistVersion"
 }
