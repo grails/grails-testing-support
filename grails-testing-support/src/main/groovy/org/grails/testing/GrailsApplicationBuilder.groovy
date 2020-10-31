@@ -24,7 +24,6 @@ import org.springframework.beans.factory.config.ConstructorArgumentValues
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.beans.factory.support.RootBeanDefinition
-import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessorRegistrar
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.AnnotationConfigUtils
@@ -158,8 +157,6 @@ class GrailsApplicationBuilder {
         registerGrailsAppPostProcessorBean(beanFactory)
 
         AnnotationConfigUtils.registerAnnotationConfigProcessors((BeanDefinitionRegistry) beanFactory)
-        new ConfigurationPropertiesBindingPostProcessorRegistrar().registerBeanDefinitions(null, (BeanDefinitionRegistry) beanFactory)
-
         new ConfigFileApplicationContextInitializer().initialize(applicationContext)
     }
 
