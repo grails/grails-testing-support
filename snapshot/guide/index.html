@@ -1,112 +1,71 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'UA-82213539-2');
-        </script>
-        <title>Grails Testing Support 2.2.0.BUILD-SNAPSHOT</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
-        <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+<head>
+    <title>Grails Testing Support</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <script src="../js/docs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
     <script type="text/javascript">
-function addJsClass(el) {
-    var classes = document.body.className.split(" ");
-    classes.push("js");
-    document.body.className = classes.join(" ");
-}
+        function addJsClass(el) {
+            var classes = document.body.className.split(" ");
+            classes.push("js");
+            document.body.className = classes.join(" ");
+        }
     </script>
-    </head>
+</head>
 
-    <body class="body" onload="addJsClass();">
-        <div id="navigation">
-            <div class="navTitle">
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Grails Testing Support
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../guide/index.html" class="button">Table of contents</a>
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="../api/index.html" class="button">API Reference</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                <div class="project">
+                    <h1>Grails Testing Support</h1>
+                    <p></p>
+                    <p>Support for writing concise expressive tests for Grails artifacts</p>
+                    <p><strong>Version:</strong> 2.1.2</p>
+
+                </div>
+
                 
-                Grails Testing Support
-            </div>
-            <div class="navLinks">
-                <ul>
-                    <li>
-                        <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
-                            <a href="../guide/index.html" class="button">Table of contents</a>
-                            <div id="nav-summary-childs" style="display:none;">
-                                
-                                <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
-                                
-                                <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
-                                
-                                <div class="toc-item" style="margin-left:0"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
-                                
-                                <div class="toc-item" style="margin-left:0"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
-                                
-                                <div class="toc-item" style="margin-left:0"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
-                                
-                            </div>
-                        </div>
-                    </li>
-                    <li class="separator selected">
-                        <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-
-        <table id="colset" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-                <td id="col1">
-                    <div id="main" class="corner-all">
-
-                        <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
-
-                        <div class="project">
-                            <h1>Grails Testing Support</h1>
-                            <p><strong>Authors:</strong> Jeff Brown,James Kleeh</p>
-                            <p><strong>Version:</strong> 2.2.0.BUILD-SNAPSHOT</p>
-                            
-                        </div>
-
-                        
-                        <div id="table-of-content">
-                            <h2>Table of Contents</h2>
-                            
-                            <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:0px"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:0px"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingControllers"><strong>4.1</strong><span>Unit Testing Controllers</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingDomainClasses"><strong>4.2</strong><span>Unit Testing Domain Classes</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingServices"><strong>4.3</strong><span>Unit Testing Services</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingTagLibraries"><strong>4.4</strong><span>Unit Testing Tag Libraries</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingInterceptors"><strong>4.5</strong><span>Unit Testing Interceptors</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingUrlMappings"><strong>4.6</strong><span>Unit Testing Url Mappings</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#annotations"><strong>4.7</strong><span>Annotations</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:10px"><a href="#usefulProperties"><strong>4.8</strong><span>Useful Properties</span></a></div>
-                            
-                            <div class="toc-item" style="margin-left:0px"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
-                            
-                            <div style="clear:both" ></div>
-                        </div>
-                        
-                        
 
 <h1 id="introduction">1 Introduction</h1>
 
@@ -137,8 +96,8 @@ function addJsClass(el) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">testCompile "org.grails:grails-gorm-testing-support:2.2.0.BUILD-SNAPSHOT"
-testCompile "org.grails:grails-web-testing-support:2.2.0.BUILD-SNAPSHOT"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">testCompile "org.grails:grails-gorm-testing-support:2.1.2"
+testCompile "org.grails:grails-web-testing-support:2.1.2"</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1457,7 +1416,7 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> grails.testing.spock
 
-<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.BeforeEach</span>
+<span class="keyword">import</span> <span class="include">org.junit.Before</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Shared</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Stepwise</span>
@@ -1477,6 +1436,9 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
     <span class="annotation">@Shared</span>
     <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
 
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
+
     <span class="type">void</span> setupSpec() {
         setupSpecCounter++
     }
@@ -1485,13 +1447,18 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         setupCounter++
     }
 
-    <span class="annotation">@BeforeEach</span>
+    <span class="annotation">@Before</span>
+    <span class="type">void</span> someBeforeMethod() {
+        beforeCounter++
+    }
+
+    <span class="annotation">@Before</span>
     <span class="annotation">@RunOnce</span>
     <span class="type">void</span> someOnceBeforeMethod() {
         onceBeforeCounter++
     }
 
-    <span class="annotation">@BeforeEach</span>
+    <span class="annotation">@Before</span>
     <span class="annotation">@RunOnce</span>
     <span class="type">void</span> someOtherOnceBeforeMethod() {
         anotherOnceBeforeCounter++
@@ -1501,6 +1468,7 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">1</span>
+        beforeCounter == <span class="integer">1</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1509,6 +1477,7 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">2</span>
+        beforeCounter == <span class="integer">2</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1517,6 +1486,7 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">3</span>
+        beforeCounter == <span class="integer">3</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1567,6 +1537,9 @@ accomplishing the same behavior that would be accomplished by applying both the
     <span class="annotation">@Shared</span>
     <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
 
+    <span class="annotation">@Shared</span>
+    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
+
     <span class="type">void</span> setupSpec() {
         setupSpecCounter++
     }
@@ -1575,8 +1548,13 @@ accomplishing the same behavior that would be accomplished by applying both the
         setupCounter++
     }
 
+    <span class="annotation">@Before</span>
+    <span class="type">void</span> someBeforeMethod() {
+        beforeCounter++
+    }
+
     <span class="annotation">@OnceBefore</span>
-    <span class="type">void</span> someOnceBeforeMethod() {<span class="type">[]</span>
+    <span class="type">void</span> someOnceBeforeMethod() {
         onceBeforeCounter++
     }
 
@@ -1589,6 +1567,7 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">1</span>
+        beforeCounter == <span class="integer">1</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1597,6 +1576,7 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">2</span>
+        beforeCounter == <span class="integer">2</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1605,6 +1585,7 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">3</span>
+        beforeCounter == <span class="integer">3</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1793,30 +1774,53 @@ various traits describe those properties.  Some particular properties of interes
 <p>Click <a href="../api/index.html">here</a> to view the API Documentation.</p>
 </div>
 
-                    </div>
-                </td>
-                <td id="col2">
-            <div class="local clearfix">
-                <div class="local-title">
-                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
-                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
-                </div>
-                <div class="menu">
-                    
-                </div>
             </div>
         </td>
-            </tr>
-        </table>
+        <td id="col2">
+            <div class="local clearfix">
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingControllers"><strong>4.1</strong><span>Unit Testing Controllers</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingDomainClasses"><strong>4.2</strong><span>Unit Testing Domain Classes</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingServices"><strong>4.3</strong><span>Unit Testing Services</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingTagLibraries"><strong>4.4</strong><span>Unit Testing Tag Libraries</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingInterceptors"><strong>4.5</strong><span>Unit Testing Interceptors</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingUrlMappings"><strong>4.6</strong><span>Unit Testing Url Mappings</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#annotations"><strong>4.7</strong><span>Annotations</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#usefulProperties"><strong>4.8</strong><span>Useful Properties</span></a></div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
+                    
+                    <div style="clear:both" ></div>
+                </div>
+                
+            </div>
+        </td>
+    </tr>
+</table>
 
-        <div id="footer">
-            
-            
-        </div>
+<div id="footer">
+    
+    
+</div>
 
 
-
-<script type="text/javascript" src="../js/docs.js"></script>
-
-    </body>
+</body>
 </html>
