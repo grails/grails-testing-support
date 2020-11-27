@@ -40,6 +40,10 @@ trait GrailsUnitTest {
     private static GrailsApplication _grailsApplication
     private static Object _servletContext
 
+    boolean getLocalOverride() {
+        localOverride
+    }
+
     /**
      * @return the servlet context
      */
@@ -65,7 +69,8 @@ trait GrailsUnitTest {
                     doWithSpring: doWithSpring(),
                     doWithConfig: doWithConfig(),
                     includePlugins: getIncludePlugins(),
-                    loadExternalBeans: loadExternalBeans()
+                    loadExternalBeans: loadExternalBeans(),
+                    localOverride: localOverride
             ).build()
             _grailsApplication = builder.grailsApplication
             _servletContext = builder.servletContext
