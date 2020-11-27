@@ -41,7 +41,7 @@ trait GrailsUnitTest {
     private static Object _servletContext
 
     boolean getLocalOverride() {
-        localOverride
+        false
     }
 
     /**
