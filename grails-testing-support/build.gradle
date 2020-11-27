@@ -8,6 +8,7 @@ dependencies {
     }
     compile("org.grails.plugins:async:$asyncVersion") {
         exclude module: 'grails-plugin-controllers'
+        exclude module: 'grails-core'
     }
     compile "org.grails:grails-datastore-gorm:$gormVersion"
     compile "org.grails:grails-test:$grailsVersion"
