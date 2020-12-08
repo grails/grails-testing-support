@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>4 Unit Testing 2.1.2</title>
+    <title>4 Unit Testing 2.2.0.M3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -84,7 +84,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4 Unit Testing</h1>
 
-                    <p><strong>Version:</strong> 2.1.2</p>
+                    <p><strong>Version:</strong> 2.2.0.M3</p>
                 </div>
 
                 
@@ -1349,7 +1349,7 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> grails.testing.spock
 
-<span class="keyword">import</span> <span class="include">org.junit.Before</span>
+<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.BeforeEach</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Shared</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Stepwise</span>
@@ -1369,9 +1369,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
     <span class="annotation">@Shared</span>
     <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
 
-    <span class="annotation">@Shared</span>
-    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
-
     <span class="type">void</span> setupSpec() {
         setupSpecCounter++
     }
@@ -1380,18 +1377,13 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         setupCounter++
     }
 
-    <span class="annotation">@Before</span>
-    <span class="type">void</span> someBeforeMethod() {
-        beforeCounter++
-    }
-
-    <span class="annotation">@Before</span>
+    <span class="annotation">@BeforeEach</span>
     <span class="annotation">@RunOnce</span>
     <span class="type">void</span> someOnceBeforeMethod() {
         onceBeforeCounter++
     }
 
-    <span class="annotation">@Before</span>
+    <span class="annotation">@BeforeEach</span>
     <span class="annotation">@RunOnce</span>
     <span class="type">void</span> someOtherOnceBeforeMethod() {
         anotherOnceBeforeCounter++
@@ -1401,7 +1393,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">1</span>
-        beforeCounter == <span class="integer">1</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1410,7 +1401,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">2</span>
-        beforeCounter == <span class="integer">2</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1419,7 +1409,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">3</span>
-        beforeCounter == <span class="integer">3</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1470,9 +1459,6 @@ accomplishing the same behavior that would be accomplished by applying both the
     <span class="annotation">@Shared</span>
     <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
 
-    <span class="annotation">@Shared</span>
-    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
-
     <span class="type">void</span> setupSpec() {
         setupSpecCounter++
     }
@@ -1481,13 +1467,8 @@ accomplishing the same behavior that would be accomplished by applying both the
         setupCounter++
     }
 
-    <span class="annotation">@Before</span>
-    <span class="type">void</span> someBeforeMethod() {
-        beforeCounter++
-    }
-
     <span class="annotation">@OnceBefore</span>
-    <span class="type">void</span> someOnceBeforeMethod() {
+    <span class="type">void</span> someOnceBeforeMethod() {<span class="type">[]</span>
         onceBeforeCounter++
     }
 
@@ -1500,7 +1481,6 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">1</span>
-        beforeCounter == <span class="integer">1</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1509,7 +1489,6 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">2</span>
-        beforeCounter == <span class="integer">2</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1518,7 +1497,6 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">3</span>
-        beforeCounter == <span class="integer">3</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
