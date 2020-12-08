@@ -5,3 +5,9 @@ image:https://travis-ci.org/grails/grails-testing-support.svg?branch=master["Bui
 Documentation is available at link:https://testing.grails.org[https://testing.grails.org/]
 
 Grails 3.x branch is https://github.com/grails/grails-testing-support/tree/1.1.x[1.1.x].
+
+Grails 4.0.x branch is https://github.com/grails/grails-testing-support/tree/2.1.x[2.1.x].
+
+Grails 4.1.x branch is https://github.com/grails/grails-testing-support/tree/master[master] which includes support for Groovy 3.
+
+Please checkout https://github.com/grails/grails-testing-support/releases[release notes] for more information.
