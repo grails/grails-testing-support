@@ -33,7 +33,7 @@ jobs:
         run: |
           [ -f ./setup.sh ] && ./setup.sh || true
       - name: Run Tests
-        run: ./gradlew check
+        run: ./gradlew classes check --no-daemon
       - name: Publish Test Report
         uses: scacap/action-surefire-report@v1
         with:
