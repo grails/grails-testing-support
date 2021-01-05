@@ -143,6 +143,11 @@ extends <a href='../../../grails.boot.config.GrailsApplicationPostProcessor.html
                             <td class="colLast"><code><a href="#includedPlugins">includedPlugins</a></code><br></td>
                         </tr>
                         
+                        <tr class="altColor">
+                            <td class="colFirst"><code><strong>boolean</strong></code>&nbsp;</td>
+                            <td class="colLast"><code><a href="#localOverride">localOverride</a></code><br></td>
+                        </tr>
+                        
                     </table>
                    </ul>
                 </li>
@@ -203,6 +208,12 @@ extends <a href='../../../grails.boot.config.GrailsApplicationPostProcessor.html
                             <td class="colLast"><code><strong><a href="#customizePluginManager(grails.plugins.GrailsPluginManager)">customizePluginManager</a></strong>(<a href='../../../grails.plugins.GrailsPluginManager.html'>GrailsPluginManager</a> grailsApplication)</code><br></td>
                         </tr>
                         
+                        <tr class="altColor">
+                            <td class="colFirst"><code></code></td>
+                            <td class="colLast"><code>void</code></td>
+                            <td class="colLast"><code><strong><a href="#postProcessBeanDefinitionRegistry(org.springframework.beans.factory.support.BeanDefinitionRegistry)">postProcessBeanDefinitionRegistry</a></strong>(<a href='../../../org.springframework.beans.factory.support.BeanDefinitionRegistry.html'>BeanDefinitionRegistry</a> registry)</code><br></td>
+                        </tr>
+                        
                     </table>
                    </ul>
               </li>
@@ -240,6 +251,14 @@ extends <a href='../../../grails.boot.config.GrailsApplicationPostProcessor.html
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>java.util.Set <strong>includedPlugins</strong></h4>
+                                <p></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="localOverride"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>boolean <strong>localOverride</strong></h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -293,6 +312,15 @@ protected&nbsp;void <strong>customizeGrailsApplication</strong>(<a href='../../.
                             <li class="blockList">
                                 <h4>@java.lang.Override
 protected&nbsp;void <strong>customizePluginManager</strong>(<a href='../../../grails.plugins.GrailsPluginManager.html'>GrailsPluginManager</a> grailsApplication)</h4>
+                                <p></p>
+                            </li>
+                        </ul>
+                    
+                        <a name="postProcessBeanDefinitionRegistry(org.springframework.beans.factory.support.BeanDefinitionRegistry)"><!-- --></a>
+                        <ul class="blockListLast">
+                            <li class="blockList">
+                                <h4>@java.lang.Override
+void <strong>postProcessBeanDefinitionRegistry</strong>(<a href='../../../org.springframework.beans.factory.support.BeanDefinitionRegistry.html'>BeanDefinitionRegistry</a> registry)</h4>
                                 <p></p>
                             </li>
                         </ul>
