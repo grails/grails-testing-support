@@ -12,11 +12,13 @@ import grails.util.Metadata
 import groovy.transform.CompileDynamic
 import io.micronaut.context.ApplicationContextConfiguration
 import io.micronaut.context.DefaultApplicationContext
+import io.micronaut.core.order.Ordered
 import io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration
 import org.grails.plugins.IncludingPluginFilter
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
 import org.grails.transaction.TransactionManagerPostProcessor
+import org.springframework.beans.BeansException
 import org.springframework.beans.MutablePropertyValues
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
@@ -28,6 +30,7 @@ import org.springframework.boot.test.context.ConfigFileApplicationContextInitial
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.AnnotationConfigUtils
 import org.springframework.context.support.ConversionServiceFactoryBean
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.context.support.StaticMessageSource
 import org.springframework.core.convert.ConversionService
 import org.springframework.core.env.ConfigurableEnvironment
@@ -48,6 +51,7 @@ class GrailsApplicationBuilder {
     Closure doWithConfig
     Set<String> includePlugins
     boolean loadExternalBeans
+    boolean localOverride = false
 
     GrailsApplication grailsApplication
     Object servletContext
@@ -226,6 +230,7 @@ class GrailsApplicationBuilder {
         constructorArgumentValues.addIndexedArgumentValue(1, includePlugins ?: DEFAULT_INCLUDED_PLUGINS)
 
         MutablePropertyValues values = new MutablePropertyValues()
+        values.add('localOverride', localOverride)
         values.add('loadExternalBeans', loadExternalBeans)
         values.add('customizeGrailsApplicationClosure', customizeGrailsApplicationClosure)
 
@@ -237,6 +242,7 @@ class GrailsApplicationBuilder {
     static class TestRuntimeGrailsApplicationPostProcessor extends GrailsApplicationPostProcessor {
         Closure customizeGrailsApplicationClosure
         Set includedPlugins
+        boolean localOverride = false
 
         TestRuntimeGrailsApplicationPostProcessor(Closure doWithSpringClosure, Set includedPlugins) {
             super([doWithSpring: { -> doWithSpringClosure }] as GrailsApplicationLifeCycle, null, null)
@@ -253,6 +259,14 @@ class GrailsApplicationBuilder {
         @Override
         protected void customizeGrailsApplication(GrailsApplication grailsApplication) {
             customizeGrailsApplicationClosure?.call(grailsApplication)
+        }
+
+        @Override
+        void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+            super.postProcessBeanDefinitionRegistry(registry)
+            PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer  = (PropertySourcesPlaceholderConfigurer) grailsApplication.mainContext.getBean('grailsPlaceholderConfigurer')
+            propertySourcePlaceholderConfigurer.order = Ordered.HIGHEST_PRECEDENCE
+            propertySourcePlaceholderConfigurer.setLocalOverride(localOverride)
         }
     }
 }

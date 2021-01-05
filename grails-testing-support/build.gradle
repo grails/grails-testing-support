@@ -18,6 +18,7 @@ dependencies {
     }
     api("org.grails.plugins:async:$asyncVersion") {
         exclude module: 'grails-plugin-controllers'
+        exclude module: 'grails-core'
     }
     api "org.grails:grails-datastore-gorm:$gormVersion"
     api("org.grails:grails-test:$grailsVersion")

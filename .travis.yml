@@ -1,8 +1,8 @@
 language: groovy
 branches:
   only:
-    - 7.0.x
-    - 6.1.x
+    - 1.1.x
+    - 2.0.x
 jdk:
 - openjdk8
 - openjdk11

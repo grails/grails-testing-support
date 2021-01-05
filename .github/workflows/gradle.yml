@@ -3,11 +3,11 @@ on:
   push:
     branches:
       - master
-      - '[2-9]+.[2-9]+.x'
+      - '[2-9]+.[1-9]+.x'
   pull_request:
     branches:
       - master
-      - '[2-9]+.[2-9]+.x'
+      - '[2-9]+.[1-9]+.x'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
         run: |
           [ -f ./setup.sh ] && ./setup.sh || true
       - name: Run Tests
-        run: ./gradlew check
+        run: ./gradlew classes check --no-daemon
       - name: Publish Test Report
         uses: scacap/action-surefire-report@v1
         with:
