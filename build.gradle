@@ -68,6 +68,14 @@ subprojects {
         targetCompatibility = 1.8
     }
 
+    configurations.all { Configuration configuration ->
+        configuration.resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if(details.requested.group == 'org.spockframework') {
+                details.useVersion(spockVersion)
+            }
+        }
+    }
+
     dependencies {
         implementation "com.github.javaparser:javaparser-core:$javaParserVersion"
         compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
