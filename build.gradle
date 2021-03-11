@@ -19,12 +19,12 @@ repositories {
 version project.projectVersion
 
 ext {
-     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/1.0.x'
+    commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/1.0.x'
 }
 
-subprojects {
+subprojects { project ->
 
-    version project.projectVersion
+    version rootProject.projectVersion
 
     ext {
         userOrg = "grails"
@@ -32,10 +32,9 @@ subprojects {
         isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
     }
 
-    if(isGrailsPlugin) {
+    if (isGrailsPlugin) {
         group "org.grails.plugins"
-    }
-    else {
+    } else {
         group "org.grails"
     }
 
@@ -43,16 +42,14 @@ subprojects {
         maven { url "https://repo.grails.org/grails/core" }
     }
 
-    if(it.name.startsWith("demo")) {
-        apply plugin:"org.grails.grails-web"
-        apply plugin:"org.grails.plugins.views-json"
-    }
-    else {
-        if(isGrailsPlugin) {
-            apply plugin:"org.grails.grails-plugin"
-        }
-        else {
-            apply from:"${commonBuild}/common-project.gradle"
+    if (project.name.startsWith("examples")) {
+        apply plugin: "org.grails.grails-web"
+        apply plugin: "org.grails.plugins.views-json"
+    } else {
+        if (isGrailsPlugin) {
+            apply plugin: "org.grails.grails-plugin"
+        } else {
+            apply from: "${commonBuild}/common-project.gradle"
         }
 
         sourceCompatibility = 1.8
@@ -67,5 +64,5 @@ subprojects {
     }
 }
 
-apply from:"${commonBuild}/common-publishing.gradle"
-apply from:"${commonBuild}/common-docs.gradle"
+apply from: "${commonBuild}/common-publishing.gradle"
+apply from: "${commonBuild}/common-docs.gradle"
