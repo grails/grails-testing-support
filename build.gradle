@@ -1,29 +1,26 @@
 buildscript {
     repositories {
-        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails:grails-docs:${project.ext.properties.grailsDocsVersion ?: grailsVersion}"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
         classpath "org.grails.plugins:views-gradle:$jsonViewsVersion"
+        classpath "io.github.gradle-nexus:publish-plugin:1.0.0"
     }
 }
 
 repositories {
-    mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
 }
 version project.projectVersion
 
 ext {
-     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/1549696f8d1a6bce3d84db9c4c1bfde61eddf175'
+     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/1.0.x'
 }
-
-
 
 subprojects {
 
@@ -43,7 +40,6 @@ subprojects {
     }
 
     repositories {
-        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
     }
 
@@ -54,11 +50,9 @@ subprojects {
     else {
         if(isGrailsPlugin) {
             apply plugin:"org.grails.grails-plugin"
-            apply from:"${commonBuild}/common-publishing.gradle"
         }
         else {
             apply from:"${commonBuild}/common-project.gradle"
-            apply from:"${commonBuild}/common-publishing.gradle"
         }
 
         sourceCompatibility = 1.8
@@ -73,4 +67,5 @@ subprojects {
     }
 }
 
+apply from:"${commonBuild}/common-publishing.gradle"
 apply from:"${commonBuild}/common-docs.gradle"
