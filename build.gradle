@@ -1,30 +1,30 @@
 buildscript {
     repositories {
-        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails:grails-docs:${project.ext.properties.grailsDocsVersion ?: grailsVersion}"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath "org.grails.plugins:views-gradle:$jsonViewsVersion"
+        classpath "io.github.gradle-nexus:publish-plugin:1.0.0"
     }
 }
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
-}   
+}
 
 version project.projectVersion
 
 ext {
-     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/v2.0.0.M1'
+    commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/master'
 }
 
-subprojects {
+subprojects { project ->
 
-    version project.projectVersion
+    version rootProject.projectVersion
 
     ext {
         userOrg = "grails"
@@ -32,10 +32,9 @@ subprojects {
         isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
     }
 
-    if(isGrailsPlugin) {
+    if (isGrailsPlugin) {
         group "org.grails.plugins"
-    }
-    else {
+    } else {
         group "org.grails"
     }
 
@@ -50,18 +49,15 @@ subprojects {
     }
 
     apply plugin: "groovy"
-    if(it.name.startsWith("demo")) {
-        apply plugin:"org.grails.grails-web"
-        apply plugin:"org.grails.plugins.views-json"
-    }
-    else {
+    if (project.name.startsWith("examples")) {
+        apply plugin: "org.grails.grails-web"
+        apply plugin: "org.grails.plugins.views-json"
+    } else {
         apply plugin: "java-library"
-        if(isGrailsPlugin) {
-            apply plugin:"org.grails.grails-plugin"
-            apply from:"${commonBuild}/common-publishing.gradle"
+        if (isGrailsPlugin) {
+            apply plugin: "org.grails.grails-plugin"
         } else {
-            apply from:"${commonBuild}/common-project.gradle"
-            apply from:"${commonBuild}/common-publishing.gradle"
+            apply from: "${commonBuild}/common-project.gradle"
         }
 
         sourceCompatibility = 1.8
@@ -84,4 +80,5 @@ subprojects {
     }
 }
 
-apply from:"${commonBuild}/common-docs.gradle"
+apply from: "${commonBuild}/common-publishing.gradle"
+apply from: "${commonBuild}/common-docs.gradle"
