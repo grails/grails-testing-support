@@ -1,6 +1,6 @@
 # Grails Testing Support
 
-[![Java CI](https://github.com/grails/grails-testing-support/actions/workflows/gradle.yml/badge.svg)](https://github.com/grails/grails-testing-support/actions/workflows/gradle.yml)
+image:https://github.com/grails/grails-testing-support/actions/workflows/gradle.yml/badge.svg["Java CI", link: "https://github.com/grails/grails-testing-support/actions/workflows/gradle.yml"]
 
 Documentation is available at link:https://testing.grails.org[https://testing.grails.org/]
 
