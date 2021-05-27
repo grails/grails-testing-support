@@ -1,3 +1,19 @@
+buildscript {
+    repositories {
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+
+    dependencies {
+        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.0"
+    }
+}
+
+apply plugin:"com.github.erdi.webdriver-binaries"
+
+webdriverBinaries {
+    chromedriver "$chromeDriverVersion"
+}
+
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
@@ -25,7 +41,7 @@ dependencies {
     profile "org.grails.profiles:web"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
-    runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:2.14.2"
+    runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:3.2.4"
     testImplementation "org.grails.plugins:geb"
     testRuntimeOnly "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntimeOnly "net.sourceforge.htmlunit:htmlunit:2.18"
@@ -33,6 +49,10 @@ dependencies {
     testImplementation project(':grails-web-testing-support')
     testImplementation project(':grails-gorm-testing-support')
 
+    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:3.14.0"
+    testImplementation "org.seleniumhq.selenium:selenium-api:3.14.0"
+    testImplementation "org.seleniumhq.selenium:selenium-support:3.14.0"
+    testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:3.14.0"
 }
 
 bootRun {
@@ -52,6 +72,14 @@ tasks.withType(GroovyCompile) {
         forkOptions.jvmArgs = ['-Xmx1024m']
     }
 }
+
+tasks.withType(Test) {
+    systemProperty "geb.env", System.getProperty('geb.env')
+    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+    systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
+}
+
+
 
 
 
