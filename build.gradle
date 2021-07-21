@@ -6,7 +6,6 @@ buildscript {
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails:grails-docs:${project.ext.properties.grailsDocsVersion ?: grailsVersion}"
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath "org.grails.plugins:views-gradle:$jsonViewsVersion"
         classpath "io.github.gradle-nexus:publish-plugin:1.0.0"
     }
