@@ -41,7 +41,7 @@ dependencies {
     profile "org.grails.profiles:web"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
-    runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:3.2.4"
+    runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:3.3.1"
     testImplementation "org.grails.plugins:geb"
     testRuntimeOnly "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntimeOnly "net.sourceforge.htmlunit:htmlunit:2.18"
