@@ -4,14 +4,14 @@ buildscript {
     }
 
     dependencies {
-        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.0"
+        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.4"
     }
 }
 
 apply plugin:"com.github.erdi.webdriver-binaries"
 
 webdriverBinaries {
-    chromedriver "$chromeDriverVersion"
+    chromedriver chromeDriverVersion
 }
 
 dependencies {
