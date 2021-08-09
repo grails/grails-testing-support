@@ -8,7 +8,6 @@ import grails.core.support.proxy.DefaultProxyHandler
 import grails.plugins.GrailsPluginManager
 import grails.spring.BeanBuilder
 import grails.util.Holders
-import grails.util.Metadata
 import groovy.transform.CompileDynamic
 import io.micronaut.context.ApplicationContextConfiguration
 import io.micronaut.context.DefaultApplicationContext
@@ -214,9 +213,6 @@ class GrailsApplicationBuilder {
 
         Closure customizeGrailsApplicationClosure = { grailsApplication ->
             grailsApp = grailsApplication
-            if (!grailsApplication.metadata[Metadata.APPLICATION_NAME]) {
-                grailsApplication.metadata[Metadata.APPLICATION_NAME] = "GrailsUnitTest"
-            }
             if (doWithConfig) {
                 doWithConfig.call(grailsApplication.config)
                 // reset flatConfig
