@@ -49,10 +49,10 @@ dependencies {
     testImplementation project(':grails-web-testing-support')
     testImplementation project(':grails-gorm-testing-support')
 
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:3.14.0"
-    testImplementation "org.seleniumhq.selenium:selenium-api:3.14.0"
-    testImplementation "org.seleniumhq.selenium:selenium-support:3.14.0"
-    testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:3.14.0"
+    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:3.141.59"
+    testImplementation "org.seleniumhq.selenium:selenium-api:3.141.59"
+    testImplementation "org.seleniumhq.selenium:selenium-support:3.141.59"
+    testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:3.141.59"
 }
 
 bootRun {
