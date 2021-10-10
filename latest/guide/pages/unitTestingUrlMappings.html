@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>4.6 Unit Testing Url Mappings 2.1.3</title>
+    <title>4.6 Unit Testing Url Mappings 2.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -84,7 +84,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.6 Unit Testing Url Mappings</h1>
 
-                    <p><strong>Version:</strong> 2.1.3</p>
+                    <p><strong>Version:</strong> 2.2.0</p>
                 </div>
 
                 
@@ -123,26 +123,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">UrlMappings</span> {
-
-    <span class="directive">static</span> mappings = {
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/foo</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">fooGet</span><span class="delimiter">&quot;</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/foo</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">fooPost</span><span class="delimiter">&quot;</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/bar</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span>)
-
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>controller</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>action</span><span class="content">?/</span><span class="inline"><span class="inline-delimiter">$</span>id</span><span class="content">?(.</span><span class="inline"><span class="inline-delimiter">$</span>format</span><span class="content">)?</span><span class="delimiter">&quot;</span></span>{
-            constraints {
-                <span class="comment">// apply constraints here</span>
-            }
-        }
-
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">/index</span><span class="delimiter">&quot;</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">500</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/error</span><span class="delimiter">'</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">404</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/notFound</span><span class="delimiter">'</span></span>)
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/UrlMappings.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -152,14 +133,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.UrlMappingsUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">UrlMappingsSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> UrlMappingsUnitTest&lt;UrlMappings&gt; {
-
-    <span class="type">void</span> setup() {
-        mockController(TestController)
-    }</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=setup,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -173,30 +147,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="string"><span class="delimiter">'</span><span class="content">123</span><span class="delimiter">'</span></span>
-    }
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-    }
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=forward,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -207,28 +158,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123?foo=bar</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-        foo = <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>
-    }
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123?foo=bar</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-        foo = <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>
-    }
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=reverse,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -251,26 +181,7 @@ Url mappings for HTTP status codes can not be reversed because it doesn&#8217;t 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-    }
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-    }
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=combined,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -293,21 +204,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    !verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/bar</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/bar</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsReverse,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -315,21 +212,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is GET, /foo should map to TestController.fooGet()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is POST, /foo should map to TestController.fooPost()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsForward,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -337,21 +220,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is GET, /foo should map to TestController.fooGet()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>
-    assertUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is POST, /foo should map to TestController.fooPost()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>
-    assertUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsCombined,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -364,16 +233,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test controller</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=controller,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -384,16 +244,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=action,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -404,16 +255,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test view</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=view,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>

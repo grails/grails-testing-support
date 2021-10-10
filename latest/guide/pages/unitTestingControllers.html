@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>4.1 Unit Testing Controllers 2.1.3</title>
+    <title>4.1 Unit Testing Controllers 2.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -84,7 +84,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>4.1 Unit Testing Controllers</h1>
 
-                    <p><strong>Version:</strong> 2.1.3</p>
+                    <p><strong>Version:</strong> 2.2.0</p>
                 </div>
 
                 
@@ -107,16 +107,7 @@ test controllers.</p>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
-
-    <span class="comment">// ...</span>
-
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -125,39 +116,13 @@ test controllers.</p>
 <div class="listingblock">
 <div class="title">grails-app/controllers/demo/DemoController.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">DemoController</span> {
-
-    <span class="keyword">def</span> <span class="function">hello</span>() {
-        render <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
-    }
-
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/DemoController.groovy[tags=basic_declaration;render_hello,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
-
-    <span class="comment">// ...</span>
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which renders text</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">when</span>:
-        controller.hello()               <i class="conum" data-value="1"></i><b>(1)</b>
-
-        <span class="key">then</span>:
-        status == <span class="integer">200</span>                    <i class="conum" data-value="2"></i><b>(2)</b>
-        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span> <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration;test_render,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="colist arabic">

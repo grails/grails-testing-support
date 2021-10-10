@@ -1,71 +1,112 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-    <title>Grails Testing Support</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
-    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
-    <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-82213539-2');
+        </script>
+        <title>Grails Testing Support 2.2.0</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+        <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
     <script type="text/javascript">
-        function addJsClass(el) {
-            var classes = document.body.className.split(" ");
-            classes.push("js");
-            document.body.className = classes.join(" ");
-        }
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
     </script>
-</head>
+    </head>
 
-<body class="body" onload="addJsClass();">
-<div id="navigation">
-    <div class="navTitle">
-        
-        Grails Testing Support
-    </div>
-    <div class="navLinks">
-        <ul>
-            <li>
-                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
-                    <a href="../guide/index.html" class="button">Table of contents</a>
-                    <div id="nav-summary-childs" style="display:none;">
-                        
-                        <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
-                        
-                        <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
-                        
-                        <div class="toc-item" style="margin-left:0"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
-                        
-                        <div class="toc-item" style="margin-left:0"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
-                        
-                        <div class="toc-item" style="margin-left:0"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
-                        
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a href="../api/index.html" class="button">API Reference</a>
-            </li>
-        </ul>
-
-    </div>
-</div>
-
-
-<table id="colset" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td id="col1">
-            <div id="main" class="corner-all">
-
-                <div class="project">
-                    <h1>Grails Testing Support</h1>
-                    <p></p>
-                    <p>Support for writing concise expressive tests for Grails artifacts</p>
-                    <p><strong>Version:</strong> 2.1.3</p>
-
-                </div>
-
+    <body class="body" onload="addJsClass();">
+        <div id="navigation">
+            <div class="navTitle">
                 
+                Grails Testing Support
+            </div>
+            <div class="navLinks">
+                <ul>
+                    <li>
+                        <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                            <a href="../guide/index.html" class="button">Table of contents</a>
+                            <div id="nav-summary-childs" style="display:none;">
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
+                                
+                            </div>
+                        </div>
+                    </li>
+                    <li class="separator selected">
+                        <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+        <table id="colset" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="col1">
+                    <div id="main" class="corner-all">
+
+                        <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                        <div class="project">
+                            <h1>Grails Testing Support</h1>
+                            <p><strong>Authors:</strong> Jeff Brown,James Kleeh</p>
+                            <p><strong>Version:</strong> 2.2.0</p>
+                            
+                        </div>
+
+                        
+                        <div id="table-of-content">
+                            <h2>Table of Contents</h2>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingControllers"><strong>4.1</strong><span>Unit Testing Controllers</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingDomainClasses"><strong>4.2</strong><span>Unit Testing Domain Classes</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingServices"><strong>4.3</strong><span>Unit Testing Services</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingTagLibraries"><strong>4.4</strong><span>Unit Testing Tag Libraries</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingInterceptors"><strong>4.5</strong><span>Unit Testing Interceptors</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#unitTestingUrlMappings"><strong>4.6</strong><span>Unit Testing Url Mappings</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#annotations"><strong>4.7</strong><span>Annotations</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#usefulProperties"><strong>4.8</strong><span>Useful Properties</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
+                            
+                            <div style="clear:both" ></div>
+                        </div>
+                        
+                        
 
 <h1 id="introduction">1 Introduction</h1>
 
@@ -96,8 +137,8 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">testCompile "org.grails:grails-gorm-testing-support:2.1.3"
-testCompile "org.grails:grails-web-testing-support:2.1.3"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">testCompile "org.grails:grails-gorm-testing-support:2.2.0"
+testCompile "org.grails:grails-web-testing-support:2.2.0"</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -277,15 +318,7 @@ If you override this method, the default plugins will not be included. The defau
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test the bean is available to the context</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">given</span>:
-    defineBeans {
-        someInteger(<span class="predefined-type">Integer</span>, <span class="integer">2</span>)
-    }
-
-    <span class="key">expect</span>:
-    applicationContext.getBean(<span class="string"><span class="delimiter">'</span><span class="content">someInteger</span><span class="delimiter">'</span></span>) == <span class="integer">2</span>
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/DefineBeansSpec.groovy[tags=test_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -313,31 +346,7 @@ If you override this method, the default plugins will not be included. The defau
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.spring.AutowiredTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">AutowiredTestSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> AutowiredTest {
-
-    Closure doWithSpring() {{ -&gt;
-        helperService HelperService
-    }}
-
-    HelperService helperService
-
-    <span class="type">void</span> setup() {
-        <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some test method</span><span class="delimiter">'</span></span>() {
-        <span class="key">expect</span>:
-        helperService != <span class="predefined-constant">null</span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some other test method</span><span class="delimiter">'</span></span>() {
-        <span class="key">expect</span>:
-        helperService != <span class="predefined-constant">null</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/AutowiredTestSpec.groovy[tags=test_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -385,16 +394,7 @@ test controllers.</p>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
-
-    <span class="comment">// ...</span>
-
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -403,39 +403,13 @@ test controllers.</p>
 <div class="listingblock">
 <div class="title">grails-app/controllers/demo/DemoController.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">DemoController</span> {
-
-    <span class="keyword">def</span> <span class="function">hello</span>() {
-        render <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
-    }
-
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/DemoController.groovy[tags=basic_declaration;render_hello,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/DemoControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DemoControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;DemoController&gt; {
-
-    <span class="comment">// ...</span>
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which renders text</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">when</span>:
-        controller.hello()               <i class="conum" data-value="1"></i><b>(1)</b>
-
-        <span class="key">then</span>:
-        status == <span class="integer">200</span>                    <i class="conum" data-value="2"></i><b>(2)</b>
-        response.text == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span> <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/DemoControllerSpec.groovy[tags=basic_declaration;test_render,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -520,60 +494,13 @@ trait to unit test single domain class.</p>
 <div class="listingblock">
 <div class="title">grails-app/domain/demo/Person.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">Person</span> {
-    <span class="predefined-type">String</span> firstName
-    <span class="predefined-type">String</span> lastName
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/domain/demo/Person.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/PersonSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DomainUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Shared</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Stepwise</span>
-
-<span class="annotation">@Stepwise</span>
-<span class="type">class</span> <span class="class">PersonSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> DomainUnitTest&lt;Person&gt; {
-
-    <span class="annotation">@Shared</span> <span class="type">int</span> id
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test basic persistence mocking</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">expect</span>:
-        Person.count() == <span class="integer">2</span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test domain instance</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        id = <span class="predefined-type">System</span>.identityHashCode(domain)
-
-        <span class="key">expect</span>:
-        domain != <span class="predefined-constant">null</span>
-        domain.hashCode() == id
-
-        <span class="key">when</span>:
-        domain.firstName = <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>
-
-        <span class="key">then</span>:
-        domain.firstName == <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test we get a new domain</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        domain != <span class="predefined-constant">null</span>
-        domain.firstName == <span class="predefined-constant">null</span>
-        <span class="predefined-type">System</span>.identityHashCode(domain) != id
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/PersonSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -587,29 +514,7 @@ test. This is useful when mocking more than one Domain class at a time to test p
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/DataTestTraitSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">DataTestTraitSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> DataTest {
-
-    <span class="type">void</span> setupSpec() {
-        mockDomain Person
-
-        <span class="comment">// for multiple domains, call mockDomains...</span>
-        <span class="comment">// mockDomains Person, Address, Company</span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test basic persistence mocking</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">expect</span>:
-        Person.count() == <span class="integer">2</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/DataTestTraitSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -619,26 +524,7 @@ to provide a <code>Class[] getDomainClassesToMock()</code> method in the test.</
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">GetDomainClassesToMockMethodSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> DataTest {
-
-    <span class="predefined-type">Class</span><span class="type">[]</span> getDomainClassesToMock() {
-        Person
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test basic persistence mocking</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">expect</span>:
-        Person.count() == <span class="integer">2</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/GetDomainClassesToMockMethodSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -649,31 +535,7 @@ trait in order to mock the related domain classes.</p>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/PersonControllerSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.gorm.DataTest</span>
-<span class="keyword">import</span> <span class="include">grails.testing.web.controllers.ControllerUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">PersonControllerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ControllerUnitTest&lt;PersonController&gt;, DataTest {
-
-    <span class="type">void</span> setupSpec() {
-        mockDomain Person
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action which invokes GORM method</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">setup</span>:
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Fripp</span><span class="delimiter">'</span></span>).save()
-        <span class="keyword">new</span> Person(<span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Adrian</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Belew</span><span class="delimiter">'</span></span>).save()
-
-        <span class="key">when</span>:
-        <span class="keyword">def</span> model = controller.index()
-
-        <span class="key">then</span>:
-        model.people.size() == <span class="integer">2</span>
-        model.keySet().contains(<span class="string"><span class="delimiter">'</span><span class="content">people</span><span class="delimiter">'</span></span>)
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/PersonControllerSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 
@@ -694,31 +556,13 @@ test services.</p>
 <div class="listingblock">
 <div class="title">grails-app/services/demo/HelperService.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">HelperService</span> {
-
-    <span class="keyword">def</span> <span class="function">getMagicNumber</span>() {
-        <span class="integer">42</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/services/demo/HelperService.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/HelperServiceSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">HelperServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;HelperService&gt; {
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test retrieving a property</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        service.magicNumber == <span class="integer">42</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/HelperServiceSpec.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -745,35 +589,13 @@ be automatically created for the Service class under test.</p>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">SampleTagLib</span> {
-
-    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
-
-    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
-
-    <span class="keyword">def</span> helloWorld = { attrs -&gt;
-        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;hello_world,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test simple tag as method</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        tagLib.helloWorld() == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_as_method,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -791,35 +613,13 @@ arguments to the method call.</p>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">SampleTagLib</span> {
-
-    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
-
-    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
-
-    <span class="keyword">def</span> sayHello = { attrs -&gt;
-        out &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello, </span><span class="inline"><span class="inline-delimiter">${</span>attrs.name<span class="inline-delimiter">}</span></span><span class="content">!</span><span class="delimiter">&quot;</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;say_hello,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test tag as method with parameters</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        tagLib.sayHello(<span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>) == <span class="string"><span class="delimiter">'</span><span class="content">Hello, Robert!</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_tag_as_method_with_parameters,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -829,19 +629,7 @@ a <code>String</code> parameter that will be evaluated as if it were source code
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test tags with applyTemplate</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:helloWorld/&gt;</span><span class="delimiter">'</span></span>) == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
-        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:sayHello name=&quot;Adrian&quot;/&gt;</span><span class="delimiter">'</span></span>) == <span class="string"><span class="delimiter">'</span><span class="content">Hello, Adrian!</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -852,37 +640,13 @@ past as the first argument to <code>applyTemplate</code> as shown below.</p>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">SampleTagLib</span> {
-
-    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
-
-    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
-
-    <span class="keyword">def</span> renderSomeNumber = { attrs -&gt;
-        <span class="type">int</span> number = attrs.int(<span class="string"><span class="delimiter">'</span><span class="content">value</span><span class="delimiter">'</span></span>, -<span class="integer">1</span>)
-        out &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">The Number Is </span><span class="inline"><span class="inline-delimiter">${</span>number<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;render_some_number,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test a tag that access the model</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>: <span class="string"><span class="delimiter">'</span><span class="content">the value attribute is used in the output</span><span class="delimiter">'</span></span>
-        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:renderSomeNumber value=&quot;${x + y}&quot;/&gt;</span><span class="delimiter">'</span></span>,
-                      [<span class="key">x</span>: <span class="integer">23</span>, <span class="key">y</span>: <span class="integer">19</span>]) == <span class="string"><span class="delimiter">'</span><span class="content">The Number Is 42</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_with_model,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -913,59 +677,19 @@ the second tag library needs to be explicitly mocked by invoking the
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/FirstTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">FirstTagLib</span> {
-    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
-
-    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>
-
-    <span class="keyword">def</span> sayHello = { attrs -&gt;
-        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">BEFORE </span><span class="delimiter">'</span></span>
-
-        <span class="comment">// this is invoking a tag from another tag library</span>
-        out &lt;&lt; two.sayHello()
-
-        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content"> AFTER</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/FirstTagLib.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SecondTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">SecondTagLib</span> {
-    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
-
-    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>
-
-    <span class="keyword">def</span> sayHello = { attrs -&gt;
-        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">Hello From SecondTagLib</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SecondTagLib.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/FirstTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">FirstTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;FirstTagLib&gt; {
-
-    <span class="type">void</span> setupSpec() {
-        mockTagLib SecondTagLib
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test invoking a tag which invokes a tag in another taglib</span><span class="delimiter">&quot;</span></span>() {
-        <span class="key">expect</span>:
-        tagLib.sayHello() == <span class="string"><span class="delimiter">'</span><span class="content">BEFORE Hello From SecondTagLib AFTER</span><span class="delimiter">'</span></span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/FirstTagLibSpec.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -988,17 +712,7 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">TestInterceptor</span> {
-
-    TestInterceptor() {
-        match(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
-    }
-
-    <span class="type">boolean</span> before() {
-        request.setAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Foo is Bar</span><span class="delimiter">'</span></span>)
-        <span class="predefined-constant">true</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/TestInterceptor.groovy[tags=declaration,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -1008,19 +722,7 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test test interceptor matching</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">when</span>:
-    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    interceptor.doesMatch()
-
-    <span class="key">when</span>:
-    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">person</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    !interceptor.doesMatch()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_request,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1035,9 +737,7 @@ the second tag library needs to be explicitly mocked by invoking the
 <div class="listingblock">
 <div class="title">grails-app/controllers/demo/TestController.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> <span class="function">renderAttribute</span>() {
-    render request.getAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>)
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/TestController.groovy[tags=render_attribute,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1045,18 +745,7 @@ the second tag library needs to be explicitly mocked by invoking the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test controller execution with interceptors</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">given</span>:
-    <span class="keyword">def</span> controller = (TestController)mockController(TestController)
-
-    <span class="key">when</span>:
-    withInterceptors([<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>]) {
-        controller.renderAttribute()
-    }
-
-    <span class="key">then</span>:
-    response.text == <span class="string"><span class="delimiter">&quot;</span><span class="content">Foo is Bar</span><span class="delimiter">&quot;</span></span>
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_interceptors,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1098,26 +787,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="type">class</span> <span class="class">UrlMappings</span> {
-
-    <span class="directive">static</span> mappings = {
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/foo</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">fooGet</span><span class="delimiter">&quot;</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/foo</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">fooPost</span><span class="delimiter">&quot;</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/bar</span><span class="delimiter">&quot;</span></span>(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span>)
-
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>controller</span><span class="content">/</span><span class="inline"><span class="inline-delimiter">$</span>action</span><span class="content">?/</span><span class="inline"><span class="inline-delimiter">$</span>id</span><span class="content">?(.</span><span class="inline"><span class="inline-delimiter">$</span>format</span><span class="content">)?</span><span class="delimiter">&quot;</span></span>{
-            constraints {
-                <span class="comment">// apply constraints here</span>
-            }
-        }
-
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">/index</span><span class="delimiter">&quot;</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">500</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/error</span><span class="delimiter">'</span></span>)
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">404</span><span class="delimiter">&quot;</span></span>(<span class="key">view</span>:<span class="string"><span class="delimiter">'</span><span class="content">/notFound</span><span class="delimiter">'</span></span>)
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/UrlMappings.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -1127,14 +797,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.testing.web.UrlMappingsUnitTest</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="type">class</span> <span class="class">UrlMappingsSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> UrlMappingsUnitTest&lt;UrlMappings&gt; {
-
-    <span class="type">void</span> setup() {
-        mockController(TestController)
-    }</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=setup,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1148,30 +811,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="string"><span class="delimiter">'</span><span class="content">123</span><span class="delimiter">'</span></span>
-    }
-    verifyForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
-    verifyForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-    }
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="integer">500</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">error</span><span class="delimiter">'</span></span>)
-    assertForwardUrlMapping(<span class="integer">404</span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">notFound</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=forward,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1182,28 +822,7 @@ Controllers can not be mocked in <code>setupSpec</code> due to the nature of the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123?foo=bar</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-        foo = <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>
-    }
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123?foo=bar</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-        foo = <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>
-    }
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=reverse,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1226,26 +845,7 @@ Url mappings for HTTP status codes can not be reversed because it doesn&#8217;t 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-    }
-    verifyUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderText</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderText</span><span class="delimiter">'</span></span>)
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderView</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderView</span><span class="delimiter">'</span></span>)
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/test/renderState/123</span><span class="delimiter">&quot;</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">renderState</span><span class="delimiter">'</span></span>) {
-        id = <span class="integer">123</span>
-    }
-    assertUrlMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="key">view</span>: <span class="string"><span class="delimiter">'</span><span class="content">index</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=combined,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1268,21 +868,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test reverse mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    !verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
-    verifyReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/bar</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
-    assertReverseUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/bar</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsReverse,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1290,21 +876,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is GET, /foo should map to TestController.fooGet()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is POST, /foo should map to TestController.fooPost()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>
-    assertForwardUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsForward,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1312,21 +884,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test forward and reverse mappings with http methods</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is GET, /foo should map to TestController.fooGet()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>
-    assertUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooGet</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">GET</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">the http method is POST, /foo should map to TestController.fooPost()</span><span class="delimiter">&quot;</span></span>
-    request.method = <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span>
-    assertUrlMapping(<span class="string"><span class="delimiter">'</span><span class="content">/foo</span><span class="delimiter">'</span></span>, <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">test</span><span class="delimiter">'</span></span>, <span class="key">action</span>: <span class="string"><span class="delimiter">'</span><span class="content">fooPost</span><span class="delimiter">'</span></span>, <span class="key">method</span>: <span class="string"><span class="delimiter">'</span><span class="content">POST</span><span class="delimiter">'</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=httpMethodsCombined,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1339,16 +897,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test controller</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertController(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=controller,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1359,16 +908,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test action</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertAction(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">renderText</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=action,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1379,16 +919,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test view</span><span class="delimiter">&quot;</span></span>() {
-    <span class="key">expect</span>:
-    verifyView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">when</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using the assert syntax</span><span class="delimiter">&quot;</span></span>
-    assertView(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>)
-
-    <span class="key">then</span>:
-    noExceptionThrown()
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/UrlMappingsSpec.groovy[tags=view,indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1405,7 +936,7 @@ When calling <code>verifyUrlMapping</code>, then reverse mapping will only be ch
 
 
 <div class="sect2">
-<h3 id="__runonce">@RunOnce</h3>
+<h3 id="_runonce">@RunOnce</h3>
 <div class="paragraph">
 <p>The <code>grails.testing.spock.RunOnce</code> annotation may be applied to any Spock test
 fixture method that you wish to be executed only once.  This is useful when
@@ -1416,7 +947,7 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> grails.testing.spock
 
-<span class="keyword">import</span> <span class="include">org.junit.Before</span>
+<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.BeforeEach</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Shared</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Stepwise</span>
@@ -1436,9 +967,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
     <span class="annotation">@Shared</span>
     <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
 
-    <span class="annotation">@Shared</span>
-    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
-
     <span class="type">void</span> setupSpec() {
         setupSpecCounter++
     }
@@ -1447,18 +975,13 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         setupCounter++
     }
 
-    <span class="annotation">@Before</span>
-    <span class="type">void</span> someBeforeMethod() {
-        beforeCounter++
-    }
-
-    <span class="annotation">@Before</span>
+    <span class="annotation">@BeforeEach</span>
     <span class="annotation">@RunOnce</span>
     <span class="type">void</span> someOnceBeforeMethod() {
         onceBeforeCounter++
     }
 
-    <span class="annotation">@Before</span>
+    <span class="annotation">@BeforeEach</span>
     <span class="annotation">@RunOnce</span>
     <span class="type">void</span> someOtherOnceBeforeMethod() {
         anotherOnceBeforeCounter++
@@ -1468,7 +991,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">1</span>
-        beforeCounter == <span class="integer">1</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1477,7 +999,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">2</span>
-        beforeCounter == <span class="integer">2</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1486,7 +1007,6 @@ applied in conjunction with a fixture annnotation like <code>@Before</code> as s
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">3</span>
-        beforeCounter == <span class="integer">3</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1506,7 +1026,7 @@ the <code>RunOnce</code> annotation can help accomplish that.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="__oncebefore">@OnceBefore</h3>
+<h3 id="_oncebefore">@OnceBefore</h3>
 <div class="paragraph">
 <p>The <code>grails.testing.spock.OnceBefore</code> annotation is a shorthand way of
 accomplishing the same behavior that would be accomplished by applying both the
@@ -1537,9 +1057,6 @@ accomplishing the same behavior that would be accomplished by applying both the
     <span class="annotation">@Shared</span>
     <span class="type">int</span> anotherOnceBeforeCounter = <span class="integer">0</span>
 
-    <span class="annotation">@Shared</span>
-    <span class="type">int</span> beforeCounter = <span class="integer">0</span>
-
     <span class="type">void</span> setupSpec() {
         setupSpecCounter++
     }
@@ -1548,13 +1065,8 @@ accomplishing the same behavior that would be accomplished by applying both the
         setupCounter++
     }
 
-    <span class="annotation">@Before</span>
-    <span class="type">void</span> someBeforeMethod() {
-        beforeCounter++
-    }
-
     <span class="annotation">@OnceBefore</span>
-    <span class="type">void</span> someOnceBeforeMethod() {
+    <span class="type">void</span> someOnceBeforeMethod() {<span class="type">[]</span>
         onceBeforeCounter++
     }
 
@@ -1567,7 +1079,6 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">1</span>
-        beforeCounter == <span class="integer">1</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1576,7 +1087,6 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">2</span>
-        beforeCounter == <span class="integer">2</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1585,7 +1095,6 @@ accomplishing the same behavior that would be accomplished by applying both the
         <span class="key">expect</span>:
         setupSpecCounter == <span class="integer">1</span>
         setupCounter == <span class="integer">3</span>
-        beforeCounter == <span class="integer">3</span>
         onceBeforeCounter == <span class="integer">1</span>
         anotherOnceBeforeCounter == <span class="integer">1</span>
     }
@@ -1599,27 +1108,7 @@ dependency injected values during setup as shown below.</p>
 <div class="listingblock">
 <div class="title">src/integration-test/groovy/demo/DependencyInjectionSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
-
-<span class="keyword">import</span> <span class="include">grails.testing.mixin.integration.Integration</span>
-<span class="keyword">import</span> <span class="include">grails.testing.spock.OnceBefore</span>
-<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
-
-<span class="annotation">@Integration</span>
-<span class="type">class</span> <span class="class">DependencyInjectionSpec</span> <span class="directive">extends</span> Specification {
-
-    HelperService helperService
-
-    <span class="annotation">@OnceBefore</span>
-    <span class="type">void</span> init() {
-        <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
-    }
-
-    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">some test method</span><span class="delimiter">'</span></span>() {
-        <span class="key">expect</span>:
-        helperService != <span class="predefined-constant">null</span>
-    }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/integration-test/groovy/demo/DependencyInjectionSpec.groovy[indent=<span class="integer">0</span>]</code></pre>
 </div>
 </div>
 </div>
@@ -1774,53 +1263,30 @@ various traits describe those properties.  Some particular properties of interes
 <p>Click <a href="../api/index.html">here</a> to view the API Documentation.</p>
 </div>
 
-            </div>
-        </td>
-        <td id="col2">
+                    </div>
+                </td>
+                <td id="col2">
             <div class="local clearfix">
-                
-                <div id="table-of-content">
-                    <h2>Table of Contents</h2>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#upgrading"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#unitTesting"><strong>4</strong><span>Unit Testing</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingControllers"><strong>4.1</strong><span>Unit Testing Controllers</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingDomainClasses"><strong>4.2</strong><span>Unit Testing Domain Classes</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingServices"><strong>4.3</strong><span>Unit Testing Services</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingTagLibraries"><strong>4.4</strong><span>Unit Testing Tag Libraries</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingInterceptors"><strong>4.5</strong><span>Unit Testing Interceptors</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#unitTestingUrlMappings"><strong>4.6</strong><span>Unit Testing Url Mappings</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#annotations"><strong>4.7</strong><span>Annotations</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:10px"><a href="#usefulProperties"><strong>4.8</strong><span>Useful Properties</span></a></div>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#APIDocs"><strong>5</strong><span>API Docs</span></a></div>
-                    
-                    <div style="clear:both" ></div>
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
                 </div>
-                
+                <div class="menu">
+                    
+                </div>
             </div>
         </td>
-    </tr>
-</table>
+            </tr>
+        </table>
 
-<div id="footer">
-    
-    
-</div>
+        <div id="footer">
+            
+            
+        </div>
 
 
-</body>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+    </body>
 </html>
