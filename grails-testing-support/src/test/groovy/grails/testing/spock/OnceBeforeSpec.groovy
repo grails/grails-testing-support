@@ -1,6 +1,5 @@
 package grails.testing.spock
 
-import org.junit.Before
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Stepwise
