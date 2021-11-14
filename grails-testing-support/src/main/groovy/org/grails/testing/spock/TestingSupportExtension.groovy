@@ -5,7 +5,9 @@ import grails.testing.spring.AutowiredTest
 import groovy.transform.CompileStatic
 import org.grails.testing.GrailsUnitTest
 import org.junit.After
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.spockframework.runtime.extension.AbstractGlobalExtension
 import org.spockframework.runtime.model.MethodInfo
@@ -32,7 +34,16 @@ class TestingSupportExtension extends AbstractGlobalExtension {
         }
         for (Method method : spec.getReflection().getDeclaredMethods()) {
             if (method.isAnnotationPresent(BeforeEach.class)) {
-                spec.addSetupMethod(createJUnitFixtureMethod(spec, method, MethodKind.SETUP, BeforeEach.class));
+                spec.getSetupMethods().add(0, createJUnitFixtureMethod(spec, method, MethodKind.SETUP, BeforeEach.class));
+            }
+            if (method.isAnnotationPresent(AfterEach.class)) {
+                spec.addCleanupMethod(createJUnitFixtureMethod(spec, method, MethodKind.CLEANUP, AfterEach.class));
+            }
+            if (method.isAnnotationPresent(BeforeAll.class)) {
+                spec.getSetupSpecMethods().add(0, createJUnitFixtureMethod(spec, method, MethodKind.SETUP_SPEC, BeforeAll.class));
+            }
+            if (method.isAnnotationPresent(AfterAll.class)) {
+                spec.addCleanupSpecMethod(createJUnitFixtureMethod(spec, method, MethodKind.CLEANUP_SPEC, AfterAll.class));
             }
         }
     }
