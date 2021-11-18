@@ -4,7 +4,7 @@ The interceptor unit test trait provides methods to make testing interceptors ea
 
 [source,groovy]
 ----
-include::{sourcedir}/apps/demo33/grails-app/controllers/demo/TestInterceptor.groovy[tags=declaration,indent=0]
+include::{sourcedir}/examples/demo33/grails-app/controllers/demo/TestInterceptor.groovy[tags=declaration,indent=0]
 ----
 
 ==== withRequest
@@ -13,7 +13,7 @@ You can use the `withRequest` method in combination with `interceptor.doesMatch(
 
 [source,groovy]
 ----
-include::{sourcedir}/apps/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_request,indent=0]
+include::{sourcedir}/examples/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_request,indent=0]
 ----
 
 ==== withInterceptors
@@ -25,14 +25,14 @@ Given this controller action:
 [source,groovy]
 .grails-app/controllers/demo/TestController.groovy
 ----
-include::{sourcedir}/apps/demo33/grails-app/controllers/demo/TestController.groovy[tags=render_attribute,indent=0]
+include::{sourcedir}/examples/demo33/grails-app/controllers/demo/TestController.groovy[tags=render_attribute,indent=0]
 ----
 
 Here is how the action might be tested with `withInterceptors`:
 
 [source,groovy]
 ----
-include::{sourcedir}/apps/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_interceptors,indent=0]
+include::{sourcedir}/examples/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_interceptors,indent=0]
 ----
 
 
