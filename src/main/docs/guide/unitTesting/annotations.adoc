@@ -39,5 +39,5 @@ dependency injected values during setup as shown below.
 [source,groovy]
 .src/integration-test/groovy/demo/DependencyInjectionSpec.groovy
 ----
-include::{sourcedir}/apps/demo33/src/integration-test/groovy/demo/DependencyInjectionSpec.groovy[indent=0]
+include::{sourcedir}/examples/demo33/src/integration-test/groovy/demo/DependencyInjectionSpec.groovy[indent=0]
 ----
