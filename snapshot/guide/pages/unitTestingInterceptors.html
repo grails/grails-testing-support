@@ -108,7 +108,17 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/TestInterceptor.groovy[tags=declaration,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">TestInterceptor</span> {
+
+    TestInterceptor() {
+        match(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+    }
+
+    <span class="type">boolean</span> before() {
+        request.setAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Foo is Bar</span><span class="delimiter">'</span></span>)
+        <span class="predefined-constant">true</span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -118,7 +128,19 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_request,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test test interceptor matching</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">when</span>:
+    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    interceptor.doesMatch()
+
+    <span class="key">when</span>:
+    withRequest(<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">person</span><span class="delimiter">&quot;</span></span>)
+
+    <span class="key">then</span>:
+    !interceptor.doesMatch()
+}</code></pre>
 </div>
 </div>
 </div>
@@ -133,7 +155,9 @@ function addJsClass() {
 <div class="listingblock">
 <div class="title">grails-app/controllers/demo/TestController.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/controllers/demo/TestController.groovy[tags=render_attribute,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> <span class="function">renderAttribute</span>() {
+    render request.getAttribute(<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>)
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -141,7 +165,18 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/TestInterceptorSpec.groovy[tags=with_interceptors,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Test controller execution with interceptors</span><span class="delimiter">&quot;</span></span>() {
+    <span class="key">given</span>:
+    <span class="keyword">def</span> controller = (TestController)mockController(TestController)
+
+    <span class="key">when</span>:
+    withInterceptors([<span class="key">controller</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>]) {
+        controller.renderAttribute()
+    }
+
+    <span class="key">then</span>:
+    response.text == <span class="string"><span class="delimiter">&quot;</span><span class="content">Foo is Bar</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
