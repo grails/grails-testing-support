@@ -109,13 +109,35 @@ function addJsClass() {
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;hello_world,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SampleTagLib</span> {
+
+    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
+
+    <span class="keyword">def</span> helloWorld = { attrs -&gt;
+        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_as_method,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test simple tag as method</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>:
+        tagLib.helloWorld() == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -133,13 +155,35 @@ arguments to the method call.</p>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;say_hello,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SampleTagLib</span> {
+
+    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
+
+    <span class="keyword">def</span> sayHello = { attrs -&gt;
+        out &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello, </span><span class="inline"><span class="inline-delimiter">${</span>attrs.name<span class="inline-delimiter">}</span></span><span class="content">!</span><span class="delimiter">&quot;</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_tag_as_method_with_parameters,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test tag as method with parameters</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>:
+        tagLib.sayHello(<span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert</span><span class="delimiter">'</span></span>) == <span class="string"><span class="delimiter">'</span><span class="content">Hello, Robert!</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -149,7 +193,19 @@ a <code>String</code> parameter that will be evaluated as if it were source code
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_simple_tag_with_applyTemplate,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test tags with applyTemplate</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>:
+        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:helloWorld/&gt;</span><span class="delimiter">'</span></span>) == <span class="string"><span class="delimiter">'</span><span class="content">Hello, World!</span><span class="delimiter">'</span></span>
+        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:sayHello name=&quot;Adrian&quot;/&gt;</span><span class="delimiter">'</span></span>) == <span class="string"><span class="delimiter">'</span><span class="content">Hello, Adrian!</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -160,13 +216,37 @@ past as the first argument to <code>applyTemplate</code> as shown below.</p>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SampleTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SampleTagLib.groovy[tags=basic_declaration;render_some_number,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SampleTagLib</span> {
+
+    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">demo</span><span class="delimiter">'</span></span>
+
+    <span class="keyword">def</span> renderSomeNumber = { attrs -&gt;
+        <span class="type">int</span> number = attrs.int(<span class="string"><span class="delimiter">'</span><span class="content">value</span><span class="delimiter">'</span></span>, -<span class="integer">1</span>)
+        out &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">The Number Is </span><span class="inline"><span class="inline-delimiter">${</span>number<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/SampleTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/SampleTagLibSpec.groovy[tags=basic_declaration;test_with_model,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">SampleTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;SampleTagLib&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test a tag that access the model</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>: <span class="string"><span class="delimiter">'</span><span class="content">the value attribute is used in the output</span><span class="delimiter">'</span></span>
+        applyTemplate(<span class="string"><span class="delimiter">'</span><span class="content">&lt;demo:renderSomeNumber value=&quot;${x + y}&quot;/&gt;</span><span class="delimiter">'</span></span>,
+                      [<span class="key">x</span>: <span class="integer">23</span>, <span class="key">y</span>: <span class="integer">19</span>]) == <span class="string"><span class="delimiter">'</span><span class="content">The Number Is 42</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -197,19 +277,59 @@ the second tag library needs to be explicitly mocked by invoking the
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/FirstTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/FirstTagLib.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">FirstTagLib</span> {
+    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>
+
+    <span class="keyword">def</span> sayHello = { attrs -&gt;
+        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">BEFORE </span><span class="delimiter">'</span></span>
+
+        <span class="comment">// this is invoking a tag from another tag library</span>
+        out &lt;&lt; two.sayHello()
+
+        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content"> AFTER</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">grails-app/taglib/demo/SecondTagLib.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/grails-app/taglib/demo/SecondTagLib.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="type">class</span> <span class="class">SecondTagLib</span> {
+    <span class="directive">static</span> defaultEncodeAs = [<span class="key">taglib</span>:<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>]
+
+    <span class="directive">static</span> namespace = <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>
+
+    <span class="keyword">def</span> sayHello = { attrs -&gt;
+        out &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">Hello From SecondTagLib</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">src/test/groovy/demo/FirstTagLibSpec.groovy</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::<span class="regexp"><span class="delimiter">/</span><span class="content">home</span><span class="delimiter">/</span></span>runner/work/grails-testing-support/grails-testing-support/apps/demo33/src/test/groovy/demo/FirstTagLibSpec.groovy[tags=basic_declaration,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.web.taglib.TagLibUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">FirstTagLibSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> TagLibUnitTest&lt;FirstTagLib&gt; {
+
+    <span class="type">void</span> setupSpec() {
+        mockTagLib SecondTagLib
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">test invoking a tag which invokes a tag in another taglib</span><span class="delimiter">&quot;</span></span>() {
+        <span class="key">expect</span>:
+        tagLib.sayHello() == <span class="string"><span class="delimiter">'</span><span class="content">BEFORE Hello From SecondTagLib AFTER</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 </div>
