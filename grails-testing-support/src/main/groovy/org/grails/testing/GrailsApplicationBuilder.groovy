@@ -14,6 +14,7 @@ import io.micronaut.context.DefaultApplicationContext
 import io.micronaut.core.order.Ordered
 import io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration
 import org.grails.plugins.IncludingPluginFilter
+import org.grails.plugins.web.mime.MimeTypesConfiguration
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
 import org.grails.transaction.TransactionManagerPostProcessor
