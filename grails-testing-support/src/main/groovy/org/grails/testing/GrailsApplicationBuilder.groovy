@@ -146,6 +146,8 @@ class GrailsApplicationBuilder {
         ConfigurableApplicationContext parentContext = micronautContext.getBean(ConfigurableApplicationContext)
         ((DefaultListableBeanFactory) beanFactory)
                 .setAllowBeanDefinitionOverriding(true);
+        ((DefaultListableBeanFactory) beanFactory)
+                .setAllowCircularReferences(true);
         context.setParent(
                 parentContext
         )
