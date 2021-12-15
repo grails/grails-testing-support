@@ -48,15 +48,6 @@ jobs:
           arguments: assemble
       - name: Export Gradle Properties
         uses: micronaut-projects/github-actions/export-gradle-properties@master
-      - name: Upload artifacts to the Github release
-        id: upload_artifact
-        if: steps.assemble.outcome == 'success'
-        uses: Roang-zero1/github-upload-release-artifacts-action@master
-        with:
-          created_tag: v${{ github.event.inputs.release }}
-          args: build/distributions/grails-${{ steps.release_version.outputs.release_version }}.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Documentation
         id: docs
         if: steps.assemble.outcome == 'success'
