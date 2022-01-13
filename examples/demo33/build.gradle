@@ -11,7 +11,9 @@ buildscript {
 apply plugin:"com.github.erdi.webdriver-binaries"
 
 webdriverBinaries {
-    chromedriver chromeDriverVersion
+    chromedriver {
+        versionRegexp = '.*'
+    }
 }
 
 dependencies {
