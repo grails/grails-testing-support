@@ -11,8 +11,9 @@ buildscript {
 apply plugin:"com.github.erdi.webdriver-binaries"
 
 webdriverBinaries {
-    chromedriver {
-        versionRegexp = '.*'
+    if (!System.getenv().containsKey('CI')) {
+        chromedriver "$chromeDriverVersion"
+        geckodriver "$geckodriverVersion"
     }
 }
 
@@ -79,6 +80,13 @@ tasks.withType(Test) {
     systemProperty "geb.env", System.getProperty('geb.env')
     systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
     systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
+    if (!System.getenv().containsKey('CI')) {
+        systemProperty 'webdriver.chrome.driver', System.getProperty('webdriver.chrome.driver')
+        systemProperty 'webdriver.gecko.driver', System.getProperty('webdriver.gecko.driver')
+    } else {
+        systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
+        systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
+    }
 }
 
 
