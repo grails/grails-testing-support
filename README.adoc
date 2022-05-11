@@ -8,6 +8,6 @@ Grails 3.x branch is https://github.com/grails/grails-testing-support/tree/1.1.x
 
 Grails 4.0.x branch is https://github.com/grails/grails-testing-support/tree/2.1.x[2.1.x].
 
-Grails 5 branch is https://github.com/grails/grails-testing-support/tree/2.2.x[2.2.x] which includes support for Groovy 3.
+Grails 5 branch is https://github.com/grails/grails-testing-support/tree/2.4.x[2.4.x] which includes support for Groovy 3.
 
 Please checkout https://github.com/grails/grails-testing-support/releases[release notes] for more information.
