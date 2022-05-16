@@ -29,7 +29,7 @@ class OnceBeforeSpec extends Specification {
     }
 
     @OnceBefore
-    void someOnceBeforeMethod() {[]
+    void someOnceBeforeMethod() {
         onceBeforeCounter++
     }
 
