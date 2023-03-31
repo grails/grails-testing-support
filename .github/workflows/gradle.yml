@@ -2,18 +2,18 @@ name: Java CI
 on:
   push:
     branches:
-      - master
       - '[2-9]+.[1-9]+.x'
+      - '[3-9]+.[0-9]+.x'
   pull_request:
     branches:
-      - master
       - '[2-9]+.[1-9]+.x'
+      - '[3-9]+.[0-9]+.x'
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['8', '11', '14']
+        java: ['11', '14']
     env:
       WORKSPACE: ${{ github.workspace }}
       GRADLE_OPTS: -Xmx1500m -Dfile.encoding=UTF-8
@@ -31,6 +31,7 @@ jobs:
         with:
           arguments: check
         env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
       - name: Run Build
@@ -53,17 +54,24 @@ jobs:
         id: publish
         if: steps.build.outcome == 'success' && github.event_name == 'push' && matrix.java == '8'
         uses: gradle/gradle-build-action@v2
+        with:
+          arguments: -Dorg.gradle.internal.publish.checksums.insecure=true publish
         env:
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        with:
-          arguments: -Dorg.gradle.internal.publish.checksums.insecure=true publish
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
+          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
       - name: Generate Docs
         id: docs
         if: steps.publish.outcome == 'success' && github.event_name == 'push' && matrix.java == '8'
         uses: gradle/gradle-build-action@v2
         with:
           arguments: docs
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
+          GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
       - name: Publish to Github Pages
         if: steps.docs.outcome == 'success' && github.event_name == 'push' && matrix.java == '8'
         uses: micronaut-projects/github-pages-deploy-action@master
