@@ -89,6 +89,9 @@ tasks.withType(Test) {
     }
 }
 
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 
 
 
