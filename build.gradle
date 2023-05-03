@@ -18,7 +18,7 @@ repositories {
 version project.projectVersion
 
 ext {
-    commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/master'
+    commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/gradle7'
 }
 
 subprojects { project ->
@@ -39,7 +39,7 @@ subprojects { project ->
 
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
-        if(groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
+        if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
                 name 'JFrog OSS snapshot repo'
                 url 'https://oss.jfrog.org/oss-snapshot-local/'
@@ -65,10 +65,9 @@ subprojects { project ->
 
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if(details.requested.group == 'org.springframework') {
+            if (details.requested.group == 'org.springframework') {
                 details.useVersion(springVersion)
-            }
-            else if(details.requested.group == 'org.springframework.boot') {
+            } else if (details.requested.group == 'org.springframework.boot') {
                 details.useVersion(springBootVersion)
             }
         }
