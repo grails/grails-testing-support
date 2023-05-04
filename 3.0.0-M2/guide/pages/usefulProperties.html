@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>4.8 Useful Properties 3.0.0-M2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Grails Testing Support
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/upgrading.html"><strong>3</strong><span>Upgrading From The Mixin Framework</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/unitTesting.html"><strong>4</strong><span>Unit Testing</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.8 Useful Properties</h1>
+
+                    <p><strong>Version:</strong> 3.0.0-M2</p>
+                </div>
+
+                
+
+                
+
+<h2 id="usefulProperties">4.8 Useful Properties</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-testing-support/edit/3.0.x/src/main/docs/guide/unitTesting/usefulProperties.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The testing framework provides and initializes a number of properties that
+are directly accessible unit tests.  The <a href="../api/index.html">javadocs</a> for the
+various traits describe those properties.  Some particular properties of interest:</p>
+</div>
+<div class="sect1">
+<h2 id="_properties_available_in_all_unit_tests">Properties Available In All Unit Tests</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/org/grails/testing/GrailsUnitTest.html#getMessageSource()">messageSource</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/GrailsUnitTest.html#getGrailsApplication()">grailsApplication</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/GrailsUnitTest.html#getApplicationContext()">applicationContext</a></p>
+</li>
+<li>
+<p><a href="../api/org/grails/testing/GrailsUnitTest.html#getConfig()">config</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_properties_available_in_all_web_unit_tests_controller_interceptor_taglib_urlmappings">Properties Available In All Web Unit Tests (Controller, Interceptor, Taglib, UrlMappings)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getRequest()">request</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getResponse()">response</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getServletContext()">servletContext</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getViews()">views</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getSession()">session</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getStatus()">status</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getParams()">params</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/GrailsWebUnitTest.html#getFlash()">flash</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_controller_unit_test_properties">Controller Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/web/controllers/ControllerUnitTest.html#getController()">controller</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/controllers/ControllerUnitTest.html#getView()">view</a></p>
+</li>
+<li>
+<p><a href="../api/grails/testing/web/controllers/ControllerUnitTest.html#getModel()">model</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interceptor_unit_test_properties">Interceptor Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/web/interceptor/InterceptorUnitTest.html#getInterceptor()">interceptor</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_service_unit_test_properties">Service Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/services/ServiceUnitTest.html#getService()">service</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tag_library_unit_test_properties">Tag Library Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/web/taglib/TagLibUnitTest.html#getTagLib()">tagLib</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_domain_class_unit_test_properties">Domain Class Unit Test Properties</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/grails/testing/gorm/DomainUnitTest.html#getDomain()">domain</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/upgrading.html">&lt;&lt; <strong>3</strong><span>Upgrading From The Mixin Framework</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/APIDocs.html"><strong>5</strong><span>API Docs</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
