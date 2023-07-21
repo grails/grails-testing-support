@@ -33,12 +33,12 @@ jobs:
         id: extract_branch
         run: |
           echo $TARGET_BRANCH
-          echo ::set-output name=value::${TARGET_BRANCH}
+          echo "value=${TARGET_BRANCH}" >> $GITHUB_OUTPUT
         env:
           TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
       - name: Set the current release version
         id: release_version
-        run: echo ::set-output name=release_version::${VERSION}
+        run: echo "release_version=${VERSION}" >> $GITHUB_OUTPUT
         env:
           VERSION: ${{ github.event.inputs.release }}
       - name: Run Assemble
