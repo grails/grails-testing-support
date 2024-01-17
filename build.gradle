@@ -26,6 +26,8 @@ subprojects { project ->
 
     version rootProject.projectVersion
 
+    ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
+
     ext {
         userOrg = "grails"
         isGrailsPlugin = name.startsWith('grails-plugin')
@@ -39,6 +41,7 @@ subprojects { project ->
     }
 
     repositories {
+        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
