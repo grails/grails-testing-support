@@ -83,7 +83,7 @@ To change configuration for the context of your test class, override the `doWith
 [source,groovy]
 ----
 Closure doWithConfig() {{ config ->
-    config.foo.bar = "x"
+    config['foo.bar'] = "x"
 }}
 ----
 
