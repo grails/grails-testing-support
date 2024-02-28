@@ -391,7 +391,7 @@ If you override this method, the default plugins will not be included. The defau
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy">Closure doWithConfig() {{ config -&gt;
-    config.foo.bar = <span class="string"><span class="delimiter">&quot;</span><span class="content">x</span><span class="delimiter">&quot;</span></span>
+    config[<span class="string"><span class="delimiter">'</span><span class="content">foo.bar</span><span class="delimiter">'</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">x</span><span class="delimiter">&quot;</span></span>
 }}</code></pre>
 </div>
 </div>
