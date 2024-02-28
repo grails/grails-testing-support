@@ -43,7 +43,7 @@ jobs:
           VERSION: ${{ github.event.inputs.release }}
       - name: Run Assemble
         id: assemble
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: assemble
       - name: Export Gradle Properties
@@ -51,7 +51,7 @@ jobs:
       - name: Publish Documentation
         id: docs
         if: steps.assemble.outcome == 'success'
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: docs
       - name: Export Gradle Properties
