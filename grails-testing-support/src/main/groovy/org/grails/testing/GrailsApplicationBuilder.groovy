@@ -9,12 +9,12 @@ import grails.plugins.GrailsPluginManager
 import grails.spring.BeanBuilder
 import grails.util.Holders
 import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import io.micronaut.context.ApplicationContextConfiguration
 import io.micronaut.context.DefaultApplicationContext
 import io.micronaut.core.order.Ordered
 import io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration
 import org.grails.plugins.IncludingPluginFilter
-import org.grails.plugins.web.mime.MimeTypesConfiguration
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
 import org.grails.transaction.TransactionManagerPostProcessor
@@ -41,9 +41,10 @@ import org.springframework.util.ClassUtils
 /**
  * Created by jameskleeh on 5/31/17.
  */
+@CompileStatic
 class GrailsApplicationBuilder {
 
-    public static final boolean isServletApiPresent = ClassUtils.isPresent("javax.servlet.ServletContext", GrailsApplicationBuilder.classLoader)
+    public static final boolean isServletApiPresent = ClassUtils.isPresent('javax.servlet.ServletContext', GrailsApplicationBuilder.classLoader)
 
     static final Set DEFAULT_INCLUDED_PLUGINS = ['core', 'eventBus'] as Set
 
@@ -56,9 +57,11 @@ class GrailsApplicationBuilder {
     GrailsApplication grailsApplication
     Object servletContext
 
+    @CompileDynamic
     GrailsApplicationBuilder build() {
+
         servletContext = createServletContext()
-        ConfigurableApplicationContext mainContext = createMainContext(servletContext)
+        def mainContext = createMainContext(servletContext)
 
         if (isServletApiPresent) {
             // NOTE: The following dynamic class loading hack is temporary so the
@@ -67,47 +70,59 @@ class GrailsApplicationBuilder {
             // be removed so rather than implement a real solution, this hack will
             // do for now to keep the build healthy.
             try {
-                Class segads = Class.forName('org.grails.web.context.ServletEnvironmentGrailsApplicationDiscoveryStrategy')
+                def segads = Class.forName('org.grails.web.context.ServletEnvironmentGrailsApplicationDiscoveryStrategy')
                 Holders.addApplicationDiscoveryStrategy(segads.newInstance(servletContext))
-            } catch (Throwable t) {
-
             }
+            catch (Throwable ignored) {}
+
             try {
-                Class gcu = Class.forName('org.grails.web.servlet.context.GrailsConfigUtils')
+                def gcu = Class.forName('org.grails.web.servlet.context.GrailsConfigUtils')
                 gcu.configureServletContextAttributes(servletContext, grailsApplication, mainContext.getBean(GrailsPluginManager.BEAN_NAME, GrailsPluginManager), mainContext)
-            } catch (Throwable t) {
-
             }
+            catch (Throwable ignored) {}
         }
 
-        grailsApplication = mainContext.getBean('grailsApplication')
+        grailsApplication = mainContext.getBean('grailsApplication') as GrailsApplication
 
         if (!grailsApplication.isInitialised()) {
             grailsApplication.initialise()
         }
-        this
+
+        return this
     }
 
     protected Object createServletContext() {
+
+        def context = null
+
         if (isServletApiPresent) {
-            def context = ClassUtils.forName("org.springframework.mock.web.MockServletContext").newInstance()
+            context = ClassUtils.forName('org.springframework.mock.web.MockServletContext').getDeclaredConstructor().newInstance()
             Holders.setServletContext(context)
-            return context
         }
+
+        return context
     }
 
     protected ConfigurableApplicationContext createMainContext(Object servletContext) {
+
         ConfigurableApplicationContext context
 
         if (isServletApiPresent && servletContext != null) {
-            context = (ConfigurableApplicationContext) ClassUtils.forName("org.springframework.web.context.support.GenericWebApplicationContext").newInstance(servletContext);
+            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.web.context.support.GenericWebApplicationContext').newInstance(servletContext)
         } else {
-            context = (ConfigurableApplicationContext) ClassUtils.forName("org.springframework.context.support.GenericApplicationContext").newInstance()
+            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.context.support.GenericApplicationContext').getDeclaredConstructor().newInstance()
         }
 
-        ClassLoader applicationClassLoader = this.class.classLoader
-        ConfigurableEnvironment configuredEnvironment = context.getEnvironment()
-        ApplicationContextConfiguration micronautConfiguration = new ApplicationContextConfiguration() {
+        def applicationClassLoader = this.class.classLoader
+        def configuredEnvironment = context.getEnvironment()
+        def beanFactory = context.getBeanFactory()
+        def beanExcludes = [ConversionService, Environment, PropertyResolver, ConfigurableEnvironment]
+        def objectMapper = io.micronaut.core.reflect.ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.getClassLoader()).orElse(null)
+        if (objectMapper) {
+            beanExcludes.add(objectMapper)
+        }
+
+        def micronautConfiguration = new ApplicationContextConfiguration() {
             @Override
             List<String> getEnvironments() {
                 if (configuredEnvironment != null) {
@@ -116,52 +131,35 @@ class GrailsApplicationBuilder {
                     return Collections.emptyList()
                 }
             }
-
             @Override
             Optional<Boolean> getDeduceEnvironments() {
                 return Optional.of(false)
             }
-
             @Override
             ClassLoader getClassLoader() {
                 return applicationClassLoader
             }
         }
-
-        ConfigurableBeanFactory beanFactory = context.getBeanFactory()
-        List beanExcludes = []
-        beanExcludes.add(ConversionService.class)
-        beanExcludes.add(Environment.class)
-        beanExcludes.add(PropertyResolver.class)
-        beanExcludes.add(ConfigurableEnvironment.class)
-        def objectMapper = io.micronaut.core.reflect.ClassUtils.forName("com.fasterxml.jackson.databind.ObjectMapper", context.getClassLoader()).orElse(null)
-        if (objectMapper != null) {
-            beanExcludes.add(objectMapper)
-        }
-        def micronautContext = new DefaultApplicationContext(micronautConfiguration);
-        micronautContext
-                .environment
-                .addPropertySource("grails-config", [(MicronautBeanFactoryConfiguration.PREFIX + ".bean-excludes"): (Object) beanExcludes])
+        def micronautContext = new DefaultApplicationContext(micronautConfiguration)
+        micronautContext.environment.addPropertySource('grails-config', [(MicronautBeanFactoryConfiguration.PREFIX + ".bean-excludes"): beanExcludes as Object])
         micronautContext.start()
-        ConfigurableApplicationContext parentContext = micronautContext.getBean(ConfigurableApplicationContext)
-        ((DefaultListableBeanFactory) beanFactory)
-                .setAllowBeanDefinitionOverriding(true);
-        ((DefaultListableBeanFactory) beanFactory)
-                .setAllowCircularReferences(true);
-        context.setParent(
-                parentContext
-        )
+
+        def parentContext = micronautContext.getBean(ConfigurableApplicationContext)
+        (beanFactory as DefaultListableBeanFactory).with {
+            setAllowBeanDefinitionOverriding(true)
+            setAllowCircularReferences(true)
+        }
+        context.setParent(parentContext)
         context.addApplicationListener(new GrailsApp.MicronautShutdownListener(micronautContext))
         prepareContext(context, beanFactory)
         context.refresh()
         context.registerShutdownHook()
 
-        context
+        return context
     }
 
     protected void prepareContext(ConfigurableApplicationContext applicationContext, ConfigurableBeanFactory beanFactory) {
         registerGrailsAppPostProcessorBean(beanFactory)
-
         AnnotationConfigUtils.registerAnnotationConfigProcessors((BeanDefinitionRegistry) beanFactory)
         new ConfigDataApplicationContextInitializer().initialize(applicationContext)
     }
@@ -178,15 +176,17 @@ class GrailsApplicationBuilder {
     void defineBeans(GrailsApplication grailsApplication, Closure callable) {
         def binding = new Binding()
         def bb = new BeanBuilder(null, null, grailsApplication.getClassLoader())
-        binding.setVariable "application", grailsApplication
-        bb.setBinding binding
+        binding.setVariable('application', grailsApplication)
+        bb.setBinding(binding)
         bb.beans(callable)
         bb.registerBeans((BeanDefinitionRegistry) grailsApplication.getMainContext())
     }
 
+    @CompileDynamic
     void registerBeans(GrailsApplication grailsApplication) {
 
         defineBeans(grailsApplication) { ->
+
             conversionService(ConversionServiceFactoryBean)
 
             xmlns context: "http://www.springframework.org/schema/context"
@@ -199,12 +199,11 @@ class GrailsApplicationBuilder {
             transactionManagerAwarePostProcessor(TransactionManagerPostProcessor)
             grailsPlaceholderConfigurer(GrailsPlaceholderConfigurer, '${', grailsApplication.config.toProperties())
             mapBasedSmartPropertyOverrideConfigurer(MapBasedSmartPropertyOverrideConfigurer) {
-                grailsApplication = grailsApplication
+                setGrailsApplication(grailsApplication)
             }
         }
     }
 
-    @CompileDynamic
     protected void registerGrailsAppPostProcessorBean(ConfigurableBeanFactory beanFactory) {
 
         GrailsApplication grailsApp
@@ -214,7 +213,7 @@ class GrailsApplicationBuilder {
             executeDoWithSpringCallback(grailsApp)
         }
 
-        Closure customizeGrailsApplicationClosure = { grailsApplication ->
+        Closure customizeGrailsApplicationClosure = { GrailsApplication grailsApplication ->
             grailsApp = grailsApplication
             if (doWithConfig) {
                 doWithConfig.call(grailsApplication.config)
@@ -224,21 +223,22 @@ class GrailsApplicationBuilder {
             Holders.config = grailsApplication.config
         }
 
-        ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues()
+        def constructorArgumentValues = new ConstructorArgumentValues()
         constructorArgumentValues.addIndexedArgumentValue(0, doWithSpringClosure)
         constructorArgumentValues.addIndexedArgumentValue(1, includePlugins ?: DEFAULT_INCLUDED_PLUGINS)
 
-        MutablePropertyValues values = new MutablePropertyValues()
+        def values = new MutablePropertyValues()
         values.add('localOverride', localOverride)
         values.add('loadExternalBeans', loadExternalBeans)
         values.add('customizeGrailsApplicationClosure', customizeGrailsApplicationClosure)
 
-        RootBeanDefinition beandef = new RootBeanDefinition(TestRuntimeGrailsApplicationPostProcessor, constructorArgumentValues, values)
-        beandef.setRole(BeanDefinition.ROLE_INFRASTRUCTURE)
-        beanFactory.registerBeanDefinition("grailsApplicationPostProcessor", beandef)
+        def beanDef = new RootBeanDefinition(TestRuntimeGrailsApplicationPostProcessor, constructorArgumentValues, values)
+        beanDef.setRole(BeanDefinition.ROLE_INFRASTRUCTURE)
+        (beanFactory as BeanDefinitionRegistry).registerBeanDefinition('grailsApplicationPostProcessor', beanDef)
     }
 
     static class TestRuntimeGrailsApplicationPostProcessor extends GrailsApplicationPostProcessor {
+
         Closure customizeGrailsApplicationClosure
         Set includedPlugins
         boolean localOverride = false
