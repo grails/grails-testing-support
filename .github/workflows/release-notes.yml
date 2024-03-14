@@ -7,6 +7,10 @@ on:
       - master
       - '[2-9]+.[1-9]+.x'
       - '[3-9]+.[0-9]+.x'
+  pull_request:
+    types: [opened, reopened, synchronize]
+  pull_request_target:
+    types: [opened, reopened, synchronize]       
   workflow_dispatch:      
 jobs:
   release_notes:
@@ -27,8 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          commitish: ${{ steps.extract_branch.outputs.value }}
-          filter-by-commitish: true
+          commitish: ${{ steps.extract_branch.outputs.value }} 
       # Otherwise:
       - name: Export Gradle Properties
         if: steps.check_release_drafter.outputs.has_release_drafter == 'false'
