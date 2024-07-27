@@ -64,8 +64,8 @@ subprojects { project ->
             apply from: "${commonBuild}/common-project.gradle"
         }
 
-        sourceCompatibility = 1.11
-        targetCompatibility = 1.11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     configurations.all {
