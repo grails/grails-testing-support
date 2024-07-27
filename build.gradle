@@ -42,7 +42,7 @@ subprojects { project ->
     }
 
     repositories {
-        mavenLocal()
+        //mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
@@ -66,20 +66,6 @@ subprojects { project ->
 
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'org.springframework') {
-                details.useVersion(springVersion)
-            } else if (details.requested.group == 'org.springframework.boot') {
-                details.useVersion(springBootVersion)
-            } else if (details.requested.group == 'org.junit.jupiter') {
-                details.useVersion(junitJupiterVersion)
-            } else if (details.requested.group == 'org.junit.platform') {
-                details.useVersion(junitPlatformVersion)
-            }
-        }
     }
 
     dependencies {
