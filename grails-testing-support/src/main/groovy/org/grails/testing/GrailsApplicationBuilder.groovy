@@ -44,7 +44,7 @@ import org.springframework.util.ClassUtils
 @CompileStatic
 class GrailsApplicationBuilder {
 
-    public static final boolean isServletApiPresent = ClassUtils.isPresent('javax.servlet.ServletContext', GrailsApplicationBuilder.classLoader)
+    public static final boolean isServletApiPresent = ClassUtils.isPresent('jakarta.servlet.ServletContext', GrailsApplicationBuilder.classLoader)
 
     static final Set DEFAULT_INCLUDED_PLUGINS = ['core', 'eventBus'] as Set
 

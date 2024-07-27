@@ -2,7 +2,7 @@ dependencies {
     api "org.grails.plugins:gsp:$gspVersion"
     api "org.grails:grails-plugin-rest:$grailsVersion"
     api "org.grails:grails-plugin-interceptors:$grailsVersion"
-    api "javax.servlet:javax.servlet-api:$servletApiVersion"
+    api "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
 
     api project(':grails-testing-support')
     api "org.javassist:javassist:$javassistVersion"

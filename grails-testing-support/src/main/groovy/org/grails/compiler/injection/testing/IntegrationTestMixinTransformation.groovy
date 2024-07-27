@@ -134,7 +134,7 @@ class IntegrationTestMixinTransformation implements ASTTransformation {
         // @SpringBootTest
         def servletApi = null
         try {
-            servletApi = Class.forName("javax.servlet.ServletContext", false, getClass().classLoader)    
+            servletApi = Class.forName("jakarta.servlet.ServletContext", false, getClass().classLoader)
         }
         catch(Exception e) {
             // ignore
