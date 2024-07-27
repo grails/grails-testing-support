@@ -29,6 +29,16 @@ subprojects { project ->
 
     ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
 
+    configurations.configureEach {
+
+        // FORCE UPGRADE OF GROOVY IN DEPENDENCIES TO GROOVY 4
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.codehaus.groovy') {
+                details.useTarget(group: 'org.apache.groovy', name: details.requested.name, version: groovyVersion)
+            }
+        }
+    }
+
     ext {
         userOrg = "grails"
         isGrailsPlugin = name.startsWith('grails-plugin')
@@ -73,7 +83,7 @@ subprojects { project ->
         compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
 
         testImplementation "javax.servlet:javax.servlet-api:$servletApiVersion"
-        testImplementation "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+        testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
         testImplementation "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"

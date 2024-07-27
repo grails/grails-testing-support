@@ -10,7 +10,7 @@
     },
     {
       "matchPackagePatterns": [
-        "^org\\.codehaus\\.groovy"
+        "^org\\.apache\\.groovy"
       ],
       "groupName": "groovy monorepo"
     },
