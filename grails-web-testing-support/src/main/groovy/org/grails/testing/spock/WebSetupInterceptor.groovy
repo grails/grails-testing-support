@@ -10,7 +10,7 @@ import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
 import org.springframework.web.servlet.DispatcherServlet
 
-import javax.servlet.ServletContext
+import jakarta.servlet.ServletContext
 
 @CompileStatic
 class WebSetupInterceptor implements IMethodInterceptor {

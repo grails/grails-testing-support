@@ -29,6 +29,16 @@ subprojects { project ->
 
     ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
 
+    configurations.configureEach {
+
+        // FORCE UPGRADE OF GROOVY IN DEPENDENCIES TO GROOVY 4
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.codehaus.groovy') {
+                details.useTarget(group: 'org.apache.groovy', name: details.requested.name, version: groovyVersion)
+            }
+        }
+    }
+
     ext {
         userOrg = "grails"
         isGrailsPlugin = name.startsWith('grails-plugin')
@@ -42,7 +52,6 @@ subprojects { project ->
     }
 
     repositories {
-        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
@@ -64,30 +73,16 @@ subprojects { project ->
             apply from: "${commonBuild}/common-project.gradle"
         }
 
-        sourceCompatibility = 1.11
-        targetCompatibility = 1.11
-    }
-
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'org.springframework') {
-                details.useVersion(springVersion)
-            } else if (details.requested.group == 'org.springframework.boot') {
-                details.useVersion(springBootVersion)
-            } else if (details.requested.group == 'org.junit.jupiter') {
-                details.useVersion(junitJupiterVersion)
-            } else if (details.requested.group == 'org.junit.platform') {
-                details.useVersion(junitPlatformVersion)
-            }
-        }
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     dependencies {
         implementation "com.github.javaparser:javaparser-core:$javaParserVersion"
-        compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
+        compileOnly "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
 
-        testImplementation "javax.servlet:javax.servlet-api:$servletApiVersion"
-        testImplementation "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+        testImplementation "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
+        testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
         testImplementation "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"

@@ -31,6 +31,6 @@ include 'grails-testing-support',
         'grails-web-testing-support',
         'grails-gorm-testing-support'
 
-include 'examples-demo33'
-project(":examples-demo33").projectDir = new File(settingsDir, "examples/demo33")
+//include 'examples-demo33'
+// project(":examples-demo33").projectDir = new File(settingsDir, "examples/demo33")
 

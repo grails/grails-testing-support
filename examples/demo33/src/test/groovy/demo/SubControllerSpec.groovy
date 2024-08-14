@@ -3,7 +3,7 @@ package demo
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 class SubControllerSpec extends Specification implements ControllerUnitTest<SubController> {
     void 'test calling super method'() {

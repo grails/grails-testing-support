@@ -7,7 +7,7 @@ import org.grails.web.servlet.mvc.SynchronizerTokensHolder
 import spock.lang.Ignore
 import spock.lang.Specification
 
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 class TestControllerSpec extends Specification implements ControllerUnitTest<TestController>, DataTest {
 

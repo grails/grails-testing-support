@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['11', '14']
+        java: ['17']
     env:
       WORKSPACE: ${{ github.workspace }}
       GRADLE_OPTS: -Xmx1500m -Dfile.encoding=UTF-8
@@ -22,7 +22,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Run Tests
         if: github.event_name == 'pull_request'
@@ -52,7 +52,7 @@ jobs:
           report_paths: '**/build/test-results/test/TEST-*.xml'
       - name: Publish to repo.grails.org
         id: publish
-        if: steps.build.outcome == 'success' && github.event_name == 'push' && matrix.java == '11'
+        if: steps.build.outcome == 'success' && github.event_name == 'push' && matrix.java == '17'
         uses: gradle/gradle-build-action@v3
         with:
           arguments: -Dorg.gradle.internal.publish.checksums.insecure=true publish
@@ -64,7 +64,7 @@ jobs:
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
       - name: Generate Docs
         id: docs
-        if: steps.publish.outcome == 'success' && github.event_name == 'push' && matrix.java == '11'
+        if: steps.publish.outcome == 'success' && github.event_name == 'push' && matrix.java == '17'
         uses: gradle/gradle-build-action@v3
         with:
           arguments: docs
@@ -73,7 +73,7 @@ jobs:
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
       - name: Publish to Github Pages
-        if: steps.docs.outcome == 'success' && github.event_name == 'push' && matrix.java == '11'
+        if: steps.docs.outcome == 'success' && github.event_name == 'push' && matrix.java == '17'
         uses: micronaut-projects/github-pages-deploy-action@master
         env:
           TARGET_REPOSITORY: ${{ github.repository }}
