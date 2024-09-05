@@ -70,11 +70,11 @@ if (location.href.indexOf('is-external=true') == -1) {
     <div>
         <ul class="subNavList">
             <li>Summary:&nbsp;</li>
-            Nested&nbsp;&nbsp;&nbsp;<li><a href="#field_summary">Field</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#property_summary">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_summary">Method</a></li>&nbsp;&nbsp;&nbsp;
+            Nested&nbsp;&nbsp;&nbsp;Field&nbsp;&nbsp;&nbsp;<li><a href="#property_summary">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_summary">Method</a></li>&nbsp;&nbsp;&nbsp;
         </ul>
         <ul class="subNavList">
             <li>&nbsp;|&nbsp;Detail:&nbsp;</li>
-            <li><a href="#field_detail">Field</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#prop_detail">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_detail">Method</a></li>&nbsp;&nbsp;&nbsp;
+            Field&nbsp;&nbsp;&nbsp;<li><a href="#prop_detail">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_detail">Method</a></li>&nbsp;&nbsp;&nbsp;
         </ul>
     </div>
     <a name="skip-navbar_top">
@@ -100,7 +100,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 
             <!-- todo: direct known subclasses -->
             <hr>
-            <br>
 
 <pre>@groovy.transform.Trait
 @groovy.transform.CompileStatic
@@ -123,33 +122,6 @@ extends <a href='../../../org/grails/testing/GrailsUnitTest.html'>GrailsUnitTest
         
             <ul class="blockList">
                 <li class="blockList"><a name="field_summary"><!--   --></a>
-                    <h3>Field Summary</h3>
-                    <ul class="blockList">
-                    <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum constants summary table">
-                        <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-                        <tr>
-                            <th class="colFirst" scope="col">Modifiers</th>
-                            <th class="colLast" scope="col">Name</th>
-                            <th class="colLast" scope="col">Description</th>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code><strong>private&nbsp;<a href='../../../org.grails.datastore.mapping.core.Session.html'>Session</a></strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#currentSession">currentSession</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code><strong>private&nbsp;boolean</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#domainsHaveBeenMocked">domainsHaveBeenMocked</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                    </table>
-                   </ul>
-                </li>
-                
-                <li class="blockList"><a name="field_summary"><!--   --></a>
                     <ul class="blockList">
                     <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Inherited fields summary table">
                         <caption><span>Inherited fields</span><span class="tabEnd">&nbsp;</span></caption>
@@ -171,7 +143,7 @@ extends <a href='../../../org/grails/testing/GrailsUnitTest.html'>GrailsUnitTest
 
         <!-- =========== PROPERTY SUMMARY =========== -->
         
-         <ul class="blockList">
+         <ul class="blockList"> 
                 <li class="blockList"><a name="property_summary"><!--   --></a>
                     <h3>Properties Summary</h3>
                     <ul class="blockList">
@@ -195,6 +167,7 @@ extends <a href='../../../org/grails/testing/GrailsUnitTest.html'>GrailsUnitTest
                     </table>
                    </ul>
                 </li>
+                
             </ul>
         
 
@@ -333,32 +306,6 @@ extends <a href='../../../org/grails/testing/GrailsUnitTest.html'>GrailsUnitTest
            
 
             
-            <!-- =========== FIELD DETAIL =========== -->
-            <ul class="blockList">
-                <li class="blockList"><a name="field_detail">
-                    <!--   -->
-                </a>
-                    <h3>Field Detail</h3>
-                    
-                        <a name="currentSession"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;<a href='../../../org.grails.datastore.mapping.core.Session.html'>Session</a> <strong>currentSession</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="domainsHaveBeenMocked"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;boolean <strong>domainsHaveBeenMocked</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                </li>
-            </ul>
-            
 
             
             <!-- =========== PROPERTY DETAIL =========== -->
@@ -404,8 +351,7 @@ extends <a href='../../../org/grails/testing/GrailsUnitTest.html'>GrailsUnitTest
                         <a name="getDataStore()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Deprecated
-<a href='../../../org.grails.datastore.mapping.core.AbstractDatastore.html'>AbstractDatastore</a> <strong>getDataStore</strong>()</h4>
+                                <h4>@java.lang.Deprecated<br><a href='../../../org.grails.datastore.mapping.core.AbstractDatastore.html'>AbstractDatastore</a> <strong>getDataStore</strong>()</h4>
                                 <p><DL><DT><B>deprecated:</B></DT><DD>as of v2.1.0 because of of consistency in the method name with
  other GORM projects. It is recommended to use <a href='#getDatastore()'>getDatastore()</a> instead.</DD></DL> <DL><DT><B>Returns:</B></DT><DD>TheAbstractDatastore</DD></DL></p>
                             </li>
@@ -488,8 +434,7 @@ extends <a href='../../../org/grails/testing/GrailsUnitTest.html'>GrailsUnitTest
                         <a name="registerDomainClassValidator(org.grails.datastore.mapping.model.PersistentEntity)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@groovy.transform.CompileDynamic
-private&nbsp;<a href='../../../org.springframework.validation.Validator.html'>Validator</a> <strong>registerDomainClassValidator</strong>(<a href='../../../org.grails.datastore.mapping.model.PersistentEntity.html'>PersistentEntity</a> domain)</h4>
+                                <h4>@groovy.transform.CompileDynamic<br>private&nbsp;<a href='../../../org.springframework.validation.Validator.html'>Validator</a> <strong>registerDomainClassValidator</strong>(<a href='../../../org.grails.datastore.mapping.model.PersistentEntity.html'>PersistentEntity</a> domain)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -505,8 +450,7 @@ private&nbsp;<a href='../../../org.springframework.validation.Validator.html'>Va
                         <a name="saveDomainList(org.grails.datastore.mapping.model.PersistentEntity, java.util.List)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@groovy.transform.CompileStatic(value: TypeCheckingMode.SKIP)
-private&nbsp;void <strong>saveDomainList</strong>(<a href='../../../org.grails.datastore.mapping.model.PersistentEntity.html'>PersistentEntity</a> entity, java.util.List domains)</h4>
+                                <h4>@groovy.transform.CompileStatic(value: TypeCheckingMode.SKIP)<br>private&nbsp;void <strong>saveDomainList</strong>(<a href='../../../org.grails.datastore.mapping.model.PersistentEntity.html'>PersistentEntity</a> entity, java.util.List domains)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -545,11 +489,11 @@ private&nbsp;void <strong>saveDomainList</strong>(<a href='../../../org.grails.d
     <div>
         <ul class="subNavList">
             <li>Summary:&nbsp;</li>
-            Nested&nbsp;&nbsp;&nbsp;<li><a href="#field_summary">Field</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#property_summary">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_summary">Method</a></li>&nbsp;&nbsp;&nbsp;
+            Nested&nbsp;&nbsp;&nbsp;Field&nbsp;&nbsp;&nbsp;<li><a href="#property_summary">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_summary">Method</a></li>&nbsp;&nbsp;&nbsp;
         </ul>
         <ul class="subNavList">
             <li>&nbsp;|&nbsp;Detail:&nbsp;</li>
-            <li><a href="#field_detail">Field</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#prop_detail">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_detail">Method</a></li>&nbsp;&nbsp;&nbsp;
+            Field&nbsp;&nbsp;&nbsp;<li><a href="#prop_detail">Property</a></li>&nbsp;&nbsp;&nbsp;<li><a href="#method_detail">Method</a></li>&nbsp;&nbsp;&nbsp;
         </ul>
     </div>
     <p>Groovy Documentation</p>

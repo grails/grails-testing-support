@@ -105,7 +105,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 
             <!-- todo: direct known subclasses -->
             <hr>
-            <br>
 
 <pre>@groovy.transform.Trait
 @groovy.transform.CompileStatic
@@ -246,7 +245,7 @@ implements <a href='../../../../grails/testing/web/GrailsWebUnitTest.html'>Grail
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#wait(long), java.lang.Object#wait(long, int), java.lang.Object#wait(), java.lang.Object#equals(java.lang.Object), java.lang.Object#toString(), java.lang.Object#hashCode(), java.lang.Object#getClass(), java.lang.Object#notify(), java.lang.Object#notifyAll()</code></td>
+                            <td class="colLast"><code>java.lang.Object#wait(long, int), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#equals(java.lang.Object), java.lang.Object#toString(), java.lang.Object#hashCode(), java.lang.Object#getClass(), java.lang.Object#notify(), java.lang.Object#notifyAll()</code></td>
                         </tr>
                     </table>
                    </ul>
@@ -349,8 +348,7 @@ implements <a href='../../../../grails/testing/web/GrailsWebUnitTest.html'>Grail
                         <a name="mockInterceptor(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@groovy.transform.CompileDynamic
-groovy.lang.Interceptor <strong>mockInterceptor</strong>(java.lang.Class&lt;?&gt; interceptorClass)</h4>
+                                <h4>@groovy.transform.CompileDynamic<br>groovy.lang.Interceptor <strong>mockInterceptor</strong>(java.lang.Class&lt;?&gt; interceptorClass)</h4>
                                 <p> Mock the interceptor for the given name <DL><DT><B>Parameters:</B></DT><DD><code>interceptorClass</code> -  The interceptor class</DD></DL><DL><DT><B>Returns:</B></DT><DD>The mocked interceptor</DD></DL></p>
                             </li>
                         </ul>
@@ -366,8 +364,7 @@ groovy.lang.Interceptor <strong>mockInterceptor</strong>(java.lang.Class&lt;?&gt
                         <a name="withRequest(Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@groovy.transform.CompileStatic(value: TypeCheckingMode.SKIP)
-<a href='../../../../grails.web.mapping.UrlMappingInfo.html'>UrlMappingInfo</a> <strong>withRequest</strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; arguments)</h4>
+                                <h4>@groovy.transform.CompileStatic(value: TypeCheckingMode.SKIP)<br><a href='../../../../grails.web.mapping.UrlMappingInfo.html'>UrlMappingInfo</a> <strong>withRequest</strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; arguments)</h4>
                                 <p> Allows testing of the interceptor directly by setting up an incoming request that can be matched prior to invoking the
  interceptor <DL><DT><B>Parameters:</B></DT><DD><code>arguments</code> -  Named arguments specifying the controller/action or URI that interceptor should match</DD></DL><DL><DT><B>Returns:</B></DT><DD>The UrlMappingInfo object</DD></DL></p>
                             </li>

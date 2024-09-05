@@ -105,7 +105,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 
             <!-- todo: direct known subclasses -->
             <hr>
-            <br>
 
 <pre>@groovy.transform.CompileStatic
 @org.codehaus.groovy.transform.GroovyASTTransformation(phase: CompilePhase.CANONICALIZATION)
@@ -160,36 +159,30 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
                         </tr>
                         
                         <tr class="rowColor">
-                            <td class="colFirst"><code><strong>private&nbsp;static&nbsp;org.codehaus.groovy.ast.ClassNode</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#MY_TYPE">MY_TYPE</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="altColor">
                             <td class="colFirst"><code><strong>static&nbsp;org.codehaus.groovy.ast.ClassNode</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#RUN_WITH_ANNOTATION_NODE">RUN_WITH_ANNOTATION_NODE</a></code></td>
                             <td class="colLast"></td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code><strong>static&nbsp;java.lang.String</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#SPEC_CLASS">SPEC_CLASS</a></code></td>
                             <td class="colLast"></td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code><strong>static&nbsp;org.codehaus.groovy.ast.ClassNode</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#SPRING_APPLICATION_CONFIGURATION_CLASS_NODE">SPRING_APPLICATION_CONFIGURATION_CLASS_NODE</a></code></td>
                             <td class="colLast"></td>
                         </tr>
                         
-                        <tr class="rowColor">
+                        <tr class="altColor">
                             <td class="colFirst"><code><strong>static&nbsp;org.codehaus.groovy.ast.ClassNode</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#SPRING_JUNIT4_CLASS_RUNNER">SPRING_JUNIT4_CLASS_RUNNER</a></code></td>
                             <td class="colLast"></td>
                         </tr>
                         
-                        <tr class="altColor">
+                        <tr class="rowColor">
                             <td class="colFirst"><code><strong>static&nbsp;org.codehaus.groovy.ast.ClassNode</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#WEB_APP_CONFIGURATION">WEB_APP_CONFIGURATION</a></code></td>
                             <td class="colLast"></td>
@@ -204,7 +197,7 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
 
         <!-- =========== PROPERTY SUMMARY =========== -->
         
-         <ul class="blockList">
+         <ul class="blockList"> 
                 <li class="blockList"><a name="property_summary"><!--   --></a>
                     <h3>Properties Summary</h3>
                     <ul class="blockList">
@@ -223,6 +216,7 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
                     </table>
                    </ul>
                 </li>
+                
             </ul>
         
 
@@ -243,8 +237,7 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst">
-                                <code><a href="#IntegrationTestMixinTransformation()">IntegrationTestMixinTransformation</a>
-                                ()</code><br></td>
+                                <code><strong><a href="#IntegrationTestMixinTransformation()">IntegrationTestMixinTransformation</a></strong>()</code><br></td>
                         </tr>
                         
                     </table>
@@ -308,7 +301,7 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#wait(long), java.lang.Object#wait(long, int), java.lang.Object#wait(), java.lang.Object#equals(java.lang.Object), java.lang.Object#toString(), java.lang.Object#hashCode(), java.lang.Object#getClass(), java.lang.Object#notify(), java.lang.Object#notifyAll()</code></td>
+                            <td class="colLast"><code>java.lang.Object#wait(long, int), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#equals(java.lang.Object), java.lang.Object#toString(), java.lang.Object#hashCode(), java.lang.Object#getClass(), java.lang.Object#notify(), java.lang.Object#notifyAll()</code></td>
                         </tr>
                     </table>
                    </ul>
@@ -353,14 +346,6 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>public&nbsp;static&nbsp;final&nbsp;org.codehaus.groovy.ast.ClassNode <strong>INTEGRATION_TEST_CLASS_NODE</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="MY_TYPE"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;static&nbsp;final&nbsp;org.codehaus.groovy.ast.ClassNode <strong>MY_TYPE</strong></h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -479,8 +464,7 @@ implements org.codehaus.groovy.transform.ASTTransformation</pre>
                         <a name="visit(org.codehaus.groovy.ast.ASTNode, org.codehaus.groovy.control.SourceUnit)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override
-void <strong>visit</strong>(org.codehaus.groovy.ast.ASTNode[] astNodes, org.codehaus.groovy.control.SourceUnit source)</h4>
+                                <h4>@java.lang.Override<br>void <strong>visit</strong>(org.codehaus.groovy.ast.ASTNode[] astNodes, org.codehaus.groovy.control.SourceUnit source)</h4>
                                 <p></p>
                             </li>
                         </ul>

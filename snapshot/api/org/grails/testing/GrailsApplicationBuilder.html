@@ -100,7 +100,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 
             <!-- todo: direct known subclasses -->
             <hr>
-            <br>
 
 <pre>@groovy.transform.CompileStatic
 class GrailsApplicationBuilder
@@ -164,56 +163,8 @@ extends java.lang.Object</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>private&nbsp;static&nbsp;java.util.Set</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#DEFAULT_INCLUDED_PLUGINS">DEFAULT_INCLUDED_PLUGINS</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code><strong>private&nbsp;groovy.lang.Closure</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#doWithConfig">doWithConfig</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code><strong>private&nbsp;groovy.lang.Closure</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#doWithSpring">doWithSpring</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code><strong>private&nbsp;<a href='../../../grails.core.GrailsApplication.html'>GrailsApplication</a></strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#grailsApplication">grailsApplication</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code><strong>private&nbsp;java.util.Set&lt;java.lang.String&gt;</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#includePlugins">includePlugins</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
                             <td class="colFirst"><code><strong>static&nbsp;boolean</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#isServletApiPresent">isServletApiPresent</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code><strong>private&nbsp;boolean</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#loadExternalBeans">loadExternalBeans</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code><strong>private&nbsp;boolean</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#localOverride">localOverride</a></code></td>
-                            <td class="colLast"></td>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code><strong>private&nbsp;java.lang.Object</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#servletContext">servletContext</a></code></td>
                             <td class="colLast"></td>
                         </tr>
                         
@@ -226,7 +177,7 @@ extends java.lang.Object</pre>
 
         <!-- =========== PROPERTY SUMMARY =========== -->
         
-         <ul class="blockList">
+         <ul class="blockList"> 
                 <li class="blockList"><a name="property_summary"><!--   --></a>
                     <h3>Properties Summary</h3>
                     <ul class="blockList">
@@ -280,6 +231,7 @@ extends java.lang.Object</pre>
                     </table>
                    </ul>
                 </li>
+                
             </ul>
         
 
@@ -300,8 +252,7 @@ extends java.lang.Object</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst">
-                                <code><a href="#GrailsApplicationBuilder()">GrailsApplicationBuilder</a>
-                                ()</code><br></td>
+                                <code><strong><a href="#GrailsApplicationBuilder()">GrailsApplicationBuilder</a></strong>()</code><br></td>
                         </tr>
                         
                     </table>
@@ -395,7 +346,7 @@ extends java.lang.Object</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#wait(long), java.lang.Object#wait(long, int), java.lang.Object#wait(), java.lang.Object#equals(java.lang.Object), java.lang.Object#toString(), java.lang.Object#hashCode(), java.lang.Object#getClass(), java.lang.Object#notify(), java.lang.Object#notifyAll()</code></td>
+                            <td class="colLast"><code>java.lang.Object#wait(long, int), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#equals(java.lang.Object), java.lang.Object#toString(), java.lang.Object#hashCode(), java.lang.Object#getClass(), java.lang.Object#notify(), java.lang.Object#notifyAll()</code></td>
                         </tr>
                     </table>
                    </ul>
@@ -420,74 +371,10 @@ extends java.lang.Object</pre>
                 </a>
                     <h3>Field Detail</h3>
                     
-                        <a name="DEFAULT_INCLUDED_PLUGINS"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;static&nbsp;final&nbsp;java.util.Set <strong>DEFAULT_INCLUDED_PLUGINS</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="doWithConfig"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;groovy.lang.Closure <strong>doWithConfig</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="doWithSpring"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;groovy.lang.Closure <strong>doWithSpring</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="grailsApplication"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;<a href='../../../grails.core.GrailsApplication.html'>GrailsApplication</a> <strong>grailsApplication</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="includePlugins"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;java.util.Set&lt;java.lang.String&gt; <strong>includePlugins</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
                         <a name="isServletApiPresent"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>public&nbsp;static&nbsp;final&nbsp;boolean <strong>isServletApiPresent</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="loadExternalBeans"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;boolean <strong>loadExternalBeans</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="localOverride"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;boolean <strong>localOverride</strong></h4>
-                                <p></p>
-                            </li>
-                        </ul>
-                    
-                        <a name="servletContext"><!-- --></a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>private&nbsp;java.lang.Object <strong>servletContext</strong></h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -606,8 +493,7 @@ extends java.lang.Object</pre>
                         <a name="build()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@groovy.transform.CompileDynamic
-<a href='../../../org/grails/testing/GrailsApplicationBuilder.html'>GrailsApplicationBuilder</a> <strong>build</strong>()</h4>
+                                <h4>@groovy.transform.CompileDynamic<br><a href='../../../org/grails/testing/GrailsApplicationBuilder.html'>GrailsApplicationBuilder</a> <strong>build</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -663,8 +549,7 @@ extends java.lang.Object</pre>
                         <a name="registerBeans(grails.core.GrailsApplication)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@groovy.transform.CompileDynamic
-void <strong>registerBeans</strong>(<a href='../../../grails.core.GrailsApplication.html'>GrailsApplication</a> grailsApplication)</h4>
+                                <h4>@groovy.transform.CompileDynamic<br>void <strong>registerBeans</strong>(<a href='../../../grails.core.GrailsApplication.html'>GrailsApplication</a> grailsApplication)</h4>
                                 <p></p>
                             </li>
                         </ul>
