@@ -10,6 +10,17 @@ buildscript {
         classpath "io.github.gradle-nexus:publish-plugin:2.0.0"
         classpath("org.asciidoctor:asciidoctor-gradle-jvm:4.0.2")
     }
+
+    configurations.configureEach {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            // This is a workaround for dependencies exposing a different version of Groovy
+            // than the one used by Gradle. This causes issues with the Groovy compiler.
+            if (details.requested.group == 'org.apache.groovy' || details.requested.group == 'org.codehaus.groovy') {
+                details.useTarget(group: "org.codehaus.groovy", name: details.requested.name, version: GroovySystem.version)
+                details.because "Use Groovy 3.0.x library shipped with Gradle"
+            }
+        }
+    }
 }
 
 repositories {
@@ -23,12 +34,7 @@ ext {
     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/gradle7'
 }
 
-subprojects { project ->
-
-    version rootProject.projectVersion
-
-    ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
-
+allprojects  {
     configurations.configureEach {
 
         // FORCE UPGRADE OF GROOVY IN DEPENDENCIES TO GROOVY 4
@@ -38,6 +44,13 @@ subprojects { project ->
             }
         }
     }
+}
+
+subprojects { project ->
+
+    version rootProject.projectVersion
+
+    ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
 
     ext {
         userOrg = "grails"
