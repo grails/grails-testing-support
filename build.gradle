@@ -34,12 +34,7 @@ ext {
     commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/gradle7'
 }
 
-subprojects { project ->
-
-    version rootProject.projectVersion
-
-    ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
-
+allprojects  {
     configurations.configureEach {
 
         // FORCE UPGRADE OF GROOVY IN DEPENDENCIES TO GROOVY 4
@@ -49,6 +44,13 @@ subprojects { project ->
             }
         }
     }
+}
+
+subprojects { project ->
+
+    version rootProject.projectVersion
+
+    ext['groovyVersion'] = System.getenv('CI_GROOVY_VERSION') ?: project.groovyVersion
 
     ext {
         userOrg = "grails"
