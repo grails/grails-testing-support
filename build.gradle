@@ -12,14 +12,21 @@ buildscript {
     }
 }
 
-repositories {
-    maven { url "https://repo.grails.org/grails/core" }
-}
-
 group = "org.grails"
 version project.projectVersion
 
-ext {}
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+
+ext {
+
+    isSnapshot = project.projectVersion.endsWith('-SNAPSHOT')
+    isReleaseVersion = !isSnapshot
+}
+
+ext."signing.keyId" = project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : System.getenv('SIGNING_KEY')
+ext."signing.secretKeyRingFile" = project.hasProperty("signing.secretKeyRingFile") ? project.getProperty('signing.secretKeyRingFile') : "${System.properties['user.home']}${File.separator}.gnupg${File.separator}secring.gpg"
+ext."signing.password" = project.hasProperty("signing.password") ? project.getProperty('signing.password') : System.getenv('SIGNING_PASSPHRASE')
 
 allprojects {
     configurations.configureEach {
@@ -55,8 +62,8 @@ subprojects { project ->
         maven { url "https://repo.grails.org/grails/core" }
         if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
-                name 'JFrog OSS snapshot repo'
-                url 'https://oss.jfrog.org/oss-snapshot-local/'
+                name = 'ASF Snapshot repo'
+                url = 'https://repository.apache.org/content/repositories/snapshots'
             }
         }
     }
@@ -81,19 +88,8 @@ subprojects { project ->
                 documentation
             }
 
-            configurations {
-                all {
-                    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-                        String group = details.requested.group
-                        if (group == 'org.codehaus.groovy') {
-                            details.useVersion(groovyVersion)
-                        }
-                    }
-                }
-            }
-
             dependencies {
-                api "org.codehaus.groovy:groovy:$groovyVersion"
+                api "org.apache.groovy:groovy:$groovyVersion"
                 api "org.slf4j:slf4j-api:$slf4jVersion"
 
                 testImplementation "org.spockframework:spock-core:${spockVersion}", {
@@ -136,53 +132,12 @@ subprojects { project ->
     tasks.withType(Test) {
         useJUnitPlatform()
     }
-}
-
-buildscript {
-    repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "io.github.gradle-nexus:publish-plugin:1.0.0"
-    }
-}
-
-ext.isSnapshot = project.projectVersion.endsWith('-SNAPSHOT')
-ext.isReleaseVersion = !isSnapshot
-ext."signing.keyId" = project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : System.getenv('SIGNING_KEY')
-ext."signing.secretKeyRingFile" = project.hasProperty("signing.secretKeyRingFile") ? project.getProperty('signing.secretKeyRingFile') : "${System.properties['user.home']}${File.separator}.gnupg${File.separator}secring.gpg"
-ext."signing.password" = project.hasProperty("signing.password") ? project.getProperty('signing.password') : System.getenv('SIGNING_PASSPHRASE')
-
-if (isReleaseVersion) {
-    apply plugin: 'maven-publish'
-    apply plugin: "io.github.gradle-nexus.publish-plugin"
-
-    nexusPublishing {
-        repositories {
-            sonatype {
-                def ossUser = System.getenv("SONATYPE_USERNAME") ?: project.hasProperty("sonatypeOssUsername") ? project.sonatypeOssUsername : ''
-                def ossPass = System.getenv("SONATYPE_PASSWORD") ?: project.hasProperty("sonatypeOssPassword") ? project.sonatypeOssPassword : ''
-                def ossStagingProfileId = System.getenv("SONATYPE_STAGING_PROFILE_ID") ?: project.hasProperty("sonatypeOssStagingProfileId") ? project.sonatypeOssStagingProfileId : ''
-                nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
-                username = ossUser
-                password = ossPass
-                stagingProfileId = ossStagingProfileId
-            }
-        }
-        transitionCheckOptions {
-            maxRetries.set(40)
-            delayBetween.set(java.time.Duration.ofMillis(2000))
-        }
-    }
-}
-
-subprojects { subproject ->
 
     ext {
-        isExample = subproject.name.startsWith('example')
-        isGrailsPlugin = subproject.name.startsWith('grails-plugin')
+        isExample = project.name.startsWith('example')
+        isGrailsPlugin = project.name.startsWith('grails-plugin')
         pomInfo = {
-            delegate.name subproject.title
+            delegate.name project.title
             delegate.description subproject.projectDesc
             delegate.url projectUrl
 
@@ -218,23 +173,23 @@ subprojects { subproject ->
         apply plugin: 'maven-publish'
         apply plugin: 'signing'
 
-        Task sourcesJar = subproject.tasks.findByName("sourcesJar")
+        Task sourcesJar = project.tasks.findByName("sourcesJar")
         if (!sourcesJar) {
             sourcesJar = tasks.create("sourcesJar", Jar) {
                 archiveClassifier = 'sources'
                 group = BasePlugin.BUILD_GROUP
                 description = 'Assembles a jar archive containing the main sources of this project.'
-                from subproject.sourceSets.main.allSource
+                from project.sourceSets.main.allSource
             }
         }
 
-        Task javadocJar = subproject.tasks.findByName("javadocJar")
+        Task javadocJar = project.tasks.findByName("javadocJar")
         if (!javadocJar) {
             javadocJar = tasks.create("javadocJar", Jar) {
                 archiveClassifier = 'javadoc'
                 group = BasePlugin.BUILD_GROUP
                 description = 'Assembles a jar archive containing the generated Javadoc API documentation of this project.'
-                from subproject.plugins.hasPlugin(GroovyPlugin) ? subproject.tasks.getByName(GroovyPlugin.GROOVYDOC_TASK_NAME) : subproject.tasks.getByName(JavaPlugin.JAVADOC_TASK_NAME)
+                from project.plugins.hasPlugin(GroovyPlugin) ? project.tasks.getByName(GroovyPlugin.GROOVYDOC_TASK_NAME) : project.tasks.getByName(JavaPlugin.JAVADOC_TASK_NAME)
             }
         }
         tasks.findByName("assemble").finalizedBy(sourcesJar, javadocJar)
@@ -244,8 +199,8 @@ subprojects { subproject ->
                 repositories {
                     maven {
                         credentials {
-                            def u = System.getenv("ARTIFACTORY_USERNAME") ?: subproject.hasProperty("artifactoryPublishUsername") ? subproject.artifactoryPublishUsername : ''
-                            def p = System.getenv("ARTIFACTORY_PASSWORD") ?: subproject.hasProperty("artifactoryPublishPassword") ? subproject.artifactoryPublishPassword : ''
+                            def u = System.getenv("ARTIFACTORY_USERNAME") ?: project.hasProperty("artifactoryPublishUsername") ? project.artifactoryPublishUsername : ''
+                            def p = System.getenv("ARTIFACTORY_PASSWORD") ?: project.hasProperty("artifactoryPublishPassword") ? project.artifactoryPublishPassword : ''
                             username = u
                             password = p
                         }
@@ -262,8 +217,8 @@ subprojects { subproject ->
                 maven(MavenPublication) {
                     if (isGrailsPlugin) {
                         artifactId(subproject.name - 'grails-plugin-')
-                    } else if (subproject.name.contains('/')) {
-                        artifactId(subproject.name.substring(subproject.name.indexOf('/') + 1))
+                    } else if (project.name.contains('/')) {
+                        artifactId(project.name.substring(subproject.name.indexOf('/') + 1))
                     }
 
                     from components.java
@@ -272,7 +227,7 @@ subprojects { subproject ->
                     artifact javadocJar
 
                     if (isGrailsPlugin) {
-                        artifact source: "${subproject.buildDir}/classes/groovy/main/META-INF/grails-plugin.xml",
+                        artifact source: "${project.buildDir}/classes/groovy/main/META-INF/grails-plugin.xml",
                                 classifier: "plugin",
                                 extension: 'xml'
                     }
@@ -289,7 +244,7 @@ subprojects { subproject ->
             }
         }
 
-        subproject.afterEvaluate {
+        project.afterEvaluate {
             signing {
                 required { isReleaseVersion }
                 sign publishing.publications.maven
@@ -305,20 +260,50 @@ subprojects { subproject ->
             shouldRunAfter(tasks.withType(Sign))
         }
     }
+    apply plugin: "org.asciidoctor.jvm.convert"
 
-}
-buildscript {
-    repositories {
-        maven { url "https://repo.grails.org/grails/core" }
+    configurations {
+        documentation.extendsFrom compileClasspath
     }
+
     dependencies {
-        classpath("org.asciidoctor:asciidoctor-gradle-jvm:4.0.0-alpha.1")
-        classpath "org.grails:grails-docs:${project.ext.properties.grailsDocsVersion ?: grailsVersion}"
+        if (configurations.find { it.name == 'documentation' }) {
+            documentation "org.fusesource.jansi:jansi:1.18"
+            documentation "jline:jline:2.14.6"
+            documentation "com.github.javaparser:javaparser-core:3.15.14"
+            documentation "org.apache.groovy:groovy:${groovyVersion}"
+            documentation "org.apache.groovy:groovy-templates:${groovyVersion}"
+            documentation "org.apache.groovy:groovy-ant:$groovyVersion"
+            documentation "org.apache.groovy:groovy-dateutil:$groovyVersion"
+            documentation "org.apache.groovy:groovy-cli-picocli:$groovyVersion"
+        }
     }
+
+    groovydoc.classpath += configurations.documentation
 }
 
-apply plugin: 'java-library'
-apply plugin: 'groovy'
+if (isReleaseVersion) {
+    apply plugin: 'maven-publish'
+    apply plugin: "io.github.gradle-nexus.publish-plugin"
+
+    nexusPublishing {
+        repositories {
+            sonatype {
+                def ossUser = System.getenv("SONATYPE_USERNAME") ?: project.hasProperty("sonatypeOssUsername") ? project.sonatypeOssUsername : ''
+                def ossPass = System.getenv("SONATYPE_PASSWORD") ?: project.hasProperty("sonatypeOssPassword") ? project.sonatypeOssPassword : ''
+                def ossStagingProfileId = System.getenv("SONATYPE_STAGING_PROFILE_ID") ?: project.hasProperty("sonatypeOssStagingProfileId") ? project.sonatypeOssStagingProfileId : ''
+                nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+                username = ossUser
+                password = ossPass
+                stagingProfileId = ossStagingProfileId
+            }
+        }
+        transitionCheckOptions {
+            maxRetries.set(40)
+            delayBetween.set(java.time.Duration.ofMillis(2000))
+        }
+    }
+}
 
 def DOCUMENTATION_GROUP = 'Documentation'
 
@@ -355,35 +340,11 @@ dependencies {
         documentation "org.fusesource.jansi:jansi:1.18"
         documentation "jline:jline:2.14.6"
         documentation "com.github.javaparser:javaparser-core:3.15.14"
-        documentation "org.codehaus.groovy:groovy:${groovyVersion}"
-        documentation "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-        documentation "org.codehaus.groovy:groovy-ant:$groovyVersion"
-        documentation "org.codehaus.groovy:groovy-cli-picocli:$groovyVersion"
+        documentation "org.apache.groovy:groovy:${groovyVersion}"
+        documentation "org.apache.groovy:groovy-templates:${groovyVersion}"
+        documentation "org.apache.groovy:groovy-ant:$groovyVersion"
+        documentation "org.apache.groovy:groovy-cli-picocli:$groovyVersion"
     }
-}
-
-subprojects {
-
-    apply plugin: "org.asciidoctor.jvm.convert"
-
-    configurations {
-        documentation.extendsFrom compileClasspath
-    }
-
-    dependencies {
-        if (configurations.find { it.name == 'documentation' }) {
-            documentation "org.fusesource.jansi:jansi:1.18"
-            documentation "jline:jline:2.14.6"
-            documentation "com.github.javaparser:javaparser-core:3.15.14"
-            documentation "org.codehaus.groovy:groovy:${groovyVersion}"
-            documentation "org.codehaus.groovy:groovy-templates:${groovyVersion}"
-            documentation "org.codehaus.groovy:groovy-ant:$groovyVersion"
-            documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
-            documentation "org.codehaus.groovy:groovy-cli-picocli:$groovyVersion"
-        }
-    }
-
-    groovydoc.classpath += configurations.documentation
 }
 
 def cleanTask = project.tasks.findByName("clean")
