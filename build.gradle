@@ -24,9 +24,9 @@ ext {
     isReleaseVersion = !isSnapshot
 }
 
-ext."signing.keyId" = project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : System.getenv('SIGNING_KEY')
-ext."signing.secretKeyRingFile" = project.hasProperty("signing.secretKeyRingFile") ? project.getProperty('signing.secretKeyRingFile') : "${System.properties['user.home']}${File.separator}.gnupg${File.separator}secring.gpg"
-ext."signing.password" = project.hasProperty("signing.password") ? project.getProperty('signing.password') : System.getenv('SIGNING_PASSPHRASE')
+ext."signing.keyId" = project.hasProperty("signing.keyId") ?: System.getenv('SIGNING_KEY')
+ext."signing.secretKeyRingFile" = project.hasProperty("signing.secretKeyRingFile") ?: "${System.properties['user.home']}${File.separator}.gnupg${File.separator}secring.gpg"
+ext."signing.password" = project.hasProperty("signing.password") ?: System.getenv('SIGNING_PASSPHRASE')
 
 allprojects {
     configurations.configureEach {
@@ -77,9 +77,6 @@ subprojects { project ->
         if (isGrailsPlugin) {
             apply plugin: "org.grails.grails-plugin"
         } else {
-            apply plugin: 'groovy'
-            apply plugin: 'java-library'
-
             repositories {
                 maven { url "https://repo.grails.org/grails/core" }
             }
@@ -132,12 +129,14 @@ subprojects { project ->
     tasks.withType(Test) {
         useJUnitPlatform()
     }
+}
 
+subprojects { subproject ->
     ext {
-        isExample = project.name.startsWith('example')
-        isGrailsPlugin = project.name.startsWith('grails-plugin')
+        isExample = subproject.name.startsWith('example')
+        isGrailsPlugin = subproject.name.startsWith('grails-plugin')
         pomInfo = {
-            delegate.name project.title
+            delegate.name subproject.title
             delegate.description subproject.projectDesc
             delegate.url projectUrl
 
@@ -173,23 +172,23 @@ subprojects { project ->
         apply plugin: 'maven-publish'
         apply plugin: 'signing'
 
-        Task sourcesJar = project.tasks.findByName("sourcesJar")
+        Task sourcesJar = subproject.tasks.findByName("sourcesJar")
         if (!sourcesJar) {
             sourcesJar = tasks.create("sourcesJar", Jar) {
                 archiveClassifier = 'sources'
                 group = BasePlugin.BUILD_GROUP
                 description = 'Assembles a jar archive containing the main sources of this project.'
-                from project.sourceSets.main.allSource
+                from subproject.sourceSets.main.allSource
             }
         }
 
-        Task javadocJar = project.tasks.findByName("javadocJar")
+        Task javadocJar = subproject.tasks.findByName("javadocJar")
         if (!javadocJar) {
             javadocJar = tasks.create("javadocJar", Jar) {
                 archiveClassifier = 'javadoc'
                 group = BasePlugin.BUILD_GROUP
                 description = 'Assembles a jar archive containing the generated Javadoc API documentation of this project.'
-                from project.plugins.hasPlugin(GroovyPlugin) ? project.tasks.getByName(GroovyPlugin.GROOVYDOC_TASK_NAME) : project.tasks.getByName(JavaPlugin.JAVADOC_TASK_NAME)
+                from subproject.plugins.hasPlugin(GroovyPlugin) ? subproject.tasks.getByName(GroovyPlugin.GROOVYDOC_TASK_NAME) : subproject.tasks.getByName(JavaPlugin.JAVADOC_TASK_NAME)
             }
         }
         tasks.findByName("assemble").finalizedBy(sourcesJar, javadocJar)
@@ -199,8 +198,8 @@ subprojects { project ->
                 repositories {
                     maven {
                         credentials {
-                            def u = System.getenv("ARTIFACTORY_USERNAME") ?: project.hasProperty("artifactoryPublishUsername") ? project.artifactoryPublishUsername : ''
-                            def p = System.getenv("ARTIFACTORY_PASSWORD") ?: project.hasProperty("artifactoryPublishPassword") ? project.artifactoryPublishPassword : ''
+                            def u = System.getenv("ARTIFACTORY_USERNAME") ?: subproject.hasProperty("artifactoryPublishUsername") ? subproject.artifactoryPublishUsername : ''
+                            def p = System.getenv("ARTIFACTORY_PASSWORD") ?: subproject.hasProperty("artifactoryPublishPassword") ? subproject.artifactoryPublishPassword : ''
                             username = u
                             password = p
                         }
@@ -217,8 +216,8 @@ subprojects { project ->
                 maven(MavenPublication) {
                     if (isGrailsPlugin) {
                         artifactId(subproject.name - 'grails-plugin-')
-                    } else if (project.name.contains('/')) {
-                        artifactId(project.name.substring(subproject.name.indexOf('/') + 1))
+                    } else if (subproject.name.contains('/')) {
+                        artifactId(subproject.name.substring(subproject.name.indexOf('/') + 1))
                     }
 
                     from components.java
@@ -227,7 +226,7 @@ subprojects { project ->
                     artifact javadocJar
 
                     if (isGrailsPlugin) {
-                        artifact source: "${project.buildDir}/classes/groovy/main/META-INF/grails-plugin.xml",
+                        artifact source: "${subproject.buildDir}/classes/groovy/main/META-INF/grails-plugin.xml",
                                 classifier: "plugin",
                                 extension: 'xml'
                     }
@@ -244,7 +243,7 @@ subprojects { project ->
             }
         }
 
-        project.afterEvaluate {
+        subproject.afterEvaluate {
             signing {
                 required { isReleaseVersion }
                 sign publishing.publications.maven
@@ -364,7 +363,7 @@ tasks.withType(Groovydoc) {
     destinationDir = project.file("build/docs/api")
     def files = []
     project.rootProject.subprojects
-            .findAll { !it.name != 'docs' && !it.name.startsWith('examples') }
+            .findAll { it.name != 'docs' && !it.name.startsWith('examples') }
             .each { subproject ->
                 if (subproject.file('src/main/groovy').exists()) {
                     files += subproject.files("src/main/groovy")
@@ -405,7 +404,8 @@ task publishGuide(type: grails.doc.gradle.PublishGuide) {
                   'sourceDir': rootProject.projectDir.absolutePath,
                   'sourcedir': rootProject.projectDir.absolutePath,
                   'javaee'   : 'https://docs.oracle.com/javaee/7/api/',
-                  'javase'   : 'https://docs.oracle.com/javase/7/docs/api/',
+                  'jakartaee': 'https://jakarta.ee/specifications/platform/10/apidocs/',
+                  'javase'   : 'https://docs.oracle.com/en/java/javase/17/docs/api/index.html',
                   'groovyapi': 'http://docs.groovy-lang.org/latest/html/gapi/',
                   'grailsapi': 'http://docs.grails.org/latest/api/',
                   'gormapi'  : 'http://gorm.grails.org/latest/api/',
