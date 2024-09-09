@@ -38,6 +38,17 @@ allprojects {
             }
         }
     }
+
+    repositories {
+        maven { url "https://repo.grails.org/grails/core" }
+        mavenCentral()
+        if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
+            maven {
+                name = 'ASF Snapshot repo'
+                url = 'https://repository.apache.org/content/repositories/snapshots'
+            }
+        }
+    }
 }
 
 subprojects { project ->
@@ -56,16 +67,6 @@ subprojects { project ->
         group "org.grails.plugins"
     } else {
         group "org.grails"
-    }
-
-    repositories {
-        maven { url "https://repo.grails.org/grails/core" }
-        if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
-            maven {
-                name = 'ASF Snapshot repo'
-                url = 'https://repository.apache.org/content/repositories/snapshots'
-            }
-        }
     }
 
     apply plugin: "groovy"
@@ -389,7 +390,7 @@ tasks.withType(org.gradle.api.tasks.javadoc.Groovydoc) {
 task publishGuide(type: grails.doc.gradle.PublishGuide) {
     group = DOCUMENTATION_GROUP
     description = 'Generate Guide'
-    dependsOn copyLocalDocResources
+    dependsOn copyLocalDocResources, compileGroovy, compileJava, groovydoc, processResources
 
     targetDir = project.file("${buildDir}/docs")
     sourceRepo = "https://github.com/${githubSlug}/edit/${githubBranch}/src/main/docs"
