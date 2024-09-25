@@ -1,6 +1,5 @@
 package org.grails.testing
 
-import grails.boot.GrailsApp
 import grails.boot.config.GrailsApplicationPostProcessor
 import grails.core.GrailsApplication
 import grails.core.GrailsApplicationLifeCycle
@@ -10,10 +9,6 @@ import grails.spring.BeanBuilder
 import grails.util.Holders
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-import io.micronaut.context.ApplicationContextConfiguration
-import io.micronaut.context.DefaultApplicationContext
-import io.micronaut.core.order.Ordered
-import io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration
 import org.grails.plugins.IncludingPluginFilter
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
@@ -32,6 +27,7 @@ import org.springframework.context.annotation.AnnotationConfigUtils
 import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.context.support.StaticMessageSource
+import org.springframework.core.Ordered
 import org.springframework.core.convert.ConversionService
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.Environment
@@ -121,36 +117,10 @@ class GrailsApplicationBuilder {
         if (objectMapper) {
             beanExcludes.add(objectMapper)
         }
-
-        def micronautConfiguration = new ApplicationContextConfiguration() {
-            @Override
-            List<String> getEnvironments() {
-                if (configuredEnvironment != null) {
-                    return configuredEnvironment.getActiveProfiles().toList()
-                } else {
-                    return Collections.emptyList()
-                }
-            }
-            @Override
-            Optional<Boolean> getDeduceEnvironments() {
-                return Optional.of(false)
-            }
-            @Override
-            ClassLoader getClassLoader() {
-                return applicationClassLoader
-            }
-        }
-        def micronautContext = new DefaultApplicationContext(micronautConfiguration)
-        micronautContext.environment.addPropertySource('grails-config', [(MicronautBeanFactoryConfiguration.PREFIX + ".bean-excludes"): beanExcludes as Object])
-        micronautContext.start()
-
-        def parentContext = micronautContext.getBean(ConfigurableApplicationContext)
         (beanFactory as DefaultListableBeanFactory).with {
             setAllowBeanDefinitionOverriding(true)
             setAllowCircularReferences(true)
         }
-        context.setParent(parentContext)
-        context.addApplicationListener(new GrailsApp.MicronautShutdownListener(micronautContext))
         prepareContext(context, beanFactory)
         context.refresh()
         context.registerShutdownHook()
