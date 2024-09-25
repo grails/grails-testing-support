@@ -113,16 +113,10 @@ class GrailsApplicationBuilder {
         def configuredEnvironment = context.getEnvironment()
         def beanFactory = context.getBeanFactory()
         def beanExcludes = [ConversionService, Environment, PropertyResolver, ConfigurableEnvironment]
-
-        Class<?> objectMapper
-        try {
-            objectMapper = ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.getClassLoader())
-        } catch (ignored) {
-        }
+        def objectMapper = ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.getClassLoader())
         if (objectMapper) {
             beanExcludes.add(objectMapper)
         }
-
         (beanFactory as DefaultListableBeanFactory).with {
             setAllowBeanDefinitionOverriding(true)
             setAllowCircularReferences(true)
