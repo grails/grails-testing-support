@@ -124,13 +124,11 @@ class GrailsApplicationBuilder {
         def beanFactory = context.getBeanFactory()
         def beanExcludes = [ConversionService, Environment, PropertyResolver, ConfigurableEnvironment]
 
-        Class<?> objectMapper
         try {
-            objectMapper = ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.getClassLoader())
-        } catch (ignored) {
-        }
-        if (objectMapper) {
+            Class<?> objectMapper = ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.classLoader)
             beanExcludes.add(objectMapper)
+        } catch (ignored) {
+            // ObjectMapper not found on classpath
         }
 
         (beanFactory as DefaultListableBeanFactory).with {
