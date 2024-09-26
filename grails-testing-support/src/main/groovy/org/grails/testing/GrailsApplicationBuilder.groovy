@@ -1,6 +1,7 @@
 package org.grails.testing
 
 import grails.boot.config.GrailsApplicationPostProcessor
+import grails.boot.config.GrailsAutoConfiguration
 import grails.core.GrailsApplication
 import grails.core.GrailsApplicationLifeCycle
 import grails.core.support.proxy.DefaultProxyHandler
@@ -9,7 +10,12 @@ import grails.spring.BeanBuilder
 import grails.util.Holders
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import jakarta.servlet.ServletContext
 import org.grails.plugins.IncludingPluginFilter
+import org.grails.plugins.codecs.CodecsConfiguration
+import org.grails.plugins.core.CoreConfiguration
+import org.grails.plugins.databinding.DataBindingConfiguration
+import org.grails.plugins.web.mime.MimeTypesConfiguration
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
 import org.grails.transaction.TransactionManagerPostProcessor
@@ -22,7 +28,9 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.beans.factory.support.RootBeanDefinition
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.annotation.AnnotationConfigRegistry
 import org.springframework.context.annotation.AnnotationConfigUtils
 import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
@@ -104,10 +112,12 @@ class GrailsApplicationBuilder {
         ConfigurableApplicationContext context
 
         if (isServletApiPresent && servletContext != null) {
-            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.web.context.support.GenericWebApplicationContext').newInstance(servletContext)
+            context = (AnnotationConfigServletWebApplicationContext) ClassUtils.forName('org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext').getDeclaredConstructor().newInstance()
+            ((AnnotationConfigServletWebApplicationContext) context).setServletContext((ServletContext) servletContext)
         } else {
-            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.context.support.GenericApplicationContext').getDeclaredConstructor().newInstance()
+            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.context.annotation.AnnotationConfigApplicationContext').getDeclaredConstructor().newInstance()
         }
+        ((AnnotationConfigRegistry) context).register(GrailsAutoConfiguration, CoreConfiguration, CodecsConfiguration, DataBindingConfiguration, MimeTypesConfiguration)
 
         def applicationClassLoader = this.class.classLoader
         def configuredEnvironment = context.getEnvironment()
