@@ -16,7 +16,6 @@ class TestServiceSpec extends Specification implements ServiceUnitTest<TestServi
         config.demo = ["foo": "test"]
     } }
 
-    @PendingFeature(reason = 'bar != test')
     void "when local-override is set then the service picks the update config value"() {
         expect:
         service.foo == "test"

@@ -10,7 +10,6 @@ class ConfigServiceSpec extends Specification implements ServiceUnitTest<ConfigS
         config['mc.allow.signup'] = true
     }}
 
-    @PendingFeature(reason = 'isSignupAllowed() == false')
     def "singup is allowed if configuration parameter is set"() {
         expect:
         service.isSignupAllowed()

@@ -11,7 +11,6 @@ class ReportingServiceSpec extends Specification implements ServiceUnitTest<Repo
         someHelper RushHelper
     }}
 
-    @PendingFeature(reason = 'java.lang.NullPointerException: Cannot get property \'someNumber\' on null object')
     void "test dependency injection"() {
         expect:
         service.retrieveSomeNumber() == 2112
