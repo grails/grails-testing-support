@@ -125,7 +125,7 @@ subprojects { project ->
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
         testImplementation "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
-        testRuntimeOnly "org.junit.platform:junit-platform-commons:$junitCommonsVersion"
+        testRuntimeOnly "org.junit.platform:junit-platform-commons:$junitPlatformVersion"
     }
 
     tasks.withType(Test) {
