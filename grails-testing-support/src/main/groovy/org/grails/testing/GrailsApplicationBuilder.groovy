@@ -30,6 +30,7 @@ import org.springframework.beans.factory.support.RootBeanDefinition
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.MessageSource
 import org.springframework.context.annotation.AnnotationConfigRegistry
 import org.springframework.context.annotation.AnnotationConfigUtils
 import org.springframework.context.support.ConversionServiceFactoryBean
@@ -91,6 +92,11 @@ class GrailsApplicationBuilder {
         if (!grailsApplication.isInitialised()) {
             grailsApplication.initialise()
         }
+
+        // I18nGrailsPlugin sets messageSource to type PluginAwareResourceBundleMessageSource in doWithSpring()
+        // tests expect type StaticMessageSource which includes addMessage() methods
+        def beanFactory = mainContext.getBeanFactory()
+        (beanFactory as BeanDefinitionRegistry).registerBeanDefinition("messageSource", new RootBeanDefinition(StaticMessageSource.class))
 
         return this
     }
