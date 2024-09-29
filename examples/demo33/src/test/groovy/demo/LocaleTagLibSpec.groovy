@@ -3,7 +3,6 @@ package demo
 import grails.testing.web.taglib.TagLibUnitTest
 import grails.validation.Validateable
 import org.springframework.context.i18n.LocaleContextHolder
-import spock.lang.PendingFeature
 import spock.lang.Specification
 
 class LocaleTagLibSpec extends Specification implements TagLibUnitTest<SampleTagLib> {

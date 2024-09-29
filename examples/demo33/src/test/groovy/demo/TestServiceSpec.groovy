@@ -1,7 +1,6 @@
 package demo
 
 import grails.testing.services.ServiceUnitTest
-import spock.lang.PendingFeature
 import spock.lang.Specification
 
 class TestServiceSpec extends Specification implements ServiceUnitTest<TestService> {
