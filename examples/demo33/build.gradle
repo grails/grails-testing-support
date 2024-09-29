@@ -12,8 +12,8 @@ apply plugin:"com.github.erdi.webdriver-binaries"
 
 webdriverBinaries {
     if (!System.getenv().containsKey('CI')) {
-        chromedriver "$chromeDriverVersion"
         geckodriver "$geckodriverVersion"
+        chromedriver "$chromeDriverVersion"
     }
 }
 
@@ -47,7 +47,7 @@ dependencies {
     runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
     testImplementation "org.grails.plugins:geb"
     testRuntimeOnly "org.seleniumhq.selenium:htmlunit-driver:$seleniumHtmlunitVersion"
-    testRuntimeOnly "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
+    testRuntimeOnly "org.htmlunit:htmlunit:$htmlunitVersion"
 
     testImplementation project(':grails-web-testing-support')
     testImplementation project(':grails-gorm-testing-support')
@@ -56,6 +56,7 @@ dependencies {
     testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 }
 
 bootRun {
