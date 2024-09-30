@@ -42,6 +42,7 @@ allprojects {
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
         mavenCentral()
+        // mavenLocal() // Keep, this will be uncommented and used by CI (groovy-joint-workflow)
         if (groovyVersion && groovyVersion.endsWith('-SNAPSHOT')) {
             maven {
                 name = 'ASF Snapshot repo'
