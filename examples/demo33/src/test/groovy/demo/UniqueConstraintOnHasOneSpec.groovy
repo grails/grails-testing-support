@@ -2,7 +2,7 @@ package demo
 
 import grails.persistence.Entity
 import grails.testing.gorm.DataTest
-import groovy.transform.NotYetImplemented
+import groovy.test.NotYetImplemented
 import spock.lang.Specification
 
 class UniqueConstraintOnHasOneSpec extends Specification implements DataTest {
