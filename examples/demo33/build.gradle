@@ -12,8 +12,8 @@ apply plugin:"com.github.erdi.webdriver-binaries"
 
 webdriverBinaries {
     if (!System.getenv().containsKey('CI')) {
-        chromedriver "$chromeDriverVersion"
         geckodriver "$geckodriverVersion"
+        chromedriver "$chromeDriverVersion"
     }
 }
 
@@ -45,17 +45,16 @@ dependencies {
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
     runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
-    testImplementation "org.grails.plugins:geb"
-    testRuntimeOnly "org.seleniumhq.selenium:htmlunit-driver:$seleniumHtmlunitVersion"
-    testRuntimeOnly "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
 
     testImplementation project(':grails-web-testing-support')
     testImplementation project(':grails-gorm-testing-support')
 
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
-    testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
-    testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
-    testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    integrationTestImplementation "org.grails.plugins:geb"
+    integrationTestRuntimeOnly "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
+    integrationTestRuntimeOnly "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
+    integrationTestRuntimeOnly "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    integrationTestRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    integrationTestRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 }
 
 bootRun {

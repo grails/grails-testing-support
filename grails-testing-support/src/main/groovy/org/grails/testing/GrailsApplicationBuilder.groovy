@@ -1,7 +1,7 @@
 package org.grails.testing
 
-import grails.boot.GrailsApp
 import grails.boot.config.GrailsApplicationPostProcessor
+import grails.boot.config.GrailsAutoConfiguration
 import grails.core.GrailsApplication
 import grails.core.GrailsApplicationLifeCycle
 import grails.core.support.proxy.DefaultProxyHandler
@@ -10,11 +10,12 @@ import grails.spring.BeanBuilder
 import grails.util.Holders
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-import io.micronaut.context.ApplicationContextConfiguration
-import io.micronaut.context.DefaultApplicationContext
-import io.micronaut.core.order.Ordered
-import io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration
+import jakarta.servlet.ServletContext
 import org.grails.plugins.IncludingPluginFilter
+import org.grails.plugins.codecs.CodecsConfiguration
+import org.grails.plugins.core.CoreConfiguration
+import org.grails.plugins.databinding.DataBindingConfiguration
+import org.grails.plugins.web.mime.MimeTypesConfiguration
 import org.grails.spring.context.support.GrailsPlaceholderConfigurer
 import org.grails.spring.context.support.MapBasedSmartPropertyOverrideConfigurer
 import org.grails.transaction.TransactionManagerPostProcessor
@@ -27,11 +28,14 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.beans.factory.support.RootBeanDefinition
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.annotation.AnnotationConfigRegistry
 import org.springframework.context.annotation.AnnotationConfigUtils
 import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.context.support.StaticMessageSource
+import org.springframework.core.Ordered
 import org.springframework.core.convert.ConversionService
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.Environment
@@ -108,49 +112,20 @@ class GrailsApplicationBuilder {
         ConfigurableApplicationContext context
 
         if (isServletApiPresent && servletContext != null) {
-            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.web.context.support.GenericWebApplicationContext').newInstance(servletContext)
+            context = (AnnotationConfigServletWebApplicationContext) ClassUtils.forName('org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext').getDeclaredConstructor().newInstance()
+            ((AnnotationConfigServletWebApplicationContext) context).setServletContext((ServletContext) servletContext)
         } else {
-            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.context.support.GenericApplicationContext').getDeclaredConstructor().newInstance()
+            context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.context.annotation.AnnotationConfigApplicationContext').getDeclaredConstructor().newInstance()
         }
+        ((AnnotationConfigRegistry) context).register(CoreConfiguration, CodecsConfiguration, DataBindingConfiguration, MimeTypesConfiguration)
 
         def applicationClassLoader = this.class.classLoader
         def configuredEnvironment = context.getEnvironment()
         def beanFactory = context.getBeanFactory()
-        def beanExcludes = [ConversionService, Environment, PropertyResolver, ConfigurableEnvironment]
-        def objectMapper = io.micronaut.core.reflect.ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.getClassLoader()).orElse(null)
-        if (objectMapper) {
-            beanExcludes.add(objectMapper)
-        }
-
-        def micronautConfiguration = new ApplicationContextConfiguration() {
-            @Override
-            List<String> getEnvironments() {
-                if (configuredEnvironment != null) {
-                    return configuredEnvironment.getActiveProfiles().toList()
-                } else {
-                    return Collections.emptyList()
-                }
-            }
-            @Override
-            Optional<Boolean> getDeduceEnvironments() {
-                return Optional.of(false)
-            }
-            @Override
-            ClassLoader getClassLoader() {
-                return applicationClassLoader
-            }
-        }
-        def micronautContext = new DefaultApplicationContext(micronautConfiguration)
-        micronautContext.environment.addPropertySource('grails-config', [(MicronautBeanFactoryConfiguration.PREFIX + ".bean-excludes"): beanExcludes as Object])
-        micronautContext.start()
-
-        def parentContext = micronautContext.getBean(ConfigurableApplicationContext)
         (beanFactory as DefaultListableBeanFactory).with {
             setAllowBeanDefinitionOverriding(true)
             setAllowCircularReferences(true)
         }
-        context.setParent(parentContext)
-        context.addApplicationListener(new GrailsApp.MicronautShutdownListener(micronautContext))
         prepareContext(context, beanFactory)
         context.refresh()
         context.registerShutdownHook()
