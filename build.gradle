@@ -72,7 +72,7 @@ subprojects { project ->
     apply plugin: "groovy"
     if (project.name.startsWith("examples")) {
         apply plugin: "org.grails.grails-web"
-        apply plugin: "org.grails.plugins.views-json"
+        //apply plugin: "org.grails.plugins.views-json"
     } else {
         apply plugin: "java-library"
         if (isGrailsPlugin) {
@@ -125,6 +125,7 @@ subprojects { project ->
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
         testImplementation "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+        testRuntimeOnly "org.junit.platform:junit-platform-commons:$junitPlatformVersion"
     }
 
     tasks.withType(Test) {
