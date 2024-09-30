@@ -25,7 +25,7 @@ jobs:
         with:
           path: ~/.m2/repository
           key: cache-local-maven-${{ github.sha }}
-      - name: "📥 Checkout Grails testing support to fetch Gradle Plugin versions it uses"
+      - name: "📥 Checkout Grails Testing Support to fetch Gradle Plugin versions it uses"
         uses: actions/checkout@v4
         with:
           sparse-checkout-cone-mode: false
@@ -46,7 +46,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-      - name: "📝 Store Groovy version to use when building Grails"
+      - name: "📝 Store Groovy version to use when building Grails Testing Support"
         id: groovy-version
         run: |
           cd groovy
@@ -112,7 +112,7 @@ jobs:
           cd groovy
           ./gradlew pTML -x groovydoc -x javadoc -x javadocAll -x groovydocAll -x asciidoc -x docGDK
 
-  build_grails:
+  build_grails_testing_support:
     needs: [build_groovy]
     runs-on: ubuntu-latest
     steps:
@@ -134,11 +134,11 @@ jobs:
           key: cache-local-maven-${{ github.sha }}
       - name: "🪶 Add mavenLocal repository to build"
         run: sed -i 's|// mavenLocal() // Keep|mavenLocal() // Keep|' build.gradle
-      - name: "🔨 Build and test Grails using the locally built Groovy snapshot"
+      - name: "🔨 Build and test Grails Testing Support using the locally built Groovy snapshot"
         env:
           DEVELOCITY_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           DEVELOCITY_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
         run: >
-          ./gradlew build
+          ./gradlew build 
           -PgroovyVersion=${{needs.build_groovy.outputs.groovyVersion}}
           -x groovydoc
