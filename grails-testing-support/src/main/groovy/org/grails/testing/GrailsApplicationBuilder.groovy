@@ -117,20 +117,11 @@ class GrailsApplicationBuilder {
         } else {
             context = (ConfigurableApplicationContext) ClassUtils.forName('org.springframework.context.annotation.AnnotationConfigApplicationContext').getDeclaredConstructor().newInstance()
         }
-        ((AnnotationConfigRegistry) context).register(GrailsAutoConfiguration, CoreConfiguration, CodecsConfiguration, DataBindingConfiguration, MimeTypesConfiguration)
+        ((AnnotationConfigRegistry) context).register(CoreConfiguration, CodecsConfiguration, DataBindingConfiguration, MimeTypesConfiguration)
 
         def applicationClassLoader = this.class.classLoader
         def configuredEnvironment = context.getEnvironment()
         def beanFactory = context.getBeanFactory()
-        def beanExcludes = [ConversionService, Environment, PropertyResolver, ConfigurableEnvironment]
-
-        try {
-            Class<?> objectMapper = ClassUtils.forName('com.fasterxml.jackson.databind.ObjectMapper', context.classLoader)
-            beanExcludes.add(objectMapper)
-        } catch (ignored) {
-            // ObjectMapper not found on classpath
-        }
-
         (beanFactory as DefaultListableBeanFactory).with {
             setAllowBeanDefinitionOverriding(true)
             setAllowCircularReferences(true)
