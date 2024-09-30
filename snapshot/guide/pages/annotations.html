@@ -275,7 +275,6 @@ dependency injected values during setup as shown below.</p>
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> demo
 
 <span class="keyword">import</span> <span class="include">grails.testing.mixin.integration.Integration</span>
-<span class="keyword">import</span> <span class="include">grails.testing.spock.OnceBefore</span>
 <span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
 
 <span class="annotation">@Integration</span>
@@ -283,8 +282,7 @@ dependency injected values during setup as shown below.</p>
 
     HelperService helperService
 
-    <span class="annotation">@OnceBefore</span>
-    <span class="type">void</span> init() {
+    <span class="keyword">def</span> <span class="function">setup</span>() {
         <span class="keyword">assert</span> helperService != <span class="predefined-constant">null</span>
     }
 
