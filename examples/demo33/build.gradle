@@ -92,6 +92,4 @@ tasks.withType(Jar).configureEach {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-
-
-
+compileTestGroovy.dependsOn(compileGsonViews)
