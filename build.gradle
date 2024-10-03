@@ -73,7 +73,7 @@ subprojects { project ->
     apply plugin: "groovy"
     if (project.name.startsWith("examples")) {
         apply plugin: "org.grails.grails-web"
-        //apply plugin: "org.grails.plugins.views-json"
+        apply plugin: "org.grails.plugins.views-json"
     } else {
         apply plugin: "java-library"
         if (isGrailsPlugin) {
