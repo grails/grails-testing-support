@@ -26,4 +26,12 @@ class JsonControllerSpec extends Specification {
         then:
         response.body() == '{"foo":"bar"}'
     }
+
+    void "test a html view is rendered"() {
+        when:
+        def response = new URL("http://localhost:$serverPort/json/index").getText()
+
+        then:
+        response == '\n<html><head><title></title></head><body>Testing</body></html>'
+    }
 }
