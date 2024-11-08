@@ -1,10 +1,10 @@
 package demo
 
-import geb.spock.GebSpec
+import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
 
 @Integration
-class JsonControllerSpec extends GebSpec {
+class JsonControllerSpec extends ContainerGebSpec {
 
     void "test a json view is rendered"() {
         when:

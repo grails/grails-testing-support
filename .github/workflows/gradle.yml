@@ -29,7 +29,7 @@ jobs:
         id: tests
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: check -Dgeb.env=chromeHeadless
+          arguments: check
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
@@ -43,7 +43,7 @@ jobs:
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
         with:
-          arguments: build -Dgeb.env=chromeHeadless --refresh-dependencies
+          arguments: build --refresh-dependencies
       - name: Publish Test Report
         if: steps.build.outcome == 'failure' || steps.tests.outcome == 'failure'
         uses: scacap/action-surefire-report@v1

@@ -140,6 +140,5 @@ jobs:
           DEVELOCITY_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
         run: >
           ./gradlew build
-          -Dgeb.env=chromeHeadless
           -PgroovyVersion=${{needs.build_groovy.outputs.groovyVersion}}
           -x groovydoc
