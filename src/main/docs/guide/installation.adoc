@@ -1,8 +1,0 @@
-To install the testing support library add the following dependency to the
-`dependencies` block of your `build.gradle` in a Grails application or plugin:
-
-[source,groovy,subs="attributes"]
-testCompile "org.grails:grails-gorm-testing-support:{version}"
-testCompile "org.grails:grails-web-testing-support:{version}"
-
-NOTE: The dependencies are optional. If you are not unit testing domain activity, you may not need the GORM testing support library.

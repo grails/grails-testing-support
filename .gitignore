@@ -1,7 +1,0 @@
-build
-classes
-.idea
-.gradle
-*.iml
-*.db
-**/out

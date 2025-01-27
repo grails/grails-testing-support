@@ -1,9 +1,0 @@
-dependencies {
-    api "org.grails.plugins:gsp"
-    api "org.grails:grails-plugin-rest"
-    api "org.grails:grails-plugin-interceptors"
-    api "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
-
-    api project(':grails-testing-support')
-    api "org.javassist:javassist:$javassistVersion"
-}
