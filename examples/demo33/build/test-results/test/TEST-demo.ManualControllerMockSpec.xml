@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.ManualControllerMockSpec" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:02" hostname="TRIUMPHT15V" time="0.008">
+  <properties/>
+  <testcase name="test it worked" classname="demo.ManualControllerMockSpec" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

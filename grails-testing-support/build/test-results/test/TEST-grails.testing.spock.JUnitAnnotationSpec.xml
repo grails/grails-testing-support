@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="grails.testing.spock.JUnitAnnotationSpec" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-12T18:24:04" hostname="TRIUMPHT15V" time="0.024">
+  <properties/>
+  <testcase name="junit 5 annotated methods are called in correct order prior to this test" classname="grails.testing.spock.JUnitAnnotationSpec" time="0.024"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

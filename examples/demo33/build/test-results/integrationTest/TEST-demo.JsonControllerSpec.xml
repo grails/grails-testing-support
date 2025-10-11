@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.JsonControllerSpec" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:16" hostname="TRIUMPHT15V" time="0.88">
+  <properties/>
+  <testcase name="test a json view is rendered" classname="demo.JsonControllerSpec" time="0.655"/>
+  <testcase name="test a html view is rendered" classname="demo.JsonControllerSpec" time="0.224"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

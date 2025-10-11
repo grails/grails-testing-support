@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.CarSpec" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:00" hostname="TRIUMPHT15V" time="0.018">
+  <properties/>
+  <testcase name="test basic persistence mocking" classname="demo.CarSpec" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

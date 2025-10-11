@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.PersonServiceSpec" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:04" hostname="TRIUMPHT15V" time="0.036">
+  <properties/>
+  <testcase name="test one" classname="demo.PersonServiceSpec" time="0.034"/>
+  <testcase name="test two" classname="demo.PersonServiceSpec" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

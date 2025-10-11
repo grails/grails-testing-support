@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.UrlMappingsSpec" tests="9" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:07" hostname="TRIUMPHT15V" time="0.801">
+  <properties/>
+  <testcase name="test controller" classname="demo.UrlMappingsSpec" time="0.013"/>
+  <testcase name="test action" classname="demo.UrlMappingsSpec" time="0.007"/>
+  <testcase name="test view" classname="demo.UrlMappingsSpec" time="0.108"/>
+  <testcase name="test forward mappings" classname="demo.UrlMappingsSpec" time="0.485"/>
+  <testcase name="test reverse mappings" classname="demo.UrlMappingsSpec" time="0.01"/>
+  <testcase name="test forward and reverse mappings" classname="demo.UrlMappingsSpec" time="0.154"/>
+  <testcase name="test reverse mappings with http methods" classname="demo.UrlMappingsSpec" time="0.008"/>
+  <testcase name="test forward mappings with http methods" classname="demo.UrlMappingsSpec" time="0.006"/>
+  <testcase name="test forward and reverse mappings with http methods" classname="demo.UrlMappingsSpec" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,3 @@
+grails.testing.gorm
+org.grails.testing.gorm
+org.grails.testing.gorm.spock

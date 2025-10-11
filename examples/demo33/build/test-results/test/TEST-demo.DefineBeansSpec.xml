@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.DefineBeansSpec" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:01" hostname="TRIUMPHT15V" time="0.095">
+  <properties/>
+  <testcase name="test dependency injection with defineBeans" classname="demo.DefineBeansSpec" time="0.092"/>
+  <testcase name="test the bean is available to the context" classname="demo.DefineBeansSpec" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

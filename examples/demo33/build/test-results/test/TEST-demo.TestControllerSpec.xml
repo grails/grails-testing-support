@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.TestControllerSpec" tests="23" skipped="2" failures="0" errors="0" timestamp="2024-12-12T19:22:06" hostname="TRIUMPHT15V" time="0.657">
+  <properties/>
+  <testcase name="test render text" classname="demo.TestControllerSpec" time="0.05"/>
+  <testcase name="test simple controller redirect" classname="demo.TestControllerSpec" time="0.022"/>
+  <testcase name="test render view" classname="demo.TestControllerSpec" time="0.016"/>
+  <testcase name="test render XML" classname="demo.TestControllerSpec" time="0.034"/>
+  <testcase name="test render JSON" classname="demo.TestControllerSpec" time="0.034"/>
+  <testcase name="test render as JSON" classname="demo.TestControllerSpec" time="0.01"/>
+  <testcase name="test render state" classname="demo.TestControllerSpec" time="0.044"/>
+  <testcase name="test injected properties" classname="demo.TestControllerSpec" time="0.002"/>
+  <testcase name="test controller autowiring" classname="demo.TestControllerSpec" time="0.013"/>
+  <testcase name="test render withFormalt XML" classname="demo.TestControllerSpec" time="0.022"/>
+  <testcase name="test render withFormat HTML" classname="demo.TestControllerSpec" time="0.01"/>
+  <testcase name="test render with request format" classname="demo.TestControllerSpec" time="0.014"/>
+  <testcase name="test form token synchronization" classname="demo.TestControllerSpec" time="0.026"/>
+  <testcase name="test file upload" classname="demo.TestControllerSpec" time="0.014"/>
+  <testcase name="test render basic template with no tags" classname="demo.TestControllerSpec" time="0.106"/>
+  <testcase name="test render basic template with tags" classname="demo.TestControllerSpec" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="test render basic template with link tag" classname="demo.TestControllerSpec" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="test invoke tag library method" classname="demo.TestControllerSpec" time="0.02"/>
+  <testcase name="test invoke tag library method via namespace" classname="demo.TestControllerSpec" time="0.141"/>
+  <testcase name="test invoke with command object" classname="demo.TestControllerSpec" time="0.032"/>
+  <testcase name="test allowed methods" classname="demo.TestControllerSpec" time="0.036"/>
+  <testcase name="test content type constants are added to the test" classname="demo.TestControllerSpec" time="0.003"/>
+  <testcase name="test default request method" classname="demo.TestControllerSpec" time="0.001"/>
+  <system-out><![CDATA[bar
+foo
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

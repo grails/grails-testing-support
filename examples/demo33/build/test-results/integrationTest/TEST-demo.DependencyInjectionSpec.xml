@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.DependencyInjectionSpec" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:16" hostname="TRIUMPHT15V" time="0.012">
+  <properties/>
+  <testcase name="some test method" classname="demo.DependencyInjectionSpec" time="0.012"/>
+  <system-out><![CDATA[14:22:10,973 |-WARN in ch.qos.logback.core.joran.action.ConversionRuleAction - [converterClass] attribute is deprecated and replaced by [class]. See element [conversionRule] near line 4
+14:22:10,973 |-WARN in ch.qos.logback.core.joran.action.ConversionRuleAction - [converterClass] attribute is deprecated and replaced by [class]. See element [conversionRule] near line 5
+14:22:10,974 |-INFO in ch.qos.logback.core.model.processor.ConversionRuleModelHandler - registering conversion word clr with class [org.springframework.boot.logging.logback.ColorConverter]
+14:22:10,974 |-INFO in ch.qos.logback.core.model.processor.ConversionRuleModelHandler - registering conversion word wex with class [org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter]
+14:22:10,974 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [STDOUT]
+14:22:10,974 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+14:22:10,974 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+14:22:10,974 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to ERROR
+14:22:10,974 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@16a5c7e4 - Propagating ERROR level on Logger[ROOT] onto the JUL framework
+14:22:10,975 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [STDOUT] to Logger[ROOT]
+14:22:10,975 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@1e225820 - End of configuration.
+14:22:10,975 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@8aeab9e - Registering current configuration as safe fallback point
+
+Grails application running at http://localhost:63045 in environment: test
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

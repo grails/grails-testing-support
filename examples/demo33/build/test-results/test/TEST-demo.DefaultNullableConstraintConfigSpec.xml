@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.DefaultNullableConstraintConfigSpec" tests="1" skipped="1" failures="0" errors="0" timestamp="2024-12-12T19:22:01" hostname="TRIUMPHT15V" time="0.0">
+  <properties/>
+  <testcase name="test default nullable" classname="demo.DefaultNullableConstraintConfigSpec" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

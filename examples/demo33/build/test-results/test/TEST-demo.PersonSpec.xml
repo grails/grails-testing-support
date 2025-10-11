@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.PersonSpec" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:04" hostname="TRIUMPHT15V" time="0.027">
+  <properties/>
+  <testcase name="test basic persistence mocking" classname="demo.PersonSpec" time="0.023"/>
+  <testcase name="test domain instance" classname="demo.PersonSpec" time="0.002"/>
+  <testcase name="test we get a new domain" classname="demo.PersonSpec" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

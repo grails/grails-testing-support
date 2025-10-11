@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.SampleTagLibSpec" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:04" hostname="TRIUMPHT15V" time="0.327">
+  <properties/>
+  <testcase name="test simple tag as method" classname="demo.SampleTagLibSpec" time="0.015"/>
+  <testcase name="test tags with applyTemplate" classname="demo.SampleTagLibSpec" time="0.169"/>
+  <testcase name="test tag as method with parameters" classname="demo.SampleTagLibSpec" time="0.011"/>
+  <testcase name="test a tag that access the model" classname="demo.SampleTagLibSpec" time="0.129"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

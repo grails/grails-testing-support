@@ -1,0 +1,8 @@
+grails.testing.mixin.integration
+grails.testing.services
+grails.testing.spock
+grails.testing.spring
+org.grails.compiler.injection.testing
+org.grails.testing
+org.grails.testing.context.junit4
+org.grails.testing.spock

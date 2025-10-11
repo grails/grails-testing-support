@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.DemoControllerSpec" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:01" hostname="TRIUMPHT15V" time="0.043">
+  <properties/>
+  <testcase name="test action which renders text" classname="demo.DemoControllerSpec" time="0.016"/>
+  <testcase name="test invalid request method" classname="demo.DemoControllerSpec" time="0.009"/>
+  <testcase name="test valid request method" classname="demo.DemoControllerSpec" time="0.006"/>
+  <testcase name="test private methods can be executed" classname="demo.DemoControllerSpec" time="0.005"/>
+  <testcase name="test protected methods can be executed" classname="demo.DemoControllerSpec" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

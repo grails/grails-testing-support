@@ -1,0 +1,6 @@
+grails.testing.web
+grails.testing.web.controllers
+grails.testing.web.interceptor
+grails.testing.web.taglib
+org.grails.testing.runtime.support
+org.grails.testing.spock

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.NamePropertyServiceSpec" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:02" hostname="TRIUMPHT15V" time="0.074">
+  <properties/>
+  <testcase name="test referencing a service with a 'name' property" classname="demo.NamePropertyServiceSpec" time="0.074"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

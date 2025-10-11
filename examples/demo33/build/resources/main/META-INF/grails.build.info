@@ -1,0 +1,6 @@
+#Thu, 12 Dec 2024 14:21:48 -0500
+
+info.app.version=4.0.0-SNAPSHOT
+info.app.name=examples-demo33
+grails.env=production
+info.app.grailsVersion=7.0.0-SNAPSHOT

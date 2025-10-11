@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="grails.testing.spock.RunOnceSpec" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-12-12T18:24:04" hostname="TRIUMPHT15V" time="0.014">
+  <properties/>
+  <testcase name="first test" classname="grails.testing.spock.RunOnceSpec" time="0.005"/>
+  <testcase name="second test" classname="grails.testing.spock.RunOnceSpec" time="0.005"/>
+  <testcase name="third test" classname="grails.testing.spock.RunOnceSpec" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

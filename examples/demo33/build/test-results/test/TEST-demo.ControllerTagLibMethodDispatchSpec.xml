@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demo.ControllerTagLibMethodDispatchSpec" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-12-12T19:22:00" hostname="TRIUMPHT15V" time="0.179">
+  <properties/>
+  <testcase name="test controller which invokes a tag which invokes another tag" classname="demo.ControllerTagLibMethodDispatchSpec" time="0.152"/>
+  <testcase name="test invoking a core tag as a method" classname="demo.ControllerTagLibMethodDispatchSpec" time="0.027"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
